@@ -59,7 +59,7 @@ let renderer, composer, scene, camera, points, material, uniforms;
 let webgl = true;
 
 try {
-  renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, preserveDrawingBuffer: true, powerPreference: 'high-performance' });
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: 'high-performance' });
   renderer.setClearColor(new THREE.Color('#02030A'), 1);
 } catch (e) { webgl = false; }
 
@@ -289,14 +289,27 @@ addEventListener('mousemove', (e) => {
 });
 
 const clock = new THREE.Clock();
-function render() {
-  requestAnimationFrame(render);
+function fitMark(p) {
+  const vH = 2 * Math.tan((camera.fov * Math.PI / 180) / 2) * camera.position.z;
+  const vW = vH * camera.aspect;
+  const fit = Math.min(0.9, (0.82 * vW) / 5.4);
+  points.scale.setScalar(fit);
+  points.position.y = 1.35 + p * 1.2;
+  uniforms.uScale.value = fit;
+  uniforms.uOffset.value.set(points.position.x, points.position.y);
+}
+
+function renderFrame() {
   if (!webgl || !points) return;
-  const dt = clock.getDelta();
+  // dormant: deep past the hero the dust is gone, so freeze the frame and skip
+  // the bloom pipeline entirely (the last frame stays on screen)
+  const sy = lenis ? lenis.animatedScroll : window.scrollY;
+  if (sy > innerHeight * 2.8) return;
+
+  const dt = Math.min(clock.getDelta(), 0.05);
   uniforms.uTime.value += dt;
 
   // scroll-driven morph: mark at top, disperses through the hero
-  const sy = lenis ? lenis.animatedScroll : window.scrollY;
   const heroEnd = innerHeight * 0.85;
   const p = Math.min(Math.max(sy / heroEnd, 0), 1);
   morphTarget = 1 - p;
@@ -315,19 +328,29 @@ function render() {
   // life: gentle rotation + mouse parallax tilt
   points.rotation.y += (tilt.y * 0.35 - points.rotation.y) * 0.04 + 0.0006;
   points.rotation.x += (tilt.x * 0.30 - points.rotation.x) * 0.04;
-  // fit the mark to the viewport width (keeps it inside frame on mobile)
-  const vH = 2 * Math.tan((camera.fov * Math.PI / 180) / 2) * camera.position.z;
-  const vW = vH * camera.aspect;
-  const fit = Math.min(0.9, (0.82 * vW) / 5.4);
-  points.scale.setScalar(fit);
-  // sit the mark in the upper-center (lifted so its base clears the eyebrow), drift down on scroll
-  points.position.y = 1.35 + p * 1.2;
-  // keep the cursor interaction in the mark's drawn space
-  uniforms.uScale.value = fit;
-  uniforms.uOffset.value.set(points.position.x, points.position.y);
+  fitMark(p);
 
   composer.render();
 }
+
+let rafId = null;
+function loop() { rafId = requestAnimationFrame(loop); renderFrame(); }
+function startLoop() {
+  if (rafId != null || !webgl || !points) return;
+  if (reduceMotion) { renderStatic(); return; } // no motion: paint one assembled frame
+  clock.getDelta();
+  loop();
+}
+function stopLoop() { if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; } }
+function renderStatic() {
+  morph = 1; uniforms.uMorph.value = 1; uniforms.uFade.value = 1;
+  uniforms.uMouse.value.set(999, 999);
+  fitMark(0);
+  composer.render();
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) stopLoop(); else startLoop();
+});
 
 /* ───────────────────────── Boot + loader ───────────────────────── */
 function revealHero() {
@@ -366,7 +389,7 @@ function setupScrollReveals() {
 function setupLetterField() {
   if (reduceMotion || window.matchMedia('(hover: none)').matches) return;
   const els = document.querySelectorAll(
-    '.hero h1, .manifesto p:not(.sig), .work-head h2, .work-card h3, .principle h4, .closer h2'
+    '.hero h1, .manifesto p:not(.sig), .work-head h2, .closer h2'
   );
   if (!els.length) return;
 
@@ -406,7 +429,7 @@ function setupLetterField() {
   addEventListener('mousemove', (e) => { if (!pointerArmed(e)) return; px = e.clientX; py = e.clientY; });
   addEventListener('mouseleave', () => { px = -9999; py = -9999; });
 
-  const R = 240, holePx = 70, strength = 0.45, swirl = 24, cap = 110;
+  const R = 220, holePx = 36, strength = 0.12, swirl = 6, cap = 18;
   const tick = () => {
     requestAnimationFrame(tick);
     const top = lenis ? lenis.animatedScroll : window.scrollY;
@@ -472,10 +495,10 @@ function boot() {
   img.onload = () => {
     let pts = [];
     try { pts = sampleMark(img); } catch (e) { pts = []; }
-    if (webgl) { buildPoints(pts); render(); }
+    if (webgl) { buildPoints(pts); startLoop(); }
     finishLoad();
   };
-  img.onerror = () => { if (webgl) { buildPoints([]); render(); } finishLoad(); };
+  img.onerror = () => { if (webgl) { buildPoints([]); startLoop(); } finishLoad(); };
   img.src = 'assets/mark-white.png';
 }
 
@@ -484,6 +507,7 @@ addEventListener('resize', () => {
   camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
   renderer.setSize(innerWidth, innerHeight);
   composer.setSize(innerWidth, innerHeight);
+  if (reduceMotion) renderStatic();
 });
 
 // safety: never trap the user behind the loader
