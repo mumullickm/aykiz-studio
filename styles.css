@@ -208,7 +208,9 @@ header.nav {
 
 .reveal { will-change: transform, opacity; }
 
-/* letters that bend around the black-hole cursor */
+/* letters that bend around the black-hole cursor; words stay whole so lines
+   never break in the middle of a word */
+.gl-word { display: inline-block; white-space: nowrap; }
 .gl { display: inline-block; will-change: transform; }
 
 /* ───────────────────────── Section base ───────────────────────── */

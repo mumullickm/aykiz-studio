@@ -420,15 +420,20 @@ function setupLetterField() {
   );
   if (!els.length) return;
 
+  // Split into per-letter spans, but keep each WORD in its own wrapper so a line
+  // never breaks in the middle of a word (the .gl letters are inline-block, which
+  // would otherwise wrap mid-word on narrow screens).
   const wrap = (node) => {
     [...node.childNodes].forEach((child) => {
       if (child.nodeType === 3) {
         const frag = document.createDocumentFragment();
+        let word = null;
         for (const c of child.textContent) {
-          if (c === ' ') { frag.appendChild(document.createTextNode(' ')); continue; }
+          if (c === ' ') { word = null; frag.appendChild(document.createTextNode(' ')); continue; }
+          if (!word) { word = document.createElement('span'); word.className = 'gl-word'; frag.appendChild(word); }
           const s = document.createElement('span');
           s.className = 'gl'; s.textContent = c;
-          frag.appendChild(s);
+          word.appendChild(s);
         }
         child.replaceWith(frag);
       } else if (child.nodeType === 1 && child.tagName !== 'BR') {
