@@ -21,7 +21,7 @@ function pointerArmed(e) {
 /* ───────────────────────── Custom cursor ───────────────────────── */
 (function cursor() {
   const ring = document.querySelector('.cursor-ring');
-  if (!ring || window.matchMedia('(hover: none)').matches) return;
+  if (!ring) return;
   let mx = -9999, my = -9999, rx = -9999, ry = -9999;
   addEventListener('mousemove', (e) => {
     if (!pointerArmed(e)) return;
@@ -29,6 +29,16 @@ function pointerArmed(e) {
     document.body.classList.add('cursor-on');
   });
   addEventListener('mouseleave', () => document.body.classList.remove('cursor-on'));
+  // touch: the black hole follows the finger and fades on release
+  const onTouch = (e) => {
+    const t = e.touches[0]; if (!t) return;
+    if (mx < -9000) { rx = t.clientX; ry = t.clientY; } // snap on first contact, no streak
+    mx = t.clientX; my = t.clientY;
+    document.body.classList.add('cursor-on');
+  };
+  addEventListener('touchstart', onTouch, { passive: true });
+  addEventListener('touchmove', onTouch, { passive: true });
+  addEventListener('touchend', () => document.body.classList.remove('cursor-on'), { passive: true });
   const tick = () => {
     rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
     ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
@@ -266,18 +276,22 @@ function initScene() {
   composer.addPass(bloom);
 }
 
-/* mouse → world coords on z=0 plane */
+/* pointer (mouse or touch) → world coords on z=0 plane */
 const mouse = new THREE.Vector2(999, 999);
 const mouseTarget = new THREE.Vector2(999, 999);
-addEventListener('mousemove', (e) => {
-  if (!camera || !pointerArmed(e)) return;
-  const ndcx = (e.clientX / innerWidth) * 2 - 1;
-  const ndcy = -((e.clientY / innerHeight) * 2 - 1);
+function setMouseWorld(cx, cy) {
+  if (!camera) return;
+  const ndcx = (cx / innerWidth) * 2 - 1;
+  const ndcy = -((cy / innerHeight) * 2 - 1);
   const vH = 2 * Math.tan((camera.fov * Math.PI / 180) / 2) * camera.position.z;
   const vW = vH * camera.aspect;
   mouseTarget.set(ndcx * vW / 2, ndcy * vH / 2);
-});
+}
+addEventListener('mousemove', (e) => { if (camera && pointerArmed(e)) setMouseWorld(e.clientX, e.clientY); });
 addEventListener('mouseleave', () => mouseTarget.set(999, 999));
+addEventListener('touchstart', (e) => { const t = e.touches[0]; if (t) setMouseWorld(t.clientX, t.clientY); }, { passive: true });
+addEventListener('touchmove', (e) => { const t = e.touches[0]; if (t) setMouseWorld(t.clientX, t.clientY); }, { passive: true });
+addEventListener('touchend', () => mouseTarget.set(999, 999), { passive: true });
 
 let morph = 1, morphTarget = 1, tilt = { x: 0, y: 0 };
 addEventListener('mousemove', (e) => {
@@ -285,6 +299,18 @@ addEventListener('mousemove', (e) => {
   tilt.x = (e.clientY / innerHeight - 0.5);
   tilt.y = (e.clientX / innerWidth - 0.5);
 });
+
+/* device tilt drives the parallax on mobile. Android and older iOS attach
+   directly; iOS 13+ gates this behind a permission prompt, so we skip the
+   prompt and let the rich touch interaction carry those devices. */
+if (typeof DeviceOrientationEvent !== 'undefined' &&
+    typeof DeviceOrientationEvent.requestPermission !== 'function') {
+  addEventListener('deviceorientation', (e) => {
+    if (e.gamma == null || e.beta == null) return;
+    tilt.y = Math.max(-0.5, Math.min(0.5, e.gamma / 45));
+    tilt.x = Math.max(-0.5, Math.min(0.5, (e.beta - 45) / 45));
+  });
+}
 
 const clock = new THREE.Clock();
 function fitMark(p) {
@@ -388,7 +414,7 @@ function setupScrollReveals() {
 /* Gravitational letters: every display glyph bends around the cursor with the
    same ring + swirl + smoothstep the stardust shader uses, just measured in px. */
 function setupLetterField() {
-  if (reduceMotion || window.matchMedia('(hover: none)').matches) return;
+  if (reduceMotion) return;
   const els = document.querySelectorAll(
     '.hero h1, .manifesto p:not(.sig), .work-head h2, .closer h2'
   );
@@ -429,6 +455,10 @@ function setupLetterField() {
   let px = -9999, py = -9999;
   addEventListener('mousemove', (e) => { if (!pointerArmed(e)) return; px = e.clientX; py = e.clientY; });
   addEventListener('mouseleave', () => { px = -9999; py = -9999; });
+  const onTouch = (e) => { const t = e.touches[0]; if (t) { px = t.clientX; py = t.clientY; } };
+  addEventListener('touchstart', onTouch, { passive: true });
+  addEventListener('touchmove', onTouch, { passive: true });
+  addEventListener('touchend', () => { px = -9999; py = -9999; }, { passive: true });
 
   const R = 220, holePx = 36, strength = 0.12, swirl = 6, cap = 18;
   const tick = () => {

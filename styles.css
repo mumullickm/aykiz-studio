@@ -134,7 +134,6 @@ body.cursor-on .cursor-ring { opacity: 1; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 .cursor-ring.hover { width: 62px; height: 62px; }
-@media (hover: none), (pointer: coarse) { .cursor-ring { display: none; } }
 
 /* ───────────────────────── WebGL canvas ───────────────────────── */
 #scene {
