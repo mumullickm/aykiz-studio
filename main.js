@@ -9,13 +9,27 @@ gsap?.registerPlugin(ScrollTrigger);
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* Pointer is "armed" only after a genuine move, so nothing reacts to a pointer
+   that is merely resting over the page on load (no parked circle, no carve). */
+let _armed = false, _seenPointer = false, _px0 = 0, _py0 = 0;
+function pointerArmed(e) {
+  if (!_seenPointer) { _seenPointer = true; _px0 = e.clientX; _py0 = e.clientY; return false; }
+  if (!_armed && (Math.abs(e.clientX - _px0) > 3 || Math.abs(e.clientY - _py0) > 3)) _armed = true;
+  return _armed;
+}
+
 /* ───────────────────────── Custom cursor ───────────────────────── */
 (function cursor() {
   const dot = document.querySelector('.cursor-dot');
   const ring = document.querySelector('.cursor-ring');
   if (!dot || !ring || window.matchMedia('(hover: none)').matches) return;
-  let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
-  addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+  let mx = -9999, my = -9999, rx = -9999, ry = -9999;
+  addEventListener('mousemove', (e) => {
+    if (!pointerArmed(e)) return;
+    mx = e.clientX; my = e.clientY;
+    document.body.classList.add('cursor-on');
+  });
+  addEventListener('mouseleave', () => document.body.classList.remove('cursor-on'));
   const tick = () => {
     rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
     dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
@@ -255,7 +269,7 @@ function initScene() {
 const mouse = new THREE.Vector2(999, 999);
 const mouseTarget = new THREE.Vector2(999, 999);
 addEventListener('mousemove', (e) => {
-  if (!camera) return;
+  if (!camera || !pointerArmed(e)) return;
   const ndcx = (e.clientX / innerWidth) * 2 - 1;
   const ndcy = -((e.clientY / innerHeight) * 2 - 1);
   const vH = 2 * Math.tan((camera.fov * Math.PI / 180) / 2) * camera.position.z;
@@ -266,6 +280,7 @@ addEventListener('mouseleave', () => mouseTarget.set(999, 999));
 
 let morph = 1, morphTarget = 1, tilt = { x: 0, y: 0 };
 addEventListener('mousemove', (e) => {
+  if (!pointerArmed(e)) return;
   tilt.x = (e.clientY / innerHeight - 0.5);
   tilt.y = (e.clientX / innerWidth - 0.5);
 });
@@ -382,7 +397,7 @@ function setupLetterField() {
   };
 
   let px = -9999, py = -9999;
-  addEventListener('mousemove', (e) => { px = e.clientX; py = e.clientY; });
+  addEventListener('mousemove', (e) => { if (!pointerArmed(e)) return; px = e.clientX; py = e.clientY; });
   addEventListener('mouseleave', () => { px = -9999; py = -9999; });
 
   const R = 240, holePx = 70, strength = 0.45, swirl = 24, cap = 110;
