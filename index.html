@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Aykiz Intelligence · a small studio for quiet software</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="description" content="Aykiz Intelligence is a small studio building quiet, offline-first software. Aykiz means moon girl. Home to Wasilah, Drafy, Crisp, and Misbah." />
+<meta name="theme-color" content="#04060D" />
+<link rel="icon" type="image/png" href="assets/icon-512.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- deep space -->
+<div class="starfield"></div>
+<div class="moonglow"></div>
+
+<!-- Loader: the real mark loading in -->
+<div id="loader">
+  <img class="loader-logo" src="assets/mark-white.png" alt="Aykiz" />
+  <div class="loader-bar"><span id="loaderFill"></span></div>
+  <div class="loader-pct"><span id="loaderPct">0</span> · gathering light</div>
+</div>
+
+<!-- Black-hole cursor -->
+<div class="cursor-ring"></div>
+<div class="cursor-dot"></div>
+
+<!-- WebGL stardust scene -->
+<canvas id="scene"></canvas>
+
+<header class="nav">
+  <a href="#top" class="brand" data-cursor>Aykiz<span class="dot"></span></a>
+  <nav class="links">
+    <a href="#work" data-cursor>Work</a>
+    <a href="#approach" data-cursor>Approach</a>
+    <a href="#contact" data-cursor>Contact</a>
+  </nav>
+</header>
+
+<main class="content" id="top">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="eyebrow" id="heroEyebrow">Aykiz Intelligence · MMXXVI</div>
+    <h1 class="reveal">Quiet software,<br><em>made with care.</em></h1>
+    <p class="lede reveal">A small studio. We build tools that answer when you ask and stay out of the way when you don't. Offline first. One button. No clutter.</p>
+    <div class="scroll-cue"><span>scroll</span><span class="line"></span></div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto" id="about">
+    <div class="wrap">
+      <div class="eyebrow-row reveal"><span class="num">01</span><span class="label">What we are</span><span class="rule"></span></div>
+      <p class="reveal">
+        We are building a <em>small</em> assistant. <span class="mut">Not a platform, not a suite.</span> A quiet tool that answers when you ask, and stays out of the way when you don't.
+      </p>
+      <p class="sig reveal">
+        Aykiz means moon girl. A small word, almost a whisper. The studio sounds the same way: short sentences, soft verbs, no superlatives. It is named after a daughter, and we mean it that way: warm where it can be, exact where it must be.
+      </p>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="wrap">
+      <div class="eyebrow-row reveal"><span class="num">02</span><span class="label">Selected work</span><span class="rule"></span></div>
+      <div class="work-head reveal">
+        <h2>Four small<br>things, finished.</h2>
+        <p>Each one ships free, runs offline, and respects your attention. Built and shipped solo.</p>
+      </div>
+
+      <div class="work-grid">
+        <a class="work-card" data-cursor href="https://wasilah.site" target="_blank" rel="noopener" style="--glow:#1F6F5C;">
+          <div class="top"><span class="badge">Live · iOS + Android</span><span class="idx">001</span></div>
+          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
+          <div>
+            <img class="appicon" src="assets/apps/wasilah.png" alt="Wasilah icon" />
+            <h3>Wasilah</h3>
+            <p class="desc">A complete prayer companion: times, qibla, Quran, hadith. Sadaqah jāriyah, never monetised.</p>
+            <div class="meta-row"><span>Flutter</span><span>Prayer</span><span>Offline</span></div>
+          </div>
+        </a>
+
+        <a class="work-card" data-cursor href="https://drafy.app" target="_blank" rel="noopener" style="--glow:#FFB347;">
+          <div class="top"><span class="badge">Live · Android</span><span class="idx">002</span></div>
+          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
+          <div>
+            <img class="appicon" src="assets/apps/drafy.png" alt="Drafy icon" />
+            <h3>Drafy</h3>
+            <p class="desc">A QR generator that asks for nothing. Eight types, logos, no paywall, no tracking. The free spoiler.</p>
+            <div class="meta-row"><span>Flutter</span><span>Utility</span><span>Free</span></div>
+          </div>
+        </a>
+
+        <a class="work-card" data-cursor href="#contact" style="--glow:#3B6EA5;">
+          <div class="top"><span class="badge">In test</span><span class="idx">003</span></div>
+          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
+          <div>
+            <img class="appicon" src="assets/apps/crisp.png" alt="Crisp icon" />
+            <h3>Crisp</h3>
+            <p class="desc">A document scanner with no subscription. Scan, clean, mark up, export. Fully offline.</p>
+            <div class="meta-row"><span>Flutter</span><span>Scanner</span><span>Free</span></div>
+          </div>
+        </a>
+
+        <a class="work-card" data-cursor href="#contact" style="--glow:#C9A24B;">
+          <div class="top"><span class="badge">In build</span><span class="idx">004</span></div>
+          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
+          <div>
+            <img class="appicon" src="assets/apps/misbah.png" alt="Misbah icon" />
+            <h3>Misbah</h3>
+            <p class="desc">Light in the dark. A one-touch game where oil is sight. Small, calm, hand-made.</p>
+            <div class="meta-row"><span>Game</span><span>2D</span><span>Calm</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section id="approach">
+    <div class="wrap">
+      <div class="eyebrow-row reveal"><span class="num">03</span><span class="label">How we work</span><span class="rule"></span></div>
+      <div class="principles-grid reveal">
+        <div class="principle">
+          <span class="pn">A</span>
+          <h4>Offline first</h4>
+          <p>The phone is the computer. Things should work on a train, in a tunnel, on a dead signal. The network is a bonus, never a requirement.</p>
+        </div>
+        <div class="principle">
+          <span class="pn">B</span>
+          <h4>One button</h4>
+          <p>If a feature needs a settings page to explain it, it is the wrong feature. We remove until only the necessary remains.</p>
+        </div>
+        <div class="principle">
+          <span class="pn">C</span>
+          <h4>Quiet by default</h4>
+          <p>No badges begging for taps, no streaks, no dark patterns. The tool answers when asked and is silent otherwise.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSER -->
+  <section class="closer" id="contact">
+    <div class="wrap">
+      <h2 class="reveal">Let's build something<br><em>small and true.</em></h2>
+      <a class="btn" data-cursor href="mailto:mumullickm@gmail.com">Start a conversation
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap footer-grid">
+      <div class="big">Aykiz <span class="dot"></span></div>
+      <div class="footer-meta">
+        <div><a href="mailto:mumullickm@gmail.com">mumullickm@gmail.com</a></div>
+        <div><a href="https://www.linkedin.com/in/mumullick" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://wasilah.site" target="_blank" rel="noopener">Wasilah</a></div>
+        <div>Aykiz Intelligence · MMXXVI · Quiet software</div>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script type="module" src="main.js"></script>
+</body>
+</html>
