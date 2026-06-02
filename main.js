@@ -20,9 +20,8 @@ function pointerArmed(e) {
 
 /* ───────────────────────── Custom cursor ───────────────────────── */
 (function cursor() {
-  const dot = document.querySelector('.cursor-dot');
   const ring = document.querySelector('.cursor-ring');
-  if (!dot || !ring || window.matchMedia('(hover: none)').matches) return;
+  if (!ring || window.matchMedia('(hover: none)').matches) return;
   let mx = -9999, my = -9999, rx = -9999, ry = -9999;
   addEventListener('mousemove', (e) => {
     if (!pointerArmed(e)) return;
@@ -32,7 +31,6 @@ function pointerArmed(e) {
   addEventListener('mouseleave', () => document.body.classList.remove('cursor-on'));
   const tick = () => {
     rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
-    dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
     ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
     requestAnimationFrame(tick);
   };
@@ -299,12 +297,15 @@ function fitMark(p) {
   uniforms.uOffset.value.set(points.position.x, points.position.y);
 }
 
+let lastRenderSy = -1;
 function renderFrame() {
   if (!webgl || !points) return;
-  // dormant: deep past the hero the dust is gone, so freeze the frame and skip
-  // the bloom pipeline entirely (the last frame stays on screen)
+  // dormant: once deep past the hero the dust has faded out, so freeze the frame.
+  // Still render one frame whenever the scroll position changes (covers instant
+  // anchor jumps), then skip while it sits idle down there.
   const sy = lenis ? lenis.animatedScroll : window.scrollY;
-  if (sy > innerHeight * 2.8) return;
+  if (sy > innerHeight * 2.6 && Math.abs(sy - lastRenderSy) < 1.5) return;
+  lastRenderSy = sy;
 
   const dt = Math.min(clock.getDelta(), 0.05);
   uniforms.uTime.value += dt;
