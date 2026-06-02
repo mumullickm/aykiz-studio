@@ -105,8 +105,8 @@ vec3 curlNoise(vec3 p){
 }`;
 
 const vert = `
-uniform float uTime, uMorph, uSize, uMouseR, uMouseStr, uPR, uFade, uHoleR, uSwirl;
-uniform vec2 uMouse;
+uniform float uTime, uMorph, uSize, uMouseR, uMouseStr, uPR, uFade, uHoleR, uSwirl, uScale;
+uniform vec2 uMouse, uOffset;
 attribute vec3 aTarget; attribute float aSeed;
 varying float vSeed, vMix, vTwinkle;
 ${snoise}
@@ -121,13 +121,15 @@ void main(){
   vec3 mark=aTarget + curlNoise(aTarget*0.7+t*0.6)*0.045;
   float m=smoothstep(0.0,1.0,uMorph);
   vec3 pos=mix(flow,mark,m);
-  // black hole: bend the stardust into a ring around the cursor, void at the center
-  vec2 toM=pos.xy-uMouse; float d=length(toM);
+  // black hole: bend the stardust around the cursor, measured in the mark's
+  // on-screen space (account for the object's scale + offset, else it carves off-target)
+  vec2 worldXY = pos.xy*uScale + uOffset;
+  vec2 toM = worldXY - uMouse; float d=length(toM);
   float infl=smoothstep(uMouseR,0.0,d);
   vec2 dir=normalize(toM+1e-4);
   vec2 perp=vec2(-dir.y,dir.x);
-  pos.xy += dir*(uHoleR-d)*infl*uMouseStr;
-  pos.xy += perp*infl*uSwirl;
+  vec2 disp = dir*(uHoleR-d)*infl*uMouseStr + perp*infl*uSwirl;
+  pos.xy += disp/uScale;
   pos.z += infl*0.25;
   vec4 mv=modelViewMatrix*vec4(pos,1.0);
   gl_Position=projectionMatrix*mv;
@@ -204,6 +206,7 @@ function buildPoints(markPts) {
     uTime: { value: 0 }, uMorph: { value: 1 }, uSize: { value: 1.5 },
     uMouse: { value: new THREE.Vector2(999, 999) }, uMouseR: { value: 1.4 }, uMouseStr: { value: 0.85 },
     uHoleR: { value: 0.45 }, uSwirl: { value: 0.22 },
+    uScale: { value: 1 }, uOffset: { value: new THREE.Vector2(0, 1.35) },
     uPR: { value: Math.min(devicePixelRatio, 2) }, uFade: { value: 1 },
     cA: { value: cStarA }, cB: { value: cStarB }, cC: { value: cTeal },
   };
@@ -319,6 +322,9 @@ function render() {
   points.scale.setScalar(fit);
   // sit the mark in the upper-center (lifted so its base clears the eyebrow), drift down on scroll
   points.position.y = 1.35 + p * 1.2;
+  // keep the cursor interaction in the mark's drawn space
+  uniforms.uScale.value = fit;
+  uniforms.uOffset.value.set(points.position.x, points.position.y);
 
   composer.render();
 }
