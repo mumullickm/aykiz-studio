@@ -203,6 +203,9 @@ header.nav {
 
 .reveal { will-change: transform, opacity; }
 
+/* letters that bend around the black-hole cursor */
+.gl { display: inline-block; will-change: transform; }
+
 /* ───────────────────────── Section base ───────────────────────── */
 section { position: relative; padding: clamp(96px, 16vh, 220px) 0; }
 .eyebrow-row { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }

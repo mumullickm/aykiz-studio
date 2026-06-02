@@ -340,6 +340,88 @@ function setupScrollReveals() {
   });
 }
 
+/* Gravitational letters: every display glyph bends around the cursor with the
+   same ring + swirl + smoothstep the stardust shader uses, just measured in px. */
+function setupLetterField() {
+  if (reduceMotion || window.matchMedia('(hover: none)').matches) return;
+  const els = document.querySelectorAll(
+    '.hero h1, .manifesto p:not(.sig), .work-head h2, .work-card h3, .principle h4, .closer h2'
+  );
+  if (!els.length) return;
+
+  const wrap = (node) => {
+    [...node.childNodes].forEach((child) => {
+      if (child.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        for (const c of child.textContent) {
+          if (c === ' ') { frag.appendChild(document.createTextNode(' ')); continue; }
+          const s = document.createElement('span');
+          s.className = 'gl'; s.textContent = c;
+          frag.appendChild(s);
+        }
+        child.replaceWith(frag);
+      } else if (child.nodeType === 1 && child.tagName !== 'BR') {
+        wrap(child);
+      }
+    });
+  };
+  els.forEach(wrap);
+
+  const letters = [...document.querySelectorAll('.gl')].map((el) => ({ el, cx: 0, cy: 0, x: 0, y: 0 }));
+
+  const measure = () => {
+    const ox = window.scrollX, oy = window.scrollY;
+    letters.forEach((L) => {
+      const prev = L.el.style.transform;
+      L.el.style.transform = 'none';
+      const r = L.el.getBoundingClientRect();
+      L.cx = r.left + r.width / 2 + ox;
+      L.cy = r.top + r.height / 2 + oy;
+      L.el.style.transform = prev;
+    });
+  };
+
+  let px = -9999, py = -9999;
+  addEventListener('mousemove', (e) => { px = e.clientX; py = e.clientY; });
+  addEventListener('mouseleave', () => { px = -9999; py = -9999; });
+
+  const R = 240, holePx = 70, strength = 0.45, swirl = 24, cap = 110;
+  const tick = () => {
+    requestAnimationFrame(tick);
+    const top = lenis ? lenis.animatedScroll : window.scrollY;
+    for (let i = 0; i < letters.length; i++) {
+      const L = letters[i];
+      const sy = L.cy - top, sx = L.cx - window.scrollX;
+      let tx = 0, ty = 0;
+      if (sy > -80 && sy < innerHeight + 80) {
+        const dx = sx - px, dy = sy - py;
+        const d = Math.hypot(dx, dy) || 1e-4;
+        if (d < R) {
+          const lin = 1 - d / R;
+          const s = lin * lin * (3 - 2 * lin);   // smoothstep, like the shader
+          const nx = dx / d, ny = dy / d;
+          const ring = (holePx - d) * s * strength; // pull toward the ring radius
+          tx = nx * ring - ny * s * swirl;          // ring + tangential swirl
+          ty = ny * ring + nx * s * swirl;
+          const m = Math.hypot(tx, ty);
+          if (m > cap) { tx = tx / m * cap; ty = ty / m * cap; }
+        }
+      }
+      L.x += (tx - L.x) * 0.15;
+      L.y += (ty - L.y) * 0.15;
+      L.el.style.transform =
+        (Math.abs(L.x) < 0.06 && Math.abs(L.y) < 0.06) ? '' : `translate3d(${L.x.toFixed(2)}px,${L.y.toFixed(2)}px,0)`;
+    }
+  };
+
+  measure();
+  tick();
+  let rt;
+  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(measure, 200); });
+  setTimeout(measure, 1700);            // after the hero intro settles
+  if (document.fonts?.ready) document.fonts.ready.then(measure);
+}
+
 function finishLoad() {
   const loader = document.getElementById('loader');
   const fill = document.getElementById('loaderFill');
@@ -355,6 +437,7 @@ function finishLoad() {
         loader?.classList.add('done');
         revealHero();
         setupScrollReveals();
+        setupLetterField();
         ScrollTrigger?.refresh();
       }, 250);
     }
