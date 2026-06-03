@@ -267,6 +267,7 @@ function buildCosmos() {
     depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true,
   }));
   scene.add(stars);
+  starField = stars;
 
   // soft moon glow behind the logo
   const cv = document.createElement('canvas'); cv.width = cv.height = 128;
@@ -292,7 +293,8 @@ function buildCosmos() {
    big/fast/bright, far ones sit deep behind and read small/slow/faint - the
    perspective camera does the size falloff for free. They fade out as the hero
    scrolls away so the content sections stay on clean black. */
-let meteors = [], meteorNext = 1.4;
+let starField = null;
+let meteors = [], meteorNext = 2.8;
 
 function makeStreakTexture() {
   const W = 256, H = 64;
@@ -337,7 +339,7 @@ function buildShootingStars() {
 }
 
 function spawnMeteor(M) {
-  const near = Math.random() < 0.28;
+  const near = Math.random() < 0.12;   // most are far and faint; a near one is a treat
   const z = near ? (1.5 + Math.random() * 2.2) : (-3 - Math.random() * 6);
   const dist = camera.position.z - z;
   const vH = 2 * Math.tan((camera.fov * Math.PI / 180) / 2) * dist;
@@ -369,7 +371,7 @@ function updateShootingStars(dt, skyFade) {
     if (meteorNext <= 0) {
       const M = meteors.find((m) => !m.active);
       if (M) spawnMeteor(M);
-      meteorNext = 0.7 + Math.random() * 2.4;
+      meteorNext = 4 + Math.random() * 5;   // well spaced, never a shower
     }
   }
   for (const M of meteors) {
@@ -494,6 +496,14 @@ function renderFrame() {
   points.rotation.y += (tilt.y * 0.35 - points.rotation.y) * 0.04 + 0.0006;
   points.rotation.x += (tilt.x * 0.30 - points.rotation.x) * 0.04;
   fitMark(p);
+
+  // the distant sky is not dead: a slow bounded sway over the horizon (kept
+  // small so a star never swings toward the camera) plus a faint lean toward
+  // the pointer, so the far stars read as real depth
+  if (starField) {
+    starField.rotation.y = Math.sin(uniforms.uTime.value * 0.02) * 0.12;
+    starField.rotation.x += (tilt.x * 0.05 - starField.rotation.x) * 0.03;
+  }
 
   // shooting stars, faded with the hero so they don't streak over content
   const skyFade = Math.max(0, Math.min(1, 1 - sy / (innerHeight * 1.4)));
