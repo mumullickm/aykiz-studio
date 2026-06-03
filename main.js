@@ -61,7 +61,11 @@ if (window.Lenis && !reduceMotion) {
 }
 
 /* ───────────────────────── Scene ───────────────────────── */
-const COUNT = 24000;
+// 48k grains on desktop for a denser mark; phones and low-memory devices stay
+// at 24k so the curl-noise vertex work never costs them frames.
+const lowPower = window.matchMedia('(hover: none), (pointer: coarse)').matches
+  || (navigator.deviceMemory && navigator.deviceMemory <= 4);
+const COUNT = lowPower ? 24000 : 48000;
 const canvas = document.getElementById('scene');
 let renderer, composer, scene, camera, points, material, uniforms;
 let webgl = true;
@@ -116,19 +120,35 @@ const vert = `
 uniform float uTime, uMorph, uSize, uMouseR, uMouseStr, uPR, uFade, uHoleR, uSwirl, uScale;
 uniform vec2 uMouse, uOffset;
 attribute vec3 aTarget; attribute float aSeed;
-varying float vSeed, vMix, vTwinkle;
+varying float vSeed, vMix, vTwinkle, vBurst;
 ${snoise}
 void main(){
   vSeed=aSeed; vMix=uMorph;
   vTwinkle=0.5+0.5*sin(uTime*1.6+aSeed*44.0);
   float t=uTime*0.05;
-  // wandering flow field
+  // wandering flow field (the deep, dispersed rest state)
   vec3 flow=position + curlNoise(position*0.20+vec3(0.,0.,t))*1.35;
   flow += curlNoise(position*0.5 - t*0.6)*0.25;
   // assembled mark, gently breathing
   vec3 mark=aTarget + curlNoise(aTarget*0.7+t*0.6)*0.045;
   float m=smoothstep(0.0,1.0,uMorph);
-  vec3 pos=mix(flow,mark,m);
+
+  // ── Shatter: as the morph drops (scrolling down) the mark doesn't crossfade,
+  // it bursts apart. Each grain gets a per-seed outward direction + speed, an
+  // overshoot bulge mid-flight, and a curl tumble, so the logo looks like it
+  // detonated and the pieces drift off. Scrolling back up sucks them home.
+  float burst = 1.0 - m;                                   // 0 assembled → 1 gone
+  vec3 jitter = vec3(aSeed - 0.5, fract(aSeed*7.3) - 0.5, fract(aSeed*13.7) - 0.5);
+  vec3 outDir = normalize(mark + jitter*0.7 + 1e-4);
+  float speed = 1.1 + aSeed*1.9;
+  float overshoot = sin(clamp(burst, 0.0, 1.0) * 3.14159);  // bulge that peaks mid-burst
+  vec3 shattered = mark
+    + outDir * (burst*speed + overshoot*0.9)
+    + curlNoise(mark*0.55 + t*0.5) * burst * 0.8;
+  vBurst = overshoot * burst;                               // hand the flash to the frag
+
+  // at m=1 → mark (burst is 0, shattered==mark); at m=0 → the wandering flow
+  vec3 pos = mix(flow, shattered, m);
   // black hole: bend the stardust around the cursor, measured in the mark's
   // on-screen space (account for the object's scale + offset, else it carves off-target)
   vec2 worldXY = pos.xy*uScale + uOffset;
@@ -148,16 +168,20 @@ void main(){
 const frag = `
 precision highp float;
 uniform vec3 cA,cB,cC;
-uniform float uFade;
-varying float vSeed, vMix, vTwinkle;
+uniform float uFade, uDensity;
+varying float vSeed, vMix, vTwinkle, vBurst;
 void main(){
   vec2 uv=gl_PointCoord-0.5; float d=length(uv);
   float a=smoothstep(0.5,0.0,d);
   if(a<0.012) discard;
   vec3 col=mix(cA,cB,smoothstep(0.0,0.85,vSeed));   // moonlight white to cool silver
   col=mix(col,cC,smoothstep(0.93,1.0,vSeed));         // rare teal star
-  float bright=(0.42+vMix*0.5)*(0.5+0.5*vTwinkle);
-  gl_FragColor=vec4(col*bright, a*(0.42+vMix*0.5)*uFade);
+  // grains flung loose in the burst lift just slightly, no bright spark flash
+  float bright=(0.42+vMix*0.5)*(0.5+0.5*vTwinkle) + vBurst*0.12;
+  // additive blending sums every grain, so scale each one down as the count
+  // goes up - 48k then reads as dense, not as a brighter navy wash
+  float alpha=a*(0.42+vMix*0.5 + vBurst*0.12)*uFade*uDensity;
+  gl_FragColor=vec4(col*bright, alpha);
 }`;
 
 /* Sample the real Ai mark into target positions */
@@ -216,6 +240,7 @@ function buildPoints(markPts) {
     uHoleR: { value: 0.45 }, uSwirl: { value: 0.22 },
     uScale: { value: 1 }, uOffset: { value: new THREE.Vector2(0, 1.35) },
     uPR: { value: Math.min(devicePixelRatio, 2) }, uFade: { value: 1 },
+    uDensity: { value: 24000 / COUNT },
     cA: { value: cStarA }, cB: { value: cStarB }, cC: { value: cTeal },
   };
   material = new THREE.ShaderMaterial({
@@ -254,7 +279,7 @@ function buildCosmos() {
   cx.fillStyle = grad; cx.fillRect(0, 0, 128, 128);
   const moon = new THREE.Sprite(new THREE.SpriteMaterial({
     map: new THREE.CanvasTexture(cv), color: 0xffffff,
-    transparent: true, opacity: 0.5, depthWrite: false, blending: THREE.AdditiveBlending,
+    transparent: true, opacity: 0.4, depthWrite: false, blending: THREE.AdditiveBlending,
   }));
   moon.scale.set(5, 5, 1);
   moon.position.set(1.1, 2.5, -3);
@@ -272,7 +297,9 @@ function initScene() {
 
   composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.35, 0.3, 0.22);
+  // higher threshold so only bright star cores bloom; the dim dust no longer
+  // hazes the whole field into navy, which keeps the background reading black
+  const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.3, 0.3, 0.32);
   composer.addPass(bloom);
 }
 
@@ -293,7 +320,11 @@ addEventListener('touchstart', (e) => { const t = e.touches[0]; if (t) setMouseW
 addEventListener('touchmove', (e) => { const t = e.touches[0]; if (t) setMouseWorld(t.clientX, t.clientY); }, { passive: true });
 addEventListener('touchend', () => mouseTarget.set(999, 999), { passive: true });
 
-let morph = 1, morphTarget = 1, tilt = { x: 0, y: 0 };
+/* The loader and the hero are one continuous shot: the dust starts as a loose
+   cloud (morph 0) and gathers into the mark as the load bar fills (introProgress
+   0→1). Only once it's assembled does scroll take over the morph. */
+let morph = 0, morphTarget = 0, tilt = { x: 0, y: 0 };
+let intro = true, introProgress = 0;
 addEventListener('mousemove', (e) => {
   if (!pointerArmed(e)) return;
   tilt.x = (e.clientY / innerHeight - 0.5);
@@ -336,11 +367,17 @@ function renderFrame() {
   const dt = Math.min(clock.getDelta(), 0.05);
   uniforms.uTime.value += dt;
 
-  // scroll-driven morph: mark at top, disperses through the hero
-  const heroEnd = innerHeight * 0.85;
-  const p = Math.min(Math.max(sy / heroEnd, 0), 1);
-  morphTarget = 1 - p;
-  morph += (morphTarget - morph) * 0.06;
+  // morph: during the intro the load bar gathers the dust into the mark; after
+  // that, scroll disperses it (mark at top → shatter/flow down the hero)
+  let p = 0;
+  if (intro) {
+    morph += (introProgress - morph) * 0.08;
+  } else {
+    const heroEnd = innerHeight * 0.85;
+    p = Math.min(Math.max(sy / heroEnd, 0), 1);
+    morphTarget = 1 - p;
+    morph += (morphTarget - morph) * 0.06;
+  }
   uniforms.uMorph.value = morph;
 
   // fade particles out as content takes over, so deep sections sit on clean ink
@@ -511,15 +548,19 @@ function finishLoad() {
     v = Math.min(100, v + Math.random() * 18);
     if (fill) fill.style.right = `${100 - v}%`;
     if (pct) pct.textContent = Math.floor(v);
+    introProgress = v / 100;            // the bar literally pulls the dust together
     if (v >= 100) {
       clearInterval(iv);
+      introProgress = 1;
+      // let the grains finish gathering, then hand the same assembled mark to the hero
       setTimeout(() => {
+        intro = false;                  // assembled at p=0; scroll now owns the morph
         loader?.classList.add('done');
         revealHero();
         setupScrollReveals();
         setupLetterField();
         ScrollTrigger?.refresh();
-      }, 250);
+      }, 620);
     }
   }, 90);
 }

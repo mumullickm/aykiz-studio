@@ -85,19 +85,19 @@ body {
 /* ───────────────────────── Loader ───────────────────────── */
 #loader {
   position: fixed; inset: 0; z-index: 1000;
-  background: var(--space);
+  /* transparent so the live dust gathering behind it is the loader */
+  background: radial-gradient(circle at 50% 38%, transparent 38%, rgba(4,6,13,0.55) 100%);
   display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 30px;
+  align-items: center; justify-content: flex-end;
+  padding-bottom: clamp(72px, 14vh, 150px);
   transition: opacity 1.1s var(--ease), visibility 1.1s var(--ease);
 }
 #loader.done { opacity: 0; visibility: hidden; }
-.loader-logo {
-  width: clamp(78px, 12vw, 132px); height: auto;
-  filter: drop-shadow(0 0 22px var(--teal-glow)) drop-shadow(0 0 6px rgba(238,242,250,0.5));
-  opacity: 0; transform: scale(0.92);
-  animation: logoIn 1.4s var(--ease) forwards;
+.loader-foot {
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  opacity: 0; animation: footIn 1s var(--ease) 0.2s forwards;
 }
-@keyframes logoIn { to { opacity: 1; transform: scale(1); } }
+@keyframes footIn { to { opacity: 1; } }
 .loader-bar {
   width: min(260px, 58vw); height: 1px;
   background: var(--line-strong); position: relative; overflow: hidden;
@@ -345,7 +345,8 @@ footer { border-top: 1px solid var(--line); padding: 54px 0 40px; position: rela
 
 /* respect reduced motion: still the ambient animation, keep content readable */
 @media (prefers-reduced-motion: reduce) {
-  .starfield, .cursor-ring::before, .scroll-cue .line, .loader-logo { animation: none !important; }
+  .starfield, .cursor-ring::before, .scroll-cue .line, .loader-foot { animation: none !important; }
+  .loader-foot { opacity: 1; }
   .reveal { opacity: 1 !important; transform: none !important; }
   html { scroll-behavior: auto; }
 }
