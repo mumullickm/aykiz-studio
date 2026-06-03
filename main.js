@@ -286,6 +286,106 @@ function buildCosmos() {
   scene.add(moon);
 }
 
+/* ── Shooting stars ──────────────────────────────────────────────────────
+   Occasional meteors, not a shower. Each is a tapered streak (bright head,
+   fading tail) placed at a depth: near ones sit in front of the mark and read
+   big/fast/bright, far ones sit deep behind and read small/slow/faint - the
+   perspective camera does the size falloff for free. They fade out as the hero
+   scrolls away so the content sections stay on clean black. */
+let meteors = [], meteorNext = 1.4;
+
+function makeStreakTexture() {
+  const W = 256, H = 64;
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d');
+  // brightness along the length, head at the right end
+  const g = x.createLinearGradient(0, 0, W, 0);
+  g.addColorStop(0.0, 'rgba(255,255,255,0)');
+  g.addColorStop(0.55, 'rgba(255,255,255,0.06)');
+  g.addColorStop(0.85, 'rgba(255,255,255,0.35)');
+  g.addColorStop(0.97, 'rgba(255,255,255,0.95)');
+  g.addColorStop(1.0, 'rgba(255,255,255,1)');
+  x.fillStyle = g; x.fillRect(0, 0, W, H);
+  // a round bloom at the head
+  const hg = x.createRadialGradient(W - 12, H / 2, 0, W - 12, H / 2, H * 0.62);
+  hg.addColorStop(0, 'rgba(255,255,255,0.85)');
+  hg.addColorStop(1, 'rgba(255,255,255,0)');
+  x.fillStyle = hg; x.fillRect(0, 0, W, H);
+  // carve a thin soft vertical profile so it reads as a line, not a band
+  x.globalCompositeOperation = 'destination-in';
+  const v = x.createLinearGradient(0, 0, 0, H);
+  v.addColorStop(0, 'rgba(0,0,0,0)');
+  v.addColorStop(0.5, 'rgba(0,0,0,1)');
+  v.addColorStop(1, 'rgba(0,0,0,0)');
+  x.fillStyle = v; x.fillRect(0, 0, W, H);
+  return new THREE.CanvasTexture(c);
+}
+
+function buildShootingStars() {
+  const tex = makeStreakTexture();
+  const geo = new THREE.PlaneGeometry(1, 1);
+  for (let i = 0; i < 8; i++) {
+    const mat = new THREE.MeshBasicMaterial({
+      map: tex, transparent: true, opacity: 0,
+      depthWrite: false, blending: THREE.AdditiveBlending,
+    });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.visible = false;
+    scene.add(mesh);
+    meteors.push({ mesh, mat, active: false, hx: 0, hy: 0, dx: 0, dy: -1, speed: 4, len: 1, thick: 0.04, peak: 0.7, life: 1, age: 0 });
+  }
+}
+
+function spawnMeteor(M) {
+  const near = Math.random() < 0.28;
+  const z = near ? (1.5 + Math.random() * 2.2) : (-3 - Math.random() * 6);
+  const dist = camera.position.z - z;
+  const vH = 2 * Math.tan((camera.fov * Math.PI / 180) / 2) * dist;
+  const vW = vH * camera.aspect;
+  const sign = Math.random() < 0.5 ? -1 : 1;
+  const ang = -Math.PI / 2 + sign * (0.35 + Math.random() * 0.5);  // mostly downward, tilted
+  M.dx = Math.cos(ang); M.dy = Math.sin(ang);
+  M.hx = (Math.random() - 0.5) * vW * 0.8;
+  M.hy = vH / 2 + 0.6;
+  M.speed = near ? (7 + Math.random() * 3) : (3.4 + Math.random() * 2);
+  M.len = near ? (1.4 + Math.random() * 1.0) : (0.7 + Math.random() * 0.6);
+  M.thick = near ? (0.05 + Math.random() * 0.03) : (0.02 + Math.random() * 0.015);
+  M.peak = near ? (0.85 + Math.random() * 0.15) : (0.32 + Math.random() * 0.22);
+  const r = Math.random();
+  M.mat.color.setHex(r < 0.85 ? 0xF2F6FF : (r < 0.97 ? 0xA9BDD8 : 0x6BC5BD));
+  M.life = (vH + M.len * 2 + 1.2) / (M.speed * Math.max(0.25, Math.abs(M.dy)));
+  M.age = 0;
+  M.active = true;
+  M.mesh.visible = true;
+  M.mesh.position.z = z;
+  M.mesh.rotation.z = ang;
+  M.mesh.scale.set(M.len, M.thick, 1);
+}
+
+function updateShootingStars(dt, skyFade) {
+  if (!meteors.length) return;
+  if (!intro && skyFade > 0.06) {
+    meteorNext -= dt;
+    if (meteorNext <= 0) {
+      const M = meteors.find((m) => !m.active);
+      if (M) spawnMeteor(M);
+      meteorNext = 0.7 + Math.random() * 2.4;
+    }
+  }
+  for (const M of meteors) {
+    if (!M.active) continue;
+    M.age += dt;
+    const f = M.age / M.life;
+    if (f >= 1) { M.active = false; M.mesh.visible = false; continue; }
+    M.hx += M.dx * M.speed * dt;
+    M.hy += M.dy * M.speed * dt;
+    M.mesh.position.x = M.hx - M.dx * M.len * 0.5;   // center trails half a length behind the head
+    M.mesh.position.y = M.hy - M.dy * M.len * 0.5;
+    const env = Math.min(1, f / 0.12) * Math.min(1, (1 - f) / 0.3);  // quick fade in, longer fade out
+    M.mat.opacity = M.peak * Math.max(0, env) * skyFade;
+  }
+}
+
 function initScene() {
   if (!webgl) return;
   renderer.setSize(innerWidth, innerHeight);
@@ -294,6 +394,7 @@ function initScene() {
   camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.1, 100);
   camera.position.set(0, 0, 7);
   buildCosmos();
+  if (!reduceMotion) buildShootingStars();
 
   composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
@@ -393,6 +494,10 @@ function renderFrame() {
   points.rotation.y += (tilt.y * 0.35 - points.rotation.y) * 0.04 + 0.0006;
   points.rotation.x += (tilt.x * 0.30 - points.rotation.x) * 0.04;
   fitMark(p);
+
+  // shooting stars, faded with the hero so they don't streak over content
+  const skyFade = Math.max(0, Math.min(1, 1 - sy / (innerHeight * 1.4)));
+  updateShootingStars(dt, skyFade);
 
   composer.render();
 }
