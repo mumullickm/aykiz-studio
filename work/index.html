@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Work — brands, sites, products, campaigns · Aykiz Intelligence</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="description" content="Selected work by Miraz Mullick: mobile products, websites, brand systems, and marketing campaigns. A marketer who builds the brand, the site, and the product." />
+<meta name="theme-color" content="#02030A" />
+<link rel="icon" type="image/png" href="/assets/favicon.png" />
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://aykizintelligence.com/work/" />
+<meta property="og:title" content="Work — brands, sites, products, campaigns" />
+<meta property="og:description" content="Mobile products, websites, brand systems, and marketing campaigns. Built and shipped solo." />
+<meta property="og:image" content="https://aykizintelligence.com/assets/icon-512.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@600;700&display=swap" />
+<link rel="canonical" href="https://aykizintelligence.com/work/" />
+
+<style>
+  :root{
+    --space:#04060D; --space-3:#0D111C;
+    --moon:#EEF2FA; --moon-soft:#C2CAD9; --moon-mute:#8A92A4;
+    --teal:#6BC5BD; --teal-deep:#2F8C84;
+    --line:rgba(238,242,250,.08); --line-strong:rgba(238,242,250,.18);
+    --f-display:'Space Grotesk',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+    --f-body:'Geist',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+    --f-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+    --ease:cubic-bezier(0.16,1,0.3,1);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:radial-gradient(120% 90% at 50% -10%,#0a1024 0%,#04060f 46%,#02030A 100%);
+    background-attachment:fixed; color:var(--moon);
+    font-family:var(--f-body); line-height:1.6; -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility; overflow-x:hidden;
+  }
+  ::selection{background:var(--teal-deep);color:var(--moon)}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:4px}
+
+  .starfield{
+    position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+    background:
+      radial-gradient(1px 1px at 12% 18%,rgba(220,230,245,.9),transparent),
+      radial-gradient(1px 1px at 28% 72%,rgba(220,230,245,.7),transparent),
+      radial-gradient(1px 1px at 47% 33%,rgba(220,230,245,.85),transparent),
+      radial-gradient(1px 1px at 63% 61%,rgba(220,230,245,.6),transparent),
+      radial-gradient(1px 1px at 78% 24%,rgba(220,230,245,.8),transparent),
+      radial-gradient(1px 1px at 88% 79%,rgba(220,230,245,.7),transparent),
+      radial-gradient(1.4px 1.4px at 71% 12%,rgba(255,255,255,.95),transparent),
+      radial-gradient(1.4px 1.4px at 18% 52%,rgba(255,255,255,.9),transparent);
+    background-repeat:no-repeat;
+  }
+
+  .wrap{width:min(1180px,90vw);margin:0 auto}
+  .content{position:relative;z-index:2}
+
+  header.nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:24px clamp(20px,5vw,56px);
+  }
+  .brandmark{display:inline-flex;flex-direction:column;align-items:flex-end;line-height:1;text-decoration:none}
+  .brandmark .bm-word{font-family:'Manrope',sans-serif;font-weight:700;letter-spacing:-.03em;color:var(--moon)}
+  .brandmark .bm-sub{font-family:'Manrope',sans-serif;font-weight:600;text-transform:uppercase;color:var(--moon-mute);letter-spacing:.14em;padding-left:.14em}
+  .nav .brandmark .bm-word{font-size:21px}
+  .nav .brandmark .bm-sub{font-size:8px;margin-top:4px}
+  .nav .links{display:flex;gap:28px}
+  .nav .links a{font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--moon-soft);text-decoration:none;transition:color .3s var(--ease)}
+  .nav .links a:hover{color:var(--moon)}
+
+  header.hero{padding:clamp(64px,12vh,128px) 0 clamp(40px,7vh,80px)}
+  .hero .eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--teal);margin-bottom:24px}
+  .hero h1{font-family:var(--f-display);font-weight:600;font-size:clamp(40px,8vw,96px);line-height:.99;letter-spacing:-.03em}
+  .hero h1 em{font-style:normal;color:var(--teal)}
+  .hero .lede{max-width:560px;margin-top:26px;font-size:clamp(15px,2vw,18px);color:var(--moon-soft);line-height:1.6}
+
+  section{padding:clamp(56px,9vh,96px) 0;border-top:1px solid var(--line)}
+  .eyebrow-row{display:flex;align-items:center;gap:16px;margin-bottom:38px}
+  .eyebrow-row .num{font-family:var(--f-mono);font-size:11px;color:var(--teal);letter-spacing:.2em}
+  .eyebrow-row .label{font-family:var(--f-mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--moon-mute)}
+  .eyebrow-row .rule{flex:1;height:1px;background:var(--line)}
+
+  /* product cards */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media (max-width:760px){.grid{grid-template-columns:1fr}}
+  .card{
+    position:relative;overflow:hidden;text-decoration:none;color:var(--moon);
+    border:1px solid var(--line);border-radius:16px;padding:28px;
+    background:linear-gradient(180deg,rgba(255,255,255,.022),rgba(255,255,255,0));
+    transition:border-color .4s var(--ease),transform .5s var(--ease);
+    display:flex;flex-direction:column;gap:14px;min-height:180px;isolation:isolate;
+  }
+  .card::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;background:radial-gradient(130% 120% at 50% 0%,var(--glow,var(--teal)) 0%,transparent 58%);transition:opacity .5s var(--ease)}
+  .card:hover{border-color:var(--line-strong);transform:translateY(-3px)}
+  .card:hover::before{opacity:.12}
+  .card .top{display:flex;align-items:center;justify-content:space-between}
+  .card .badge{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:5px 11px;border-radius:999px;border:1px solid var(--line-strong);color:var(--moon-soft)}
+  .card .idx{font-family:var(--f-mono);font-size:11px;color:var(--moon-mute)}
+  .card .appicon{width:48px;height:48px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.45),0 0 0 1px var(--line);background:var(--space-3)}
+  .card h3{font-family:var(--f-display);font-weight:600;font-size:clamp(22px,3vw,28px);line-height:1.05;letter-spacing:-.02em}
+  .card .desc{color:var(--moon-soft);font-size:14px;line-height:1.55}
+  .card .meta-row{display:flex;gap:16px;margin-top:auto;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--moon-mute)}
+
+  /* lighter tiles for sites + brand */
+  .tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media (max-width:760px){.tiles{grid-template-columns:1fr}}
+  .tile{
+    display:block;text-decoration:none;color:var(--moon);
+    border:1px solid var(--line);border-radius:14px;padding:24px;
+    background:rgba(255,255,255,.014);
+    transition:border-color .3s var(--ease),transform .3s var(--ease);
+  }
+  .tile:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+  .tile .th{display:flex;align-items:baseline;justify-content:space-between;gap:14px}
+  .tile h3{font-family:var(--f-display);font-weight:600;font-size:19px;letter-spacing:-.01em}
+  .tile .tag{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);white-space:nowrap}
+  .tile .desc{color:var(--moon-soft);font-size:14px;margin-top:9px;line-height:1.55}
+  .tile .stack{margin-top:14px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--moon-mute)}
+
+  /* campaign list */
+  .camp{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .camp .row{background:var(--space);padding:24px 30px;display:grid;grid-template-columns:1fr auto;gap:6px 20px}
+  .camp .role{font-family:var(--f-display);font-weight:600;font-size:18px;letter-spacing:-.01em}
+  .camp .org{color:var(--teal);font-size:14px;font-family:var(--f-mono);letter-spacing:.04em}
+  .camp .when{font-family:var(--f-mono);font-size:12px;color:var(--moon-mute);text-align:right;white-space:nowrap}
+  .camp .note{grid-column:1/-1;color:var(--moon-soft);font-size:14.5px;margin-top:4px;line-height:1.55;max-width:62ch}
+  @media (max-width:560px){.camp .row{padding:20px 20px}}
+
+  .closer{text-align:center;border-top:1px solid var(--line);padding:clamp(72px,12vh,128px) 0}
+  .closer h2{font-family:var(--f-display);font-weight:600;font-size:clamp(30px,5.5vw,60px);line-height:1.02;letter-spacing:-.03em}
+  .closer h2 em{font-style:normal;color:var(--teal)}
+  .closer .btn{display:inline-flex;align-items:center;gap:12px;margin-top:34px;font-family:var(--f-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--moon);text-decoration:none;padding:16px 30px;border-radius:999px;border:1px solid var(--line-strong);transition:background .4s var(--ease),color .4s var(--ease),border-color .4s var(--ease)}
+  .closer .btn:hover{background:var(--moon);color:var(--space);border-color:var(--moon)}
+
+  footer{border-top:1px solid var(--line);padding:48px 0 60px}
+  .footer-grid{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap}
+  .footer-grid .brandmark .bm-word{font-size:clamp(28px,4.5vw,42px)}
+  .footer-grid .brandmark .bm-sub{font-size:11px;margin-top:7px;letter-spacing:.18em}
+  .footer-meta{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--moon-mute);text-align:right;line-height:2}
+  .footer-meta a{color:var(--moon-soft);text-decoration:none}
+  .footer-meta a:hover{color:var(--teal)}
+
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="starfield"></div>
+
+<div class="content">
+<header class="nav wrap">
+  <a href="/" class="brandmark">
+    <span class="bm-word">aykız</span>
+    <span class="bm-sub">Intelligence</span>
+  </a>
+  <nav class="links">
+    <a href="/">Studio</a>
+    <a href="/founder/">Founder</a>
+    <a href="mailto:hello@aykizintelligence.com">Contact</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Selected work · MMXXVI</div>
+    <h1>Brand, sites, products,<br><em>and the campaigns between.</em></h1>
+    <p class="lede">I'm a marketer who builds. The brand, the site that carries it, the product behind it, and the campaign that moves it. Here is the work, in four parts. Built and shipped solo, or led for the teams I worked with.</p>
+  </header>
+
+  <!-- PRODUCTS -->
+  <section>
+    <div class="eyebrow-row"><span class="num">01</span><span class="label">Products</span><span class="rule"></span></div>
+    <div class="grid">
+      <a class="card" href="https://wasilah.site" target="_blank" rel="noopener" style="--glow:#1F6F5C;">
+        <div class="top"><span class="badge">Live · Android</span><span class="idx">P—01</span></div>
+        <img class="appicon" src="/assets/apps/wasilah.png" alt="Wasilah icon" />
+        <h3>Wasilah</h3>
+        <p class="desc">A complete prayer companion: times, qibla, Quran, hadith. Offline-first. Sadaqah, never monetised.</p>
+        <div class="meta-row"><span>Flutter</span><span>Prayer</span><span>Offline</span></div>
+      </a>
+      <a class="card" href="https://drafy.app" target="_blank" rel="noopener" style="--glow:#FFB347;">
+        <div class="top"><span class="badge">In test</span><span class="idx">P—02</span></div>
+        <img class="appicon" src="/assets/apps/drafy.png" alt="Drafy icon" />
+        <h3>Drafy</h3>
+        <p class="desc">A QR generator that asks for nothing. Eight types, logos, no paywall, no tracking.</p>
+        <div class="meta-row"><span>Flutter</span><span>Utility</span><span>Free</span></div>
+      </a>
+      <a class="card" href="/#work" style="--glow:#3B6EA5;">
+        <div class="top"><span class="badge">In test</span><span class="idx">P—03</span></div>
+        <img class="appicon" src="/assets/apps/crisp.png" alt="Crisp icon" />
+        <h3>Crisp</h3>
+        <p class="desc">A document scanner with no subscription. Scan, clean, mark up, export. Fully offline.</p>
+        <div class="meta-row"><span>Flutter</span><span>Scanner</span><span>Free</span></div>
+      </a>
+      <a class="card" href="/#work" style="--glow:#C9A24B;">
+        <div class="top"><span class="badge">In build</span><span class="idx">P—04</span></div>
+        <img class="appicon" src="/assets/apps/misbah.png" alt="Misbah icon" />
+        <h3>Misbah</h3>
+        <p class="desc">Light in the dark. A one-touch game where oil is sight. Small, calm, hand-made.</p>
+        <div class="meta-row"><span>Game</span><span>2D</span><span>Calm</span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- SITES -->
+  <section>
+    <div class="eyebrow-row"><span class="num">02</span><span class="label">Sites</span><span class="rule"></span></div>
+    <div class="tiles">
+      <a class="tile" href="https://aykizintelligence.com" target="_blank" rel="noopener">
+        <div class="th"><h3>Aykiz Intelligence</h3><span class="tag">Live</span></div>
+        <p class="desc">This site. A WebGL studio universe: live stardust that gathers into the mark, a moon glow, a black-hole cursor. Designed and built from nothing.</p>
+        <div class="stack">three.js · GSAP · GLSL</div>
+      </a>
+      <a class="tile" href="https://mumullickm.github.io/studio" target="_blank" rel="noopener">
+        <div class="th"><h3>Studio dashboard</h3><span class="tag">Live</span></div>
+        <p class="desc">A living multi-brand deck. One data file drives status and a brand library across every project. Installable as an app.</p>
+        <div class="stack">Web · PWA</div>
+      </a>
+      <a class="tile" href="https://wasilah.site" target="_blank" rel="noopener">
+        <div class="th"><h3>wasilah.site</h3><span class="tag">Live</span></div>
+        <p class="desc">The product site for Wasilah. Device-framed screens, a clear story, fast on a phone.</p>
+        <div class="stack">Web · Responsive</div>
+      </a>
+      <a class="tile" href="/#work">
+        <div class="th"><h3>Brand books</h3><span class="tag">Live</span></div>
+        <p class="desc">Hosted, interactive brand systems for Aykiz, Wasilah, and Misbah. The guidelines, made to browse.</p>
+        <div class="stack">Web · Design system</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- BRAND -->
+  <section>
+    <div class="eyebrow-row"><span class="num">03</span><span class="label">Brand &amp; identity</span><span class="rule"></span></div>
+    <div class="tiles">
+      <a class="tile" href="https://aykizintelligence.com" target="_blank" rel="noopener">
+        <div class="th"><h3>Aykiz</h3><span class="tag">System</span></div>
+        <p class="desc">Moon-girl identity. The stardust "Ai" mark, a pure-moonlight palette, and a full token system. Named after my daughter.</p>
+        <div class="stack">Mark · Palette · Tokens</div>
+      </a>
+      <a class="tile" href="https://wasilah.site" target="_blank" rel="noopener">
+        <div class="th"><h3>Wasilah</h3><span class="tag">System</span></div>
+        <p class="desc">A calm, devotional brand: typography, palette, and a voice that stays quiet and warm.</p>
+        <div class="stack">Identity · Type · Voice</div>
+      </a>
+      <a class="tile" href="/#work">
+        <div class="th"><h3>Misbah</h3><span class="tag">System</span></div>
+        <p class="desc">Radiant Star. A warm mark and palette for a game about light in the dark.</p>
+        <div class="stack">Mark · Game brand</div>
+      </a>
+      <a class="tile" href="https://drafy.app" target="_blank" rel="noopener">
+        <div class="th"><h3>Drafy</h3><span class="tag">System</span></div>
+        <p class="desc">A blueprint design system: technical and precise, but friendly. Space Grotesk on graph paper.</p>
+        <div class="stack">Identity · Design system</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- CAMPAIGNS -->
+  <section>
+    <div class="eyebrow-row"><span class="num">04</span><span class="label">Marketing &amp; campaigns</span><span class="rule"></span></div>
+    <div class="camp">
+      <div class="row">
+        <div><div class="role">Brand Manager</div><div class="org">US-Bangla Group</div></div>
+        <div class="when">2021 — 2025</div>
+        <div class="note">Three plus years leading airline brand and digital marketing. Campaigns, brand visibility, Google Ads and Analytics, SEO, and social. Award-winning Triplover guest campaign with Emirates.</div>
+      </div>
+      <div class="row">
+        <div><div class="role">Senior Brand Manager</div><div class="org">Hajee Air</div></div>
+        <div class="when">2025</div>
+        <div class="note">Airline digital marketing and brand communication: campaigns, online presence, and data-driven growth.</div>
+      </div>
+      <div class="row">
+        <div><div class="role">Digital &amp; Brand Communication</div><div class="org">Lifan Motors</div></div>
+        <div class="when">2019 — 2021</div>
+        <div class="note">Automotive brand strategy, digital presence, creative direction, and B2B communication.</div>
+      </div>
+      <div class="row">
+        <div><div class="role">Visualizer · Senior Visualizer</div><div class="org">dentsu international</div></div>
+        <div class="when">2017 — 2019</div>
+        <div class="note">Agency craft: display advertising, creative content, and visual storytelling across digital campaigns.</div>
+      </div>
+      <div class="row">
+        <div><div class="role">Social content engine</div><div class="org">Wasilah</div></div>
+        <div class="when">2026 — now</div>
+        <div class="note">A live bilingual content system for Instagram and Facebook, built and run solo. Daily organic reach for a free app.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<section class="closer wrap">
+  <h2>One person, the whole<br><em>stack of a brand.</em></h2>
+  <a class="btn" href="/founder/">See the person behind it
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
+  </a>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <a class="brandmark" href="/">
+      <span class="bm-word">aykız</span>
+      <span class="bm-sub">Intelligence</span>
+    </a>
+    <div class="footer-meta">
+      <div><a href="mailto:hello@aykizintelligence.com">hello@aykizintelligence.com</a></div>
+      <div><a href="/">Studio</a> · <a href="/founder/">Founder</a></div>
+      <div>Aykiz Intelligence · MMXXVI</div>
+    </div>
+  </div>
+</footer>
+</div>
+
+</body>
+</html>

@@ -26,6 +26,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+a { color: inherit; text-decoration: none; }
 
 body {
   background: var(--space);
@@ -151,17 +152,12 @@ header.nav {
   padding: 24px clamp(20px, 5vw, 56px);
   background: linear-gradient(180deg, rgba(2,3,10,0.72) 0%, rgba(2,3,10,0.3) 62%, transparent 100%);
 }
-.nav .brand {
-  font-family: var(--f-display); font-weight: 600; font-size: 19px;
-  letter-spacing: 0.02em; color: var(--moon); text-decoration: none;
-  display: flex; align-items: center; gap: 8px;
-  text-shadow: 0 1px 12px rgba(2,3,10,0.9);
-}
-.nav .brand .dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--moon);
-  box-shadow: inset -3px -1px 0 0 var(--space), 0 0 10px rgba(238,242,250,0.7);
-}
+/* Aykiz logotype — Manrope, lowercase dotless ı, "Intelligence" tucked under the kız. The moon lives in the Ai mark, not the wordmark. */
+.brandmark { display: inline-flex; flex-direction: column; align-items: flex-end; line-height: 1; text-decoration: none; }
+.brandmark .bm-word { font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700; letter-spacing: -0.03em; color: var(--moon); }
+.brandmark .bm-sub { font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 600; text-transform: uppercase; color: var(--moon-mute); letter-spacing: 0.14em; padding-left: 0.14em; }
+.nav .brandmark .bm-word { font-size: 21px; text-shadow: 0 1px 12px rgba(2,3,10,0.9); }
+.nav .brandmark .bm-sub { font-size: 8px; margin-top: 4px; }
 .nav .links { display: flex; gap: 30px; }
 .nav .links a {
   font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.18em;
@@ -292,6 +288,15 @@ section { position: relative; padding: clamp(96px, 16vh, 220px) 0; }
 }
 .work-card:hover .arrow { opacity: 1; transform: translate(0,0); }
 
+.work-more {
+  display: inline-flex; align-items: center; gap: 10px; margin-top: 36px;
+  font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--moon-soft); text-decoration: none;
+  border-bottom: 1px solid var(--line-strong); padding-bottom: 7px;
+  transition: color .3s var(--ease), border-color .3s var(--ease);
+}
+.work-more:hover { color: var(--moon); border-color: var(--moon); }
+
 /* Principles */
 .principles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
 @media (max-width: 760px) { .principles-grid { grid-template-columns: 1fr; } }
@@ -333,15 +338,22 @@ section { position: relative; padding: clamp(96px, 16vh, 220px) 0; }
   transition: background .4s var(--ease), color .4s var(--ease), border-color .4s var(--ease);
 }
 .closer .btn:hover { background: var(--moon); color: var(--space); border-color: var(--moon); }
+.closer .closer-contact { margin-top: 30px; font-size: 14px; color: var(--moon-mute); }
+.closer .closer-contact a { color: var(--moon-soft); border-bottom: 1px solid var(--line-strong); padding-bottom: 2px; transition: color .3s var(--ease), border-color .3s var(--ease); }
+.closer .closer-contact a:hover { color: var(--teal); border-color: var(--teal); }
 
 /* Footer */
 footer { border-top: 1px solid var(--line); padding: 54px 0 40px; position: relative; z-index: 2; }
 .footer-grid { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
-.footer-grid .big { font-family: var(--f-display); font-weight: 600; font-size: clamp(26px, 5vw, 50px); letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
-.footer-grid .big .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--moon); box-shadow: inset -3px -1px 0 0 var(--space), 0 0 10px rgba(238,242,250,0.7); }
+.footer-grid .brandmark .bm-word { font-size: clamp(30px, 5vw, 46px); }
+.footer-grid .brandmark .bm-sub { font-size: 12px; margin-top: 8px; letter-spacing: 0.18em; }
 .footer-meta { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--moon-mute); text-align: right; line-height: 2; }
 .footer-meta a { color: var(--moon-soft); text-decoration: none; }
 .footer-meta a:hover { color: var(--teal); }
+.footer-social { display: flex; gap: 18px; justify-content: flex-end; margin-bottom: 12px; }
+.footer-social a { color: var(--moon-soft); display: inline-flex; transition: color .3s var(--ease); }
+.footer-social a:hover { color: var(--teal); }
+.footer-social svg { width: 18px; height: 18px; display: block; }
 
 /* respect reduced motion: still the ambient animation, keep content readable */
 @media (prefers-reduced-motion: reduce) {
