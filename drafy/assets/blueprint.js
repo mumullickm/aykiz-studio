@@ -30,10 +30,8 @@
   uniform float uTime;
   uniform float uReduce;
 
-  const vec3 BG1   = vec3(0.031, 0.118, 0.227);
-  const vec3 BG2   = vec3(0.055, 0.165, 0.290);
-  const vec3 INK   = vec3(0.918, 0.945, 0.984);
-  const vec3 AMBER = vec3(1.000, 0.702, 0.278);
+  const vec3 PAPER  = vec3(0.984, 0.965, 0.937); // #FBF6EF
+  const vec3 INDIGO = vec3(0.200, 0.251, 0.561); // #33408F
 
   const float CELL  = 40.0;  // px per fine cell -> square cells, fixed
   const float MAJOR = 5.0;   // every 5th line is a major line
@@ -65,10 +63,9 @@
 
   void main(){
     vec2 fc = gl_FragCoord.xy;
-    vec2 uv = fc / uRes.xy;
 
-    // static paper gradient (no motion)
-    vec3 col = mix(BG1, BG2, smoothstep(-0.15, 1.1, uv.y));
+    // flat warm paper, no motion
+    vec3 col = PAPER;
 
     // grid coordinates in cell units (square, fixed)
     vec2 g = fc / CELL;
@@ -77,9 +74,9 @@
     float vMaj  = lineMask(g.x / MAJOR, CELL * MAJOR);
     float hMaj  = lineMask(g.y / MAJOR, CELL * MAJOR);
 
-    // static base grid (the blueprint itself - visible, calm)
-    col += INK * (vFine + hFine) * 0.11;
-    col += INK * (vMaj + hMaj) * 0.17;
+    // static base grid: faint indigo lines drawn into the paper
+    float gridA = (vFine + hFine) * 0.10 + (vMaj + hMaj) * 0.16;
+    col = mix(col, INDIGO, clamp(gridA, 0.0, 1.0));
 
     if (uReduce < 0.5) {
       float dwell = 0.12, fade = 0.5;
@@ -95,7 +92,8 @@
         float ny = uRes.y / CELL;
         float L0 = floor(h11(cyc + 1.3) * max(1.0, ny - countH));
         float li = floor(g.y + 0.5);
-        col += INK * cascade(li, L0, countH, ltH, dwell, fade) * hFine * 1.15;
+        // line lights up = lines deepen toward indigo. Beam glow kept gentle (~half).
+        col = mix(col, INDIGO, clamp(cascade(li, L0, countH, ltH, dwell, fade) * hFine * 0.40, 0.0, 1.0));
       }
 
       // vertical run: same idea a couple of seconds later, left to right
@@ -106,13 +104,9 @@
         float nx = uRes.x / CELL;
         float C0 = floor(h11(cyc + 7.7) * max(1.0, nx - countV));
         float ci = floor(g.x + 0.5);
-        col += INK * cascade(ci, C0, countV, ltV, dwell, fade) * vFine * 1.15;
+        col = mix(col, INDIGO, clamp(cascade(ci, C0, countV, ltV, dwell, fade) * vFine * 0.40, 0.0, 1.0));
       }
     }
-
-    // static vignette for a touch of depth (no animated grain)
-    float vig = smoothstep(1.3, 0.4, distance(uv, vec2(0.5)));
-    col *= mix(0.82, 1.0, vig);
 
     frag = vec4(col, 1.0);
   }`;
