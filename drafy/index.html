@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Drafy - free QR codes, in your browser</title>
+  <meta name="description" content="Drafy is a free QR code generator that runs entirely in your browser. No account, no servers, no expiry, no tricks. Style it, then save a PNG or SVG. Made by Aykiz Intelligence." />
+  <link rel="canonical" href="https://aykizintelligence.com/drafy/" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+  <meta name="theme-color" content="#0E2A4A" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Drafy - free QR codes, in your browser" />
+  <meta property="og:description" content="A free QR generator that runs entirely in your browser. No account, no servers, no expiry, no tricks." />
+  <meta property="og:url" content="https://aykizintelligence.com/drafy/" />
+  <meta name="twitter:card" content="summary" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/drafy.css" />
+</head>
+<body>
+  <canvas id="bp" aria-hidden="true"></canvas>
+
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">
+        <svg class="mk" viewBox="0 0 24 24" aria-hidden="true">
+          <rect width="24" height="24" rx="5" fill="#0E2A4A" />
+          <g fill="none" stroke="#FFB347" stroke-width="1.6" stroke-linecap="square">
+            <path d="M3 8 V3 H8" /><path d="M16 3 H21 V8" />
+            <path d="M3 16 V21 H8" /><path d="M16 21 H21 V16" />
+          </g>
+          <rect x="7" y="7" width="10" height="10" rx="2" fill="#EAF1FB" />
+          <rect x="9" y="9" width="6" height="6" rx="1" fill="#0E2A4A" />
+          <rect x="10.4" y="10.4" width="3.2" height="3.2" rx="0.6" fill="#EAF1FB" />
+        </svg>
+        <span class="wm">Draf<b>y</b></span>
+      </div>
+      <span class="badge">MK-01 · web build</span>
+    </header>
+
+    <section class="hero">
+      <p class="ey">QR generator · drafting room</p>
+      <h1>Draft a QR code that never expires.</h1>
+      <p>Type it, style it, save it. Drafy runs entirely in this tab. No account, no servers, nothing leaves your phone. The data lives in the image, so the code works forever.</p>
+      <div class="free">
+        <span><b>Free.</b> Forever.</span>
+        <span>No account</span>
+        <span>No servers</span>
+        <span>No expiry</span>
+        <span>No tricks</span>
+      </div>
+      <div class="getapp">
+        <span class="storebtn soon" role="button" aria-disabled="true" title="iOS coming soon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.05 12.04c-.03-2.85 2.33-4.22 2.44-4.28-1.33-1.95-3.4-2.21-4.13-2.24-1.76-.18-3.43 1.04-4.32 1.04-.89 0-2.26-1.01-3.72-.98-1.91.03-3.68 1.11-4.66 2.82-1.99 3.45-.51 8.56 1.42 11.36.94 1.37 2.06 2.91 3.53 2.86 1.42-.06 1.96-.92 3.67-.92 1.71 0 2.2.92 3.7.89 1.53-.03 2.5-1.4 3.43-2.78 1.08-1.59 1.53-3.13 1.55-3.21-.03-.01-2.97-1.14-3-4.53zM14.28 4.5c.79-.96 1.32-2.29 1.18-3.62-1.14.05-2.52.76-3.33 1.72-.73.85-1.37 2.21-1.2 3.51 1.27.1 2.57-.65 3.35-1.61z"/></svg>
+          <span class="t"><small>Download on the</small><b>App Store</b></span>
+          <span class="soontag">Soon</span>
+        </span>
+        <a class="storebtn" href="https://play.google.com/store/apps/details?id=com.mumullickm.drafy">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          <span class="t"><small>Get it on</small><b>Google Play</b></span>
+        </a>
+      </div>
+    </section>
+
+    <main class="sheet">
+      <span class="cm1"></span><span class="cm2"></span>
+
+      <div class="controls">
+        <!-- type -->
+        <div class="section">
+          <span class="lbl">01 · Payload</span>
+          <div class="types">
+            <button class="typechip on" data-type="link">Link</button>
+            <button class="typechip" data-type="text">Text</button>
+            <button class="typechip" data-type="wifi">Wi-Fi</button>
+            <button class="typechip" data-type="email">Email</button>
+            <button class="typechip" data-type="sms">SMS</button>
+            <button class="typechip" data-type="phone">Phone</button>
+            <button class="typechip" data-type="geo">Geo</button>
+            <button class="typechip" data-type="vcard">Card</button>
+          </div>
+        </div>
+
+        <!-- fields -->
+        <div class="section">
+          <div class="fields" data-type="link">
+            <div class="f full"><label>URL</label><input type="url" data-field="url" placeholder="https://example.com" /></div>
+          </div>
+
+          <div class="fields" data-type="text" hidden>
+            <div class="f full"><label>Text</label><textarea data-field="text" placeholder="Any text you like"></textarea></div>
+          </div>
+
+          <div class="fields" data-type="wifi" hidden>
+            <div class="f full"><label>Network name (SSID)</label><input type="text" data-field="ssid" placeholder="MyNetwork" /></div>
+            <div class="row">
+              <div class="f"><label>Password</label><input type="text" data-field="pass" placeholder="password" /></div>
+              <div class="f"><label>Security</label>
+                <select data-field="auth"><option value="WPA">WPA / WPA2</option><option value="WEP">WEP</option><option value="nopass">None</option></select>
+              </div>
+            </div>
+            <label class="check"><input type="checkbox" data-field="hidden" /> Hidden network</label>
+          </div>
+
+          <div class="fields" data-type="email" hidden>
+            <div class="f full"><label>To</label><input type="email" data-field="to" placeholder="name@example.com" /></div>
+            <div class="f full"><label>Subject</label><input type="text" data-field="subject" placeholder="Optional" /></div>
+            <div class="f full"><label>Body</label><textarea data-field="body" placeholder="Optional"></textarea></div>
+          </div>
+
+          <div class="fields" data-type="sms" hidden>
+            <div class="f full"><label>Number</label><input type="tel" data-field="number" placeholder="+880..." /></div>
+            <div class="f full"><label>Message</label><textarea data-field="message" placeholder="Optional"></textarea></div>
+          </div>
+
+          <div class="fields" data-type="phone" hidden>
+            <div class="f full"><label>Number</label><input type="tel" data-field="number" placeholder="+880..." /></div>
+          </div>
+
+          <div class="fields" data-type="geo" hidden>
+            <div class="row">
+              <div class="f"><label>Latitude</label><input type="text" data-field="lat" placeholder="23.8103" /></div>
+              <div class="f"><label>Longitude</label><input type="text" data-field="lng" placeholder="90.4125" /></div>
+            </div>
+          </div>
+
+          <div class="fields" data-type="vcard" hidden>
+            <div class="row">
+              <div class="f"><label>First name</label><input type="text" data-field="first" placeholder="Miraz" /></div>
+              <div class="f"><label>Last name</label><input type="text" data-field="last" placeholder="Mullick" /></div>
+            </div>
+            <div class="row">
+              <div class="f"><label>Organisation</label><input type="text" data-field="org" placeholder="Aykiz Intelligence" /></div>
+              <div class="f"><label>Title</label><input type="text" data-field="title" placeholder="Founder" /></div>
+            </div>
+            <div class="row">
+              <div class="f"><label>Phone</label><input type="tel" data-field="phone" placeholder="+880..." /></div>
+              <div class="f"><label>Email</label><input type="email" data-field="email" placeholder="name@example.com" /></div>
+            </div>
+            <div class="f full"><label>Website</label><input type="url" data-field="web" placeholder="https://..." /></div>
+          </div>
+        </div>
+
+        <!-- colours -->
+        <div class="section">
+          <span class="lbl">02 · Colour</span>
+          <div class="colors">
+            <label class="colorpick"><input type="color" id="fg" /><span>Code</span></label>
+            <label class="colorpick"><input type="color" id="bg" /><span>Sheet</span></label>
+          </div>
+          <div id="presets"></div>
+        </div>
+
+        <!-- style -->
+        <div class="section">
+          <span class="lbl">03 · Style</span>
+          <div class="segrow">
+            <div class="g">
+              <span class="lbl" style="margin:0">Cells</span>
+              <div class="seg" data-key="cell">
+                <button class="on" data-val="square">Square</button>
+                <button data-val="round">Round</button>
+              </div>
+            </div>
+            <div class="g">
+              <span class="lbl" style="margin:0">Eyes</span>
+              <div class="seg" data-key="eye">
+                <button class="on" data-val="square">Square</button>
+                <button data-val="round">Round</button>
+              </div>
+            </div>
+            <div class="g">
+              <span class="lbl" style="margin:0">Error correction</span>
+              <div class="seg" data-key="ecc">
+                <button data-val="L">L</button>
+                <button class="on" data-val="M">M</button>
+                <button data-val="Q">Q</button>
+                <button data-val="H">H</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- logo -->
+        <div class="section">
+          <span class="lbl">04 · Centre logo (optional)</span>
+          <div class="logorow">
+            <label class="filebtn" for="logo">Choose image</label>
+            <input type="file" id="logo" accept="image/*" />
+            <button id="logoclear" hidden>Remove</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- preview -->
+      <div class="preview">
+        <span class="lbl">Output <span class="count">[<span id="count">--</span>]</span></span>
+        <div class="stagewrap">
+          <div id="stage"><div class="empty">Fill a field to draft a code.</div></div>
+        </div>
+        <div id="contrast" hidden>LOW CONTRAST · MAY NOT SCAN</div>
+        <div id="meta">awaiting input</div>
+        <div class="export">
+          <button id="dl-png">Save PNG</button>
+          <button id="dl-svg">Save SVG</button>
+        </div>
+      </div>
+    </main>
+
+    <div class="trust">
+      <span><b>On-device.</b> The QR is built in this tab.</span>
+      <span><b>No upload.</b> Logos never leave your phone.</span>
+      <span><b>Static.</b> The data is in the image, so it can't expire.</span>
+    </div>
+
+    <footer class="titleblock">
+      <div class="cell"><span class="k">Project</span><span class="v">Drafy</span></div>
+      <div class="cell"><span class="k">Drawing</span><span class="v">MK-01 · Web</span></div>
+      <div class="cell"><span class="k">By</span><span class="v"><a href="https://aykizintelligence.com/">Aykiz Intelligence</a></span></div>
+      <div class="cell"><span class="k">Get the app</span><span class="v"><a href="https://play.google.com/store/apps/details?id=com.mumullickm.drafy">Google Play</a> · App Store soon</span></div>
+    </footer>
+  </div>
+
+  <script src="assets/qrcode.js"></script>
+  <script src="assets/drafy.js"></script>
+  <script src="assets/blueprint.js"></script>
+</body>
+</html>
