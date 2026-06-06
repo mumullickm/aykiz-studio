@@ -15,6 +15,15 @@
 
 * { box-sizing: border-box; }
 
+/* custom pixel cursor (PNG first for Safari, SVG fallback). tip = hotspot 0 0 */
+html, body, a, button, label,
+.typechip, .seg button, .swatch, .storebtn, .filebtn,
+input[type=color], input[type=file] {
+  cursor: url("cursor.png") 0 0, url("cursor.svg") 0 0, auto;
+}
+input[type=text], input[type=url], input[type=tel], input[type=email],
+input[type=number], textarea { cursor: text; }
+
 html, body {
   margin: 0;
   background: var(--navy2);

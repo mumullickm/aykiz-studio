@@ -1,6 +1,7 @@
-// Blueprint background. A living drafting-table grid rendered in WebGL2:
-// receding grid, drifting major lines, amber survey nodes, a slow scan sweep,
-// faint ghost finder-eyes, vignette and a touch of grain. Pointer parallax.
+// Blueprint background. ONE static blueprint grid that never moves. The only
+// motion: every so often a run of 7-10 individual grid lines lights up thin and
+// white, one line at a time in sequence - once across the horizontals, once down
+// the verticals - then it goes quiet again. Nothing else animates.
 (function () {
   const canvas = document.getElementById('bp');
   if (!canvas) return;
@@ -8,11 +9,10 @@
   const gl = canvas.getContext('webgl2', {
     antialias: true,
     alpha: false,
-    preserveDrawingBuffer: true, // lets the page be screenshotted; cheap at one quad
+    preserveDrawingBuffer: true,
     powerPreference: 'high-performance',
   });
 
-  // No WebGL2 (very old device): fall back to the static CSS blueprint underneath.
   if (!gl) {
     canvas.style.display = 'none';
     document.documentElement.classList.add('no-webgl');
@@ -28,92 +28,91 @@
   out vec4 frag;
   uniform vec2  uRes;
   uniform float uTime;
-  uniform vec2  uMouse;
   uniform float uReduce;
 
-  const vec3 BG1   = vec3(0.031, 0.118, 0.227); // deep blueprint
-  const vec3 BG2   = vec3(0.055, 0.165, 0.290); // #0E2A4A
-  const vec3 INK   = vec3(0.918, 0.945, 0.984); // #EAF1FB
-  const vec3 AMBER = vec3(1.000, 0.702, 0.278); // #FFB347
+  const vec3 BG1   = vec3(0.031, 0.118, 0.227);
+  const vec3 BG2   = vec3(0.055, 0.165, 0.290);
+  const vec3 INK   = vec3(0.918, 0.945, 0.984);
+  const vec3 AMBER = vec3(1.000, 0.702, 0.278);
 
-  // anti-aliased grid: returns line intensity for a given cell scale
-  float gridMask(vec2 uv, float cells, float weight){
-    vec2 g = uv * cells;
-    vec2 d = abs(fract(g) - 0.5);
-    vec2 w = fwidth(g) * weight;
-    vec2 lines = smoothstep(w, vec2(0.0), d);
-    return clamp(max(lines.x, lines.y), 0.0, 1.0);
+  const float CELL  = 40.0;  // px per fine cell -> square cells, fixed
+  const float MAJOR = 5.0;   // every 5th line is a major line
+  const float LW    = 1.1;   // line half-width in px
+
+  // distance (px) to the nearest grid line on one axis
+  float lineDistPx(float t, float cellPx){
+    float fr = fract(t);
+    float dCells = min(fr, 1.0 - fr); // 0 at a line, 0.5 mid-cell
+    return dCells * cellPx;
+  }
+  float lineMask(float t, float cellPx){
+    return 1.0 - smoothstep(0.0, LW, lineDistPx(t, cellPx));
   }
 
-  // concentric square ring (a ghosted QR finder-eye)
-  float finderEye(vec2 uv, vec2 c, float s){
-    vec2 q = abs(uv - c) / s;
-    float box = max(q.x, q.y);
-    float ring1 = smoothstep(0.03, 0.0, abs(box - 1.0));
-    float ring2 = smoothstep(0.03, 0.0, abs(box - 0.62));
-    float core  = smoothstep(0.30, 0.27, box);
-    return ring1 + ring2 + core;
-  }
+  float h11(float n){ return fract(sin(n * 12.9898) * 43758.5453); }
 
-  float hash(vec2 p){ return fract(sin(dot(p, vec2(41.3, 289.1))) * 43758.5453); }
+  // brightness for line li during a sequential run of count lines starting at
+  // startIdx. Each line gets a sharp attack then a short fade, stepped by dwell,
+  // so the lines read as lighting up one at a time.
+  float cascade(float li, float startIdx, float count, float lt, float dwell, float fade){
+    if (li < startIdx || li >= startIdx + count) return 0.0;
+    float age = lt - (li - startIdx) * dwell;
+    if (age < 0.0) return 0.0;
+    float atk = smoothstep(0.0, 0.035, age);
+    float dec = 1.0 - smoothstep(0.0, fade, age);
+    return atk * dec;
+  }
 
   void main(){
-    vec2 uv = gl_FragCoord.xy / uRes.xy;
-    float aspect = uRes.x / uRes.y;
-    vec2 sp = uv;
-    sp.x *= aspect;
+    vec2 fc = gl_FragCoord.xy;
+    vec2 uv = fc / uRes.xy;
 
-    // pointer + slow auto drift -> the table breathes
-    vec2 par = (uMouse - 0.5) * vec2(0.06, 0.045) * (1.0 - uReduce);
-    vec2 drift = vec2(uTime * 0.006, uTime * 0.010) * (1.0 - uReduce);
-    vec2 guv = sp + par + drift;
+    // static paper gradient (no motion)
+    vec3 col = mix(BG1, BG2, smoothstep(-0.15, 1.1, uv.y));
 
-    // gentle perspective: cells widen toward the bottom (a draft table receding)
-    float depth = mix(1.18, 0.86, uv.y);
-    guv *= depth;
+    // grid coordinates in cell units (square, fixed)
+    vec2 g = fc / CELL;
+    float vFine = lineMask(g.x, CELL);          // vertical lines (constant x)
+    float hFine = lineMask(g.y, CELL);          // horizontal lines (constant y)
+    float vMaj  = lineMask(g.x / MAJOR, CELL * MAJOR);
+    float hMaj  = lineMask(g.y / MAJOR, CELL * MAJOR);
 
-    // base paper gradient with a soft top glow
-    float vgrad = smoothstep(-0.2, 1.15, uv.y);
-    vec3 col = mix(BG1, BG2, vgrad);
-    col += AMBER * 0.020 * smoothstep(0.75, 0.0, distance(uv, vec2(0.5, 1.05)));
+    // static base grid (the blueprint itself - visible, calm)
+    col += INK * (vFine + hFine) * 0.11;
+    col += INK * (vMaj + hMaj) * 0.17;
 
-    // fine + major grid
-    float fine  = gridMask(guv, 26.0, 1.0) * 0.10;
-    float major = gridMask(guv, 26.0 / 5.0, 1.2) * 0.18;
-    float gridFade = mix(0.55, 1.0, smoothstep(0.0, 0.7, uv.y)); // dimmer up top
-    col += INK * (fine + major) * gridFade;
+    if (uReduce < 0.5) {
+      float dwell = 0.12, fade = 0.5;
+      float T = 13.0;                 // long period: mostly quiet, lights "sometimes"
+      float ph = mod(uTime, T);
+      float cyc = floor(uTime / T);
 
-    // survey nodes: amber pulses parked on the major lattice
-    vec2 cell = guv * (26.0 / 5.0);
-    vec2 id = floor(cell);
-    vec2 f  = fract(cell) - 0.5;
-    float lit = step(0.86, hash(id));                 // only a few cells glow
-    float ph  = hash(id + 7.0) * 6.2831;
-    float pulse = 0.5 + 0.5 * sin(uTime * 1.2 + ph);
-    float node = smoothstep(0.16, 0.0, length(f)) * lit * (0.25 + 0.75 * pulse);
-    col += AMBER * node * 0.9;
+      // horizontal run: 7-10 lines light one at a time, top to bottom
+      float countH = 7.0 + floor(h11(cyc) * 4.0);
+      float winH = countH * dwell + fade;
+      float ltH = ph - 1.0;
+      if (ltH >= 0.0 && ltH < winH) {
+        float ny = uRes.y / CELL;
+        float L0 = floor(h11(cyc + 1.3) * max(1.0, ny - countH));
+        float li = floor(g.y + 0.5);
+        col += INK * cascade(li, L0, countH, ltH, dwell, fade) * hFine * 1.15;
+      }
 
-    // ghost finder-eyes drifting behind everything
-    float ghosts = 0.0;
-    ghosts += finderEye(guv, vec2(0.6 * aspect, 0.30) + drift * 1.4, 0.16);
-    ghosts += finderEye(guv, vec2(0.18 * aspect, 0.78) - drift * 1.1, 0.12);
-    col += INK * ghosts * 0.018;
+      // vertical run: same idea a couple of seconds later, left to right
+      float countV = 7.0 + floor(h11(cyc + 5.0) * 4.0);
+      float winV = countV * dwell + fade;
+      float ltV = ph - (2.0 + winH);
+      if (ltV >= 0.0 && ltV < winV) {
+        float nx = uRes.x / CELL;
+        float C0 = floor(h11(cyc + 7.7) * max(1.0, nx - countV));
+        float ci = floor(g.x + 0.5);
+        col += INK * cascade(ci, C0, countV, ltV, dwell, fade) * vFine * 1.15;
+      }
+    }
 
-    // slow scan sweep
-    float scan = smoothstep(0.02, 0.0, abs(fract(uv.y * 0.5 - uTime * 0.05) - 0.5) - 0.005);
-    col += AMBER * scan * 0.05 * (1.0 - uReduce);
-
-    // crosshair tick at the pointer (a draftsman's cursor)
-    vec2 m = vec2(uMouse.x * aspect, uMouse.y);
-    float cd = distance(sp, m);
-    float cross = smoothstep(0.004, 0.0, abs(sp.x - m.x) ) + smoothstep(0.004, 0.0, abs(sp.y - m.y));
-    cross *= smoothstep(0.12, 0.0, cd);
-    col += AMBER * cross * 0.18 * (1.0 - uReduce);
-
-    // vignette + faint grain
-    float vig = smoothstep(1.25, 0.35, distance(uv, vec2(0.5)));
-    col *= mix(0.78, 1.0, vig);
-    col += (hash(gl_FragCoord.xy + uTime) - 0.5) * 0.015;
+    // static vignette for a touch of depth (no animated grain)
+    float vig = smoothstep(1.3, 0.4, distance(uv, vec2(0.5)));
+    col *= mix(0.82, 1.0, vig);
 
     frag = vec4(col, 1.0);
   }`;
@@ -122,9 +121,7 @@
     const s = gl.createShader(type);
     gl.shaderSource(s, src);
     gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-      console.error(gl.getShaderInfoLog(s));
-    }
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s));
     return s;
   }
 
@@ -143,21 +140,11 @@
 
   const uRes = gl.getUniformLocation(prog, 'uRes');
   const uTime = gl.getUniformLocation(prog, 'uTime');
-  const uMouse = gl.getUniformLocation(prog, 'uMouse');
   const uReduce = gl.getUniformLocation(prog, 'uReduce');
+  gl.uniform1f(uReduce, matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0);
 
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0;
-  gl.uniform1f(uReduce, reduce);
-
-  const mouse = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5 };
-  addEventListener('pointermove', (e) => {
-    mouse.tx = e.clientX / innerWidth;
-    mouse.ty = 1 - e.clientY / innerHeight;
-  }, { passive: true });
-
-  let dpr = Math.min(devicePixelRatio || 1, 2);
   function resize() {
-    dpr = Math.min(devicePixelRatio || 1, 2);
+    const dpr = Math.min(devicePixelRatio || 1, 2);
     canvas.width = Math.floor(innerWidth * dpr);
     canvas.height = Math.floor(innerHeight * dpr);
     canvas.style.width = innerWidth + 'px';
@@ -177,10 +164,7 @@
 
   function frame(now) {
     if (!running) return;
-    mouse.x += (mouse.tx - mouse.x) * 0.06;
-    mouse.y += (mouse.ty - mouse.y) * 0.06;
     gl.uniform1f(uTime, (now - start) / 1000);
-    gl.uniform2f(uMouse, mouse.x, mouse.y);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     requestAnimationFrame(frame);
   }
