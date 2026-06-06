@@ -22,6 +22,63 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;700&family=VT323&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/drafy.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://aykizintelligence.com/drafy/#app",
+        "name": "Drafy",
+        "url": "https://aykizintelligence.com/drafy/",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires a modern web browser. Works offline after load.",
+        "description": "A free QR code generator that runs entirely in the browser. No account, no servers, no expiry, no tricks. Build a code for a link, text, Wi-Fi, email, SMS, phone, location, or contact card, style it, then save a PNG or SVG.",
+        "image": "https://aykizintelligence.com/drafy/assets/icon.png",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": [
+          "QR codes for link, text, Wi-Fi, email, SMS, phone, geo, vCard",
+          "Custom colours, cell and eye shapes, error correction",
+          "Centre logo embed",
+          "Export as PNG or SVG",
+          "Runs entirely on-device, no account or upload"
+        ],
+        "publisher": { "@id": "https://aykizintelligence.com/#organization" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Aykiz Intelligence", "item": "https://aykizintelligence.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Drafy", "item": "https://aykizintelligence.com/drafy/" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is Drafy free?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Drafy is completely free, with no account, no ads, and nothing locked behind a paywall." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do the QR codes expire?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Drafy makes static QR codes. The data lives in the image itself, so the code keeps working forever and never depends on a server." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does my data leave my device?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. The QR code is built entirely in your browser tab. Nothing you type, and no logo you add, is uploaded anywhere." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <canvas id="bp" aria-hidden="true"></canvas>
