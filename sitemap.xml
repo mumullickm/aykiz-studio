@@ -23,4 +23,16 @@
       <image:title>Drafy - free QR code generator</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://aykizintelligence.com/drafy/support.html</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aykizintelligence.com/drafy/privacy.html</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
 </urlset>
