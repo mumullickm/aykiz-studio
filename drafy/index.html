@@ -3,20 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Drafy - free QR codes, in your browser</title>
-  <meta name="description" content="Drafy is a free QR code generator that runs entirely in your browser. No account, no servers, no expiry, no tricks. Style it, then save a PNG or SVG. Made by Aykiz Intelligence." />
+  <title>Drafy - Free QR Code Generator (No Account, No Expiry)</title>
+  <meta name="description" content="Drafy is a free QR code generator that runs entirely in your browser. Make QR codes for a link, text, Wi-Fi, email, phone, location or contact card, then save a PNG or SVG. No account, no servers, no expiry, no tricks." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://aykizintelligence.com/drafy/" />
   <link rel="icon" type="image/png" href="assets/icon.png" />
   <link rel="apple-touch-icon" href="assets/icon.png" />
   <meta name="theme-color" content="#0E2A4A" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Drafy - free QR codes, in your browser" />
+  <meta property="og:site_name" content="Aykiz Intelligence" />
+  <meta property="og:title" content="Drafy - Free QR Code Generator" />
   <meta property="og:description" content="A free QR generator that runs entirely in your browser. No account, no servers, no expiry, no tricks." />
   <meta property="og:url" content="https://aykizintelligence.com/drafy/" />
-  <meta property="og:image" content="https://aykizintelligence.com/drafy/assets/icon.png" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:image" content="https://aykizintelligence.com/drafy/assets/icon.png" />
+  <meta property="og:image" content="https://aykizintelligence.com/drafy/assets/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Drafy - free QR code generator that never expires" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Drafy - Free QR Code Generator" />
+  <meta name="twitter:description" content="A free QR generator that runs entirely in your browser. No account, no servers, no expiry, no tricks." />
+  <meta name="twitter:image" content="https://aykizintelligence.com/drafy/assets/og.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,6 +44,7 @@
         "browserRequirements": "Requires a modern web browser. Works offline after load.",
         "description": "A free QR code generator that runs entirely in the browser. No account, no servers, no expiry, no tricks. Build a code for a link, text, Wi-Fi, email, SMS, phone, location, or contact card, style it, then save a PNG or SVG.",
         "image": "https://aykizintelligence.com/drafy/assets/icon.png",
+        "screenshot": "https://aykizintelligence.com/drafy/assets/og.png",
         "inLanguage": "en",
         "isAccessibleForFree": true,
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
@@ -73,6 +81,16 @@
             "@type": "Question",
             "name": "Does my data leave my device?",
             "acceptedAnswer": { "@type": "Answer", "text": "No. The QR code is built entirely in your browser tab. Nothing you type, and no logo you add, is uploaded anywhere." }
+          },
+          {
+            "@type": "Question",
+            "name": "What can I make a QR code for?",
+            "acceptedAnswer": { "@type": "Answer", "text": "A link, plain text, Wi-Fi login, email, SMS, phone number, a map location, or a contact card (vCard). Each type is encoded correctly so it scans the way you expect." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I download the QR code as an image?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Save it as a PNG or a vector SVG. You can also set the colours, cell and eye shapes, error correction level, and drop a logo in the centre." }
           }
         ]
       }
@@ -86,7 +104,7 @@
   <div class="wrap">
     <header class="top">
       <div class="brand">
-        <img class="mk" src="assets/icon.png" width="38" height="38" alt="Drafy" style="border-radius:8px" />
+        <img class="mk" src="assets/icon.png" width="38" height="38" alt="Drafy" decoding="async" style="border-radius:8px" />
         <span class="wm">Draf<b>y</b></span>
       </div>
       <span class="badge">web build</span>
@@ -265,6 +283,34 @@
       <span><b>No upload.</b> Logos never leave your device.</span>
       <span><b>Static.</b> The data is in the image, so it can't expire.</span>
     </div>
+
+    <section class="about">
+      <h2>A free QR code generator that asks for nothing</h2>
+      <p>Drafy is a free, offline-friendly QR code generator. It runs entirely in your browser, so there is no account to make, no server to trust, and nothing to upload. The codes it makes are <strong>static</strong>, which means the data lives inside the image itself. They do not route through a tracking link and they never expire, so the QR code you save today still works years from now.</p>
+
+      <div class="faq">
+        <div class="qa">
+          <h3>Is Drafy free?</h3>
+          <p>Yes. Drafy is completely free, with no account, no ads, and nothing locked behind a paywall.</p>
+        </div>
+        <div class="qa">
+          <h3>Do the QR codes expire?</h3>
+          <p>No. Drafy makes static QR codes. The data lives in the image itself, so the code keeps working forever and never depends on a server.</p>
+        </div>
+        <div class="qa">
+          <h3>Does my data leave my device?</h3>
+          <p>No. The QR code is built entirely in your browser tab. Nothing you type, and no logo you add, is uploaded anywhere.</p>
+        </div>
+        <div class="qa">
+          <h3>What can I make a QR code for?</h3>
+          <p>A link, plain text, Wi-Fi login, email, SMS, phone number, a map location, or a contact card (vCard). Each type is encoded correctly so it scans the way you expect.</p>
+        </div>
+        <div class="qa">
+          <h3>Can I download the QR code as an image?</h3>
+          <p>Yes. Save it as a PNG or a vector SVG. You can also set the colours, cell and eye shapes, error correction level, and drop a logo in the centre.</p>
+        </div>
+      </div>
+    </section>
 
     <footer class="titleblock">
       <div class="cell"><span class="k">Project</span><span class="v">Drafy</span></div>

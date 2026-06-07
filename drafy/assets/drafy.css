@@ -293,6 +293,19 @@ input[type=color] {
 .trust span { border: 1px solid var(--line); border-radius: 5px; padding: 7px 11px; }
 .trust b { color: var(--ink); font-weight: 500; }
 
+/* ---- about / FAQ (indexable content) ----------------------------------- */
+.about { margin: 56px 27px 0; max-width: 880px; }
+.about h2 {
+  font-size: clamp(22px, 3.4vw, 30px); line-height: 1.15; letter-spacing: -0.02em;
+  color: var(--ink); font-weight: 700; margin: 0 0 14px;
+}
+.about > p { font-size: 15px; line-height: 1.65; color: #B7C6DE; margin: 0 0 30px; max-width: 70ch; }
+.about > p strong { color: var(--ink); font-weight: 600; }
+.faq { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 36px; }
+.qa h3 { font-size: 15px; color: var(--ink); font-weight: 600; margin: 0 0 6px; letter-spacing: -0.01em; }
+.qa p { font-size: 14px; line-height: 1.6; color: var(--ink-dim); margin: 0; }
+@media (max-width: 680px) { .faq { grid-template-columns: 1fr; } .about { margin-left: 27px; margin-right: 27px; } }
+
 /* ---- title-block footer ----------------------------------------------- */
 .titleblock {
   margin: 44px 0 0; border: 1px solid var(--line-2);
