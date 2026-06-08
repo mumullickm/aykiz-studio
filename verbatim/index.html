@@ -6,6 +6,9 @@
 <title>Verbatim - Transcribe audio and video, privately</title>
 <meta name="description" content="Verbatim transcribes audio and video into clean, timestamped text. It runs entirely in your browser. Nothing is ever uploaded. Free, private, no length limits." />
 <link rel="canonical" href="https://aykizintelligence.com/verbatim/" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<meta name="author" content="Aykiz Intelligence" />
+<meta name="keywords" content="audio to text, transcribe audio, speech to text, video to text, free transcription, online transcription, private transcription, transcription in browser, Whisper transcription, automatic transcription, generate subtitles, SRT generator, VTT captions, transcribe interview, transcribe lecture, transcribe meeting, voice to text, voice notes to text, no upload transcription, offline transcription, Bangla transcription" />
 
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
@@ -15,16 +18,72 @@
 <meta name="theme-color" content="#0B0E12" />
 
 <meta property="og:type" content="website" />
+<meta property="og:site_name" content="Aykiz Intelligence" />
+<meta property="og:locale" content="en_US" />
 <meta property="og:url" content="https://aykizintelligence.com/verbatim/" />
 <meta property="og:title" content="Verbatim - Transcribe audio and video, privately" />
 <meta property="og:description" content="Transcribe audio and video into clean, timestamped text, entirely in your browser. Free, private, no length limits. Nothing is ever uploaded." />
 <meta property="og:image" content="https://aykizintelligence.com/verbatim/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Verbatim - private audio and video transcription that runs in your browser" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Verbatim - Transcribe audio and video, privately" />
 <meta name="twitter:description" content="Transcribe audio and video into clean, timestamped text, entirely in your browser. Free, private, no length limits." />
 <meta name="twitter:image" content="https://aykizintelligence.com/verbatim/og.png" />
+<meta name="twitter:image:alt" content="Verbatim - private audio and video transcription that runs in your browser" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://aykizintelligence.com/verbatim/#app",
+      "name": "Verbatim",
+      "url": "https://aykizintelligence.com/verbatim/",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any (web browser)",
+      "browserRequirements": "Requires a modern web browser with WebAssembly. Works offline after the model loads.",
+      "description": "A free transcription tool that runs entirely in the browser. Record in the tab or drop an audio or video file and get clean, timestamped text using OpenAI Whisper. Export to TXT, SRT, or VTT. Nothing is uploaded, no account, no length limits.",
+      "image": "https://aykizintelligence.com/verbatim/icon-512.png",
+      "screenshot": "https://aykizintelligence.com/verbatim/og.png",
+      "inLanguage": "en",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": [
+        "Transcribe audio and video to text in the browser",
+        "Record from the microphone in the tab",
+        "Timestamped segments",
+        "Export to TXT, SRT, and VTT subtitles",
+        "Dozens of languages with auto-detect, including Bangla",
+        "Translate speech into English",
+        "Fully private, nothing is uploaded",
+        "Works offline after the first load",
+        "Free with no length limits and no account"
+      ],
+      "publisher": { "@id": "https://aykizintelligence.com/#organization" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Aykiz Intelligence", "item": "https://aykizintelligence.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Verbatim", "item": "https://aykizintelligence.com/verbatim/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Is it really private?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Verbatim has no backend to receive your files. The model and your audio live in your browser tab. You can confirm it yourself: open your network tools, transcribe a file, and watch that nothing is sent." } },
+        { "@type": "Question", "name": "How large a file can I transcribe?", "acceptedAnswer": { "@type": "Answer", "text": "There is no hard limit. Length is bounded only by your own device memory. Very long files take longer because the work happens on your hardware, not a data center." } },
+        { "@type": "Question", "name": "Which formats can I export?", "acceptedAnswer": { "@type": "Answer", "text": "Plain text (.txt), SubRip subtitles (.srt), and WebVTT (.vtt). You can also copy the transcript straight to your clipboard, with or without timestamps." } },
+        { "@type": "Question", "name": "How accurate is it?", "acceptedAnswer": { "@type": "Answer", "text": "It uses OpenAI's Whisper models, which are strong across clear speech and many languages. Choose a larger model for better accuracy or a smaller one for speed. The transcript is fully editable, so you stay in control of the final text." } },
+        { "@type": "Question", "name": "Is it free, and what is the catch?", "acceptedAnswer": { "@type": "Answer", "text": "It is free, and there is no catch. The honest trade-offs: the model downloads once on first use, and because everything runs locally, very long files are slower than a paid cloud service." } }
+      ]
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
