@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Verbatim - Transcribe audio and video, privately</title>
+<meta name="description" content="Verbatim transcribes audio and video into clean, timestamped text. It runs entirely in your browser. Nothing is ever uploaded. Free, private, no length limits." />
+<link rel="canonical" href="https://aykizintelligence.com/verbatim/" />
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="manifest" href="site.webmanifest" />
+<meta name="theme-color" content="#0B0E12" />
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://aykizintelligence.com/verbatim/" />
+<meta property="og:title" content="Verbatim - Transcribe audio and video, privately" />
+<meta property="og:description" content="Transcribe audio and video into clean, timestamped text, entirely in your browser. Free, private, no length limits. Nothing is ever uploaded." />
+<meta property="og:image" content="https://aykizintelligence.com/verbatim/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Verbatim - Transcribe audio and video, privately" />
+<meta name="twitter:description" content="Transcribe audio and video into clean, timestamped text, entirely in your browser. Free, private, no length limits." />
+<meta name="twitter:image" content="https://aykizintelligence.com/verbatim/og.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;450;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="verbatim.css" />
+</head>
+<body>
+
+<!-- ============ Header ============ -->
+<header class="header">
+  <div class="header__inner">
+    <a class="wordmark" href="#top" aria-label="Verbatim home">
+      <svg class="wordmark__mark" viewBox="0 0 44 44" fill="none" aria-hidden="true"><path d="M4 22 C9 9 16 9 22 22 C28 35 35 35 40 22" stroke="currentColor" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Verbatim
+    </a>
+    <div class="privacy-pill" role="status">
+      <span class="privacy-pill__dot" aria-hidden="true"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg>
+      <span class="pill-long">Model and files stay in this browser</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ Hero + tool ============ -->
+<main id="top">
+<section class="hero" id="tool">
+  <!-- voice field -->
+  <div class="field" aria-hidden="true">
+    <div class="field__fallback" id="fieldFallback"></div>
+    <canvas id="fieldCanvas"></canvas>
+  </div>
+
+  <div class="hero__inner">
+    <span class="eyebrow hero__eyebrow reveal">Free · Private · No limits</span>
+    <h1 class="t-display reveal" data-delay="1">Transcribe audio and video, privately.</h1>
+    <p class="t-body-lg hero__sub reveal" data-delay="2">
+      Whisper runs on <b>your device</b>, not a server. Record in this tab or drop a file, and
+      watch it become clean, timestamped text. <b>Your words never leave your machine.</b>
+    </p>
+
+    <!-- record orb: heart of the field -->
+    <div class="orb-stage reveal" data-delay="3">
+      <div class="orb-wrap">
+        <span class="orb-ring" aria-hidden="true"></span>
+        <span class="orb-pulse" aria-hidden="true"></span>
+        <span class="orb-level" id="orbLevel" aria-hidden="true"></span>
+        <button class="orb" id="recordOrb" aria-label="Start recording">
+          <svg class="orb-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0"/><path d="M12 17v4M9 21h6"/>
+          </svg>
+        </button>
+        <span class="orb__label" id="orbLabel">Tap to record</span>
+      </div>
+
+      <p class="dropline">
+        or drop a file anywhere, or
+        <button id="filePick" type="button">choose one</button>
+        <input id="fileInput" type="file" accept="audio/*,video/*" hidden />
+      </p>
+      <p class="hero__formats">MP3 · WAV · M4A · MP4 · MOV · and more · no length limit</p>
+    </div>
+
+    <!-- settings: quiet, optional -->
+    <div class="settings reveal" data-delay="4">
+      <div class="setting">
+        <label for="setModel">Model</label>
+        <span class="select">
+          <select id="setModel">
+            <option value="tiny">Tiny · fastest</option>
+            <option value="base" selected>Base · balanced</option>
+            <option value="small">Small · most accurate</option>
+          </select>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
+      </div>
+      <div class="setting">
+        <label for="setLang">Language</label>
+        <span class="select">
+          <select id="setLang">
+            <option value="auto" selected>Auto-detect</option>
+            <option>English</option><option>Spanish</option><option>French</option>
+            <option>German</option><option>Mandarin</option><option>Arabic</option><option>Hindi</option>
+            <option value="bengali">Bangla</option><option>Urdu</option><option>Portuguese</option>
+            <option>Russian</option><option>Japanese</option><option>Turkish</option><option>Italian</option>
+          </select>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
+      </div>
+      <div class="setting">
+        <label for="setOut">Output</label>
+        <span class="select">
+          <select id="setOut">
+            <option value="transcribe" selected>Transcribe</option>
+            <option value="translate">Translate to English</option>
+          </select>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
+      </div>
+    </div>
+
+    <!-- ============ Tool panel (download / processing / result / error / live) ============ -->
+    <section class="panel" id="toolPanel" hidden aria-live="polite">
+
+      <!-- LIVE -->
+      <div class="panel-stage" id="stageLive" hidden>
+        <div class="panel__head">
+          <div class="panel__title"><span class="status-dot status-dot--live"></span><h3>Listening</h3></div>
+          <span class="t-mono ink-faint">on this device</span>
+        </div>
+        <div class="panel__body">
+          <div class="transcript-doc" id="liveText" style="max-height:240px"></div>
+        </div>
+      </div>
+
+      <!-- DOWNLOAD (first run) -->
+      <div class="panel-stage" id="stageDownload" hidden>
+        <div class="panel__head">
+          <div class="panel__title"><span class="status-dot"></span><h3>Preparing the model</h3></div>
+          <span class="t-mono ink-faint" id="dlName">audio file</span>
+        </div>
+        <div class="panel__body">
+          <div class="progress" style="margin-bottom:var(--s5)">
+            <div class="progress__meta"><span class="t-small ink-soft" id="dlLabel">Downloading Whisper</span><span class="pct" id="dlPct">0%</span></div>
+            <div class="progress__bar"><div class="progress__fill" id="dlFill"></div></div>
+          </div>
+          <div class="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 16v-5M12 8v.01"/><circle cx="12" cy="12" r="9"/></svg>
+            <span>This happens once. The model is cached in your browser, so every transcription after this is instant and works offline. The file is never uploaded.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROCESSING -->
+      <div class="panel-stage" id="stageProcessing" hidden>
+        <div class="panel__head">
+          <div class="panel__title"><span class="status-dot status-dot--live"></span><h3>Transcribing on your device</h3></div>
+          <span class="t-mono ink-faint" id="procName">audio file</span>
+        </div>
+        <div class="panel__body">
+          <div class="progress">
+            <div class="progress__meta"><span class="t-small ink-soft">Working through the audio</span><span class="t-small ink-faint">no upload</span></div>
+            <div class="progress__bar"><div class="progress__fill is-indeterminate"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <div class="panel-stage" id="stageResult" hidden>
+        <div class="panel__head">
+          <div class="panel__title"><span class="status-dot" style="background:var(--success)"></span><h3>Transcript</h3></div>
+          <button class="btn btn--ghost btn--sm" id="newBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 1 3 6.7M3 19v-4h4"/></svg>
+            New
+          </button>
+        </div>
+        <div class="panel__body">
+          <div class="transcript-toolbar">
+            <div class="seg-toggle" id="segToggle" role="group" aria-label="Transcript view">
+              <button data-view="text" aria-pressed="true">Plain text</button>
+              <button data-view="segments" aria-pressed="false">Timestamps</button>
+            </div>
+            <div class="exports">
+              <button class="btn btn--sm" id="expCopy" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span>Copy</span></button>
+              <button class="btn btn--sm" id="expTxt" type="button">.txt</button>
+              <button class="btn btn--sm" id="expSrt" type="button">.srt</button>
+              <button class="btn btn--sm" id="expVtt" type="button">.vtt</button>
+            </div>
+          </div>
+          <div class="transcript-doc" id="docView" contenteditable="true" spellcheck="false" aria-label="Editable transcript"></div>
+          <div class="segments" id="segView" hidden></div>
+        </div>
+      </div>
+
+      <!-- ERROR -->
+      <div class="panel-stage" id="stageError" hidden>
+        <div class="panel__head">
+          <div class="panel__title"><span class="status-dot" style="background:var(--danger)"></span><h3>Something needs a second look</h3></div>
+        </div>
+        <div class="panel__body">
+          <div class="inline-error" style="margin-bottom:var(--s5)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+            <span id="errText">That file could not be read. Verbatim supports common audio and video formats such as MP3, WAV, M4A, MP4, and MOV. Try a different file.</span>
+          </div>
+          <button class="btn btn--accent btn--sm" id="retryBtn" type="button">Try again</button>
+        </div>
+      </div>
+
+    </section>
+  </div>
+</section>
+
+<!-- ============ Privacy band ============ -->
+<section class="section privacy-band">
+  <div class="wrap">
+    <div class="privacy-band__card reveal">
+      <span class="eyebrow">The whole point</span>
+      <h2 class="t-h1" style="margin-top:var(--s4); max-width:18ch">Your words never leave your device.</h2>
+      <div class="privacy-points">
+        <div class="privacy-point">
+          <div class="pp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+          <h3>Nothing is uploaded</h3>
+          <p>There is no server to send to. Audio, video, and the finished transcript stay in this tab, full stop.</p>
+        </div>
+        <div class="privacy-point">
+          <div class="pp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z"/></svg></div>
+          <h3>The model runs locally</h3>
+          <p>Whisper downloads once and runs on your own hardware. No account, no API key, no usage being watched.</p>
+        </div>
+        <div class="privacy-point">
+          <div class="pp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12.5l4 4 10-10"/><path d="M3 19h18"/></svg></div>
+          <h3>Works offline</h3>
+          <p>After the first load you can pull the plug. Transcribe a sensitive call on a plane, in a clinic, anywhere.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ How it works ============ -->
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">How it works</span>
+      <h2 class="t-h2">Three steps. No setup, no sign in.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="step__num">01</div><h3>Record or choose</h3><p>Hit record to capture from your mic, or drop in an audio or video file of any length.</p></div>
+      <div class="step reveal" data-delay="1"><div class="step__num">02</div><h3>It transcribes on your device</h3><p>Whisper runs locally and turns speech into clean, timestamped text. Nothing is sent anywhere.</p></div>
+      <div class="step reveal" data-delay="2"><div class="step__num">03</div><h3>Edit and export</h3><p>Fix a word, switch to timestamps, then copy or save as .txt, .srt, or .vtt.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Features ============ -->
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">Why Verbatim</span>
+      <h2 class="t-h2">Built to be quiet, fast, and yours.</h2>
+    </div>
+    <div class="features reveal">
+      <div class="feature"><div class="feature__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v18M5 8v8M19 8v8"/></svg></div><h3>Free, no length limits</h3><p>Transcribe a two minute note or a three hour interview. There is no meter and no paywall.</p></div>
+      <div class="feature"><div class="feature__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div><h3>Fully private</h3><p>Everything runs in your browser. Nothing is uploaded, logged, or trained on.</p></div>
+      <div class="feature"><div class="feature__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg></div><h3>Many languages</h3><p>Transcribe in dozens of languages with auto-detect, or translate speech into English.</p></div>
+      <div class="feature"><div class="feature__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Timestamps and subtitles</h3><p>Every segment is timed. Export caption-ready .srt and .vtt in a click.</p></div>
+      <div class="feature"><div class="feature__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12.5l4 4 10-10"/><path d="M3 19h18"/></svg></div><h3>Works offline</h3><p>After the first load Verbatim keeps working with no connection at all.</p></div>
+      <div class="feature"><div class="feature__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-4 3-6 7-6s7 2 7 6"/><path d="M4 4l16 16" stroke-width="1.5"/></svg></div><h3>No account</h3><p>Open the page and start. No email, no password, nothing to forget.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Use cases ============ -->
+<section class="section section--tight section--center">
+  <div class="wrap">
+    <div class="section__head reveal">
+      <span class="eyebrow">Who it is for</span>
+      <h2 class="t-h2">For anyone turning speech into text.</h2>
+    </div>
+    <div class="usecases">
+      <div class="usecase reveal"><div class="usecase__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0"/><path d="M12 17v4"/></svg></div><h3>Interviews</h3><p>Keep sources confidential. Nothing leaves your laptop.</p></div>
+      <div class="usecase reveal" data-delay="1"><div class="usecase__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6l8-3 8 3-8 3-8-3z"/><path d="M8 8v5c0 1.5 8 1.5 8 0V8"/></svg></div><h3>Lectures</h3><p>Capture every word, then study from clean text.</p></div>
+      <div class="usecase reveal" data-delay="2"><div class="usecase__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5h16v11H7l-3 3V5z"/></svg></div><h3>Meetings</h3><p>Minutes without a bot in the call or a cloud recording.</p></div>
+      <div class="usecase reveal" data-delay="3"><div class="usecase__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 4h9l3 3v13H6z"/><path d="M9 11h6M9 15h4"/></svg></div><h3>Voice notes</h3><p>Talk it out, get text you can search and paste.</p></div>
+      <div class="usecase reveal" data-delay="4"><div class="usecase__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 8h13v8H3z"/><path d="M16 10l5-3v10l-5-3"/></svg></div><h3>Captions</h3><p>Make video accessible with subtitle files in seconds.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section section--tight">
+  <div class="wrap measure">
+    <div class="section__head reveal" style="text-align:center; margin-left:auto; margin-right:auto;">
+      <span class="eyebrow">Honest answers</span>
+      <h2 class="t-h2">Questions, answered plainly.</h2>
+    </div>
+    <div class="faq reveal">
+      <div class="faq__item">
+        <button class="faq__q" aria-expanded="false"><span>Is it really private?</span><span class="faq__icon" aria-hidden="true"></span></button>
+        <div class="faq__a"><div class="faq__a-inner"><b>Yes.</b> Verbatim has no backend to receive your files. The model and your audio live in your browser tab. You can confirm it yourself: open your network tools, transcribe a file, and watch that nothing is sent.</div></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q" aria-expanded="false"><span>How large a file can I transcribe?</span><span class="faq__icon" aria-hidden="true"></span></button>
+        <div class="faq__a"><div class="faq__a-inner">There is no hard limit. Length is bounded only by your own device memory and patience. Very long files take longer because the work happens on your hardware, not a data center.</div></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q" aria-expanded="false"><span>Which formats can I export?</span><span class="faq__icon" aria-hidden="true"></span></button>
+        <div class="faq__a"><div class="faq__a-inner">Plain text (.txt), SubRip subtitles (.srt), and WebVTT (.vtt). You can also copy the transcript straight to your clipboard, with or without timestamps.</div></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q" aria-expanded="false"><span>How accurate is it?</span><span class="faq__icon" aria-hidden="true"></span></button>
+        <div class="faq__a"><div class="faq__a-inner">It uses OpenAI's Whisper models, which are strong across clear speech and many languages. Choose a larger model for better accuracy, or a smaller one for speed. The transcript is fully editable, so you stay in control of the final text.</div></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q" aria-expanded="false"><span>Is it free, and what is the catch?</span><span class="faq__icon" aria-hidden="true"></span></button>
+        <div class="faq__a"><div class="faq__a-inner"><b>It is free, and there is no catch.</b> The honest trade-offs: the model downloads once on first use (a one time wait), and because everything runs locally, very long files are slower than a paid cloud service. For most people, privacy and no limits are worth it.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ Footer ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div>
+        <a class="wordmark" href="#top"><svg class="wordmark__mark" viewBox="0 0 44 44" fill="none" aria-hidden="true"><path d="M4 22 C9 9 16 9 22 22 C28 35 35 35 40 22" stroke="currentColor" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Verbatim</a>
+        <p class="footer__tag">Transcribe audio and video into clean, timestamped text, entirely in your browser.</p>
+      </div>
+      <p class="footer__meta">
+        Runs locally. No uploads, no accounts.<br/>
+        Whisper runs on your device via <a href="https://github.com/huggingface/transformers.js" target="_blank" rel="noopener">transformers.js</a>.
+      </p>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Verbatim</span>
+      <span>Made for people who value quiet and privacy.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ Drag overlay ============ -->
+<div class="dropzone-overlay" id="dropOverlay" aria-hidden="true">
+  <div class="dropzone-card">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M5 20h14"/></svg>
+    <h3 class="t-h3" style="margin-bottom:var(--s2)">Drop to transcribe</h3>
+    <p class="ink-soft t-small">It stays in this browser. Nothing is uploaded.</p>
+  </div>
+</div>
+
+<!-- ============ Toasts ============ -->
+<div class="toast-zone" id="toastZone" aria-live="polite"></div>
+
+<script src="liquid-cursor.js"></script>
+<script src="voice-field.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

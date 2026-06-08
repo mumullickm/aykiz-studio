@@ -1,0 +1,75 @@
+/* ============================================================
+   VERBATIM - Design tokens
+   Color, type, spacing, radius, motion. Single source of truth.
+   ============================================================ */
+
+:root {
+  /* ---- Color: deep cool near-black, AA-checked pairings ---- */
+  --bg:           #0B0E12; /* page base (gradient top) */
+  --bg-deep:      #070A0D; /* gradient bottom, footer */
+  --surface-1:    #10151A; /* cards, panels - barely lifted */
+  --surface-2:    #161C22; /* inputs, raised controls */
+  --hairline:     #232A31; /* 1px borders, dividers */
+  --hairline-soft:#1A2026; /* fainter dividers */
+
+  --ink:          #E9ECEA; /* primary text - soft off-white */
+  --ink-soft:     #9DA8A9; /* secondary text */
+  --ink-faint:    #647072; /* captions, meta, disabled */
+
+  --accent:       #62E6C8; /* the one luminous accent */
+  --accent-strong:#33CFAC; /* hover / pressed / borders */
+  --accent-ink:   #04231C; /* text on accent fills */
+  --accent-glow:  rgba(98, 230, 200, 0.18);
+
+  /* WebGL aurora only - gentle, desaturated */
+  --aurora-1: #5FE0C4; /* mint */
+  --aurora-2: #54A9D6; /* soft blue */
+  --aurora-3: #9A92E4; /* faint violet */
+
+  --danger:  #EB958C; /* quiet error */
+  --danger-soft: rgba(235, 149, 140, 0.14);
+  --success: #84D6A2; /* success / done */
+
+  /* ---- Type ---- */
+  --font-display: "Hanken Grotesk", system-ui, -apple-system, sans-serif;
+  --font-ui:      "Hanken Grotesk", system-ui, -apple-system, sans-serif;
+  --font-read:    "Newsreader", Georgia, "Times New Roman", serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ---- Spacing scale (4px base) ---- */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
+  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
+  --s9: 96px; --s10: 128px; --s11: 176px;
+
+  /* ---- Radius ---- */
+  --r-sm: 8px; --r-md: 12px; --r-lg: 18px; --r-xl: 28px; --r-pill: 999px;
+
+  /* ---- Elevation (soft, dark-friendly) ---- */
+  --shadow-1: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-2: 0 8px 30px rgba(0,0,0,0.45);
+  --shadow-pop: 0 20px 60px rgba(0,0,0,0.55);
+
+  /* ---- Motion ---- */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-1: 180ms; --dur-2: 280ms; --dur-3: 420ms; --dur-4: 600ms;
+
+  /* ---- Layout ---- */
+  --measure: 760px;   /* comfortable reading width */
+  --measure-wide: 1080px;
+  --header-h: 64px;
+}
+
+/* ============================================================
+   Type scale  (font / size / line-height / tracking / weight)
+   ============================================================ */
+.t-display { font-family: var(--font-display); font-size: clamp(40px, 7vw, 68px); line-height: 1.04; letter-spacing: -0.032em; font-weight: 600; }
+.t-h1      { font-family: var(--font-display); font-size: clamp(34px, 5vw, 46px); line-height: 1.08; letter-spacing: -0.026em; font-weight: 600; }
+.t-h2      { font-family: var(--font-display); font-size: clamp(26px, 3.4vw, 34px); line-height: 1.14; letter-spacing: -0.02em;  font-weight: 600; }
+.t-h3      { font-family: var(--font-display); font-size: 21px; line-height: 1.25; letter-spacing: -0.014em; font-weight: 600; }
+.t-body-lg { font-family: var(--font-ui); font-size: clamp(17px, 1.5vw, 19px); line-height: 1.6; letter-spacing: -0.003em; font-weight: 400; }
+.t-body    { font-family: var(--font-ui); font-size: 16px; line-height: 1.65; letter-spacing: 0; font-weight: 400; }
+.t-small   { font-family: var(--font-ui); font-size: 14px; line-height: 1.5; letter-spacing: 0; font-weight: 450; }
+.t-caption { font-family: var(--font-ui); font-size: 12.5px; line-height: 1.4; letter-spacing: 0.06em; font-weight: 600; text-transform: uppercase; }
+.t-mono    { font-family: var(--font-mono); font-size: 13px; line-height: 1.4; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.t-transcript { font-family: var(--font-read); font-size: 20px; line-height: 1.72; letter-spacing: 0; font-weight: 400; }
