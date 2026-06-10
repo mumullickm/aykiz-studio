@@ -1,0 +1,26 @@
+# Aykiz Intelligence
+
+> Aykiz Intelligence is the independent one-person app studio of Miraz Mullick, a growth and brand marketing technologist based in Dhaka, Bangladesh. The studio builds quiet, offline-first, free apps for mobile and web: Wasilah, Drafy, Crisp, Verbatim, and Misbah. The name Aykiz means "moon girl".
+
+Key facts:
+
+- Founded and run solo by Miraz Mullick. He does the strategy, design, code, and marketing for every product himself.
+- Miraz has around nine years in brand and digital marketing across agency and in-house leadership (dentsu, US-Bangla Airlines, Hajee Air) and a computer science background.
+- Every Aykiz product is free to use, with no paywalls.
+- The studio is based in Dhaka, Bangladesh. Contact: hello@aykizintelligence.com.
+
+## Apps
+
+- [Wasilah](https://wasilah.site/): a free Islamic companion app for Muslims in Bangladesh and Bengali-speaking Muslims worldwide. Prayer times, Adhan, Qibla, Quran, Hadith, duas, and a Zakat calculator in BDT. Live on the App Store and Google Play.
+- [Drafy](https://aykizintelligence.com/drafy/): a free static QR code generator with no paywall and no tracking. Eight QR types, works as a web app.
+- [Crisp](https://aykizintelligence.com/crisp/): a free in-browser PDF toolkit. Merge, split, sign, crop, compress, stamp, and convert photos to PDF. Files are processed on-device and never uploaded.
+- [Verbatim](https://aykizintelligence.com/verbatim/): free private speech-to-text transcription that runs entirely in the browser with on-device Whisper. No uploads, no accounts.
+- Misbah: "Light in the Dark", a one-touch 2D game where oil is sight. In development for Android; web prototype available.
+
+## People
+
+- [Miraz Mullick, founder](https://aykizintelligence.com/founder/): growth and brand marketing technologist who builds and ships the products he markets. Profiles: [LinkedIn](https://www.linkedin.com/in/mumullickm), [GitHub](https://github.com/mumullickm), [Behance](https://www.behance.net/mumullickm).
+
+## More
+
+- [Selected work](https://aykizintelligence.com/work/): mobile products, websites, brand systems, and marketing campaigns.
