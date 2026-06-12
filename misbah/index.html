@@ -536,8 +536,8 @@
     </div>
     <div class="idea-grid reveal">
       <figure class="idea-shot">
-        <video class="app-shot" src="assets/misbah-loop.mp4" poster="assets/play.jpg" autoplay muted loop playsinline preload="metadata" width="660" height="1434" aria-label="Misbah gameplay: a tap begins, the lantern carries its light past the arches, and a run ends with a line from Rumi"></video>
-        <figcaption><span class="shot-eyebrow">In flight</span><em>Hold to rise, release to fall.</em></figcaption>
+        <img class="app-shot" src="assets/play.jpg" alt="Misbah gameplay: the glowing lantern carrying its light past pointed arches under a crescent moon" width="660" height="1433" loading="lazy" />
+        <figcaption><span class="shot-eyebrow">In flight</span><em>Thread the arches, catch the oil.</em></figcaption>
       </figure>
       <figure class="idea-shot">
         <img class="app-shot" src="assets/start.jpg" alt="Misbah start screen: the radiant star and a single gold button, Tap to begin" width="660" height="1433" loading="lazy" />
@@ -691,11 +691,7 @@
 <script defer src="hero-webgl.js"></script>
 <script>
   (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      var v = document.querySelector('video');
-      if (v) { v.removeAttribute('autoplay'); v.pause(); }
-      return;
-    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var pending = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
     function sweep() {
       pending = pending.filter(function (el) {
