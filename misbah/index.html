@@ -22,8 +22,8 @@
 <meta property="og:title" content="Misbah - Light in the Dark" />
 <meta property="og:description" content="A calm one-touch flight by lantern light. Your oil is your sight. No ads, no tracking, fully offline. Coming to Google Play and the App Store." />
 <meta property="og:image" content="https://aykizintelligence.com/misbah/assets/og-misbah.png" />
-<meta property="og:image:width" content="1024" />
-<meta property="og:image:height" content="500" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="Misbah - Light in the Dark, a calm one-touch game by lantern light" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Misbah - Light in the Dark" />
@@ -200,14 +200,6 @@
   .store-button { display: inline-flex; }
   .store-button img { height: 56px; width: auto; display: block; }
   .store-button.pending { opacity: 0.85; filter: saturate(0.9); }
-  .store-note {
-    margin-top: 12px;
-    font-size: 14px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold-warm);
-  }
-
   .trust-strip {
     list-style: none;
     margin-top: 30px;
@@ -524,7 +516,6 @@
           <img src="assets/Google_Play.svg" alt="Get it on Google Play" width="200" height="60" />
         </span>
       </div>
-      <p class="store-note">Submitted June 2026 · live store links land here the day they open</p>
       <ul class="trust-strip" aria-label="What makes Misbah different">
         <li>Free always</li>
         <li>No ads</li>
@@ -545,8 +536,8 @@
     </div>
     <div class="idea-grid reveal">
       <figure class="idea-shot">
-        <img class="app-shot" src="assets/play.jpg" alt="Misbah gameplay: the glowing lantern carrying its light past pointed arches under a crescent moon" width="660" height="1433" loading="lazy" />
-        <figcaption><span class="shot-eyebrow">In flight</span><em>Thread the arches, catch the oil.</em></figcaption>
+        <video class="app-shot" src="assets/misbah-loop.mp4" poster="assets/play.jpg" autoplay muted loop playsinline preload="metadata" width="660" height="1434" aria-label="Misbah gameplay: a tap begins, the lantern carries its light past the arches, and a run ends with a line from Rumi"></video>
+        <figcaption><span class="shot-eyebrow">In flight</span><em>Hold to rise, release to fall.</em></figcaption>
       </figure>
       <figure class="idea-shot">
         <img class="app-shot" src="assets/start.jpg" alt="Misbah start screen: the radiant star and a single gold button, Tap to begin" width="660" height="1433" loading="lazy" />
@@ -700,7 +691,11 @@
 <script defer src="hero-webgl.js"></script>
 <script>
   (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      var v = document.querySelector('video');
+      if (v) { v.removeAttribute('autoplay'); v.pause(); }
+      return;
+    }
     var pending = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
     function sweep() {
       pending = pending.filter(function (el) {
