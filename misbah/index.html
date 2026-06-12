@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Misbah - Light in the Dark | A calm one-touch game</title>
+<meta name="description" content="Misbah is a calm one-touch game about carrying a small light through the dark. Your oil is your sight. No ads, no tracking, fully offline. Coming to Google Play and the App Store." />
+<link rel="canonical" href="https://aykizintelligence.com/misbah/" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<meta name="author" content="Aykiz Intelligence" />
+<meta name="keywords" content="Misbah game, light in the dark game, calm game, one touch game, relaxing game, minimalist game, Islamic game, Islamic geometry game, lantern game, peaceful mobile game, no ads game, offline game, Ramadan game, halal game, Aykiz Intelligence" />
+
+<link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png" />
+<link rel="apple-touch-icon" href="assets/icon-512.png" />
+<meta name="theme-color" content="#0a0d1f" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Aykiz Intelligence" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://aykizintelligence.com/misbah/" />
+<meta property="og:title" content="Misbah - Light in the Dark" />
+<meta property="og:description" content="A calm one-touch flight by lantern light. Your oil is your sight. No ads, no tracking, fully offline. Coming to Google Play and the App Store." />
+<meta property="og:image" content="https://aykizintelligence.com/misbah/assets/og-misbah.png" />
+<meta property="og:image:width" content="1024" />
+<meta property="og:image:height" content="500" />
+<meta property="og:image:alt" content="Misbah - Light in the Dark, a calm one-touch game by lantern light" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Misbah - Light in the Dark" />
+<meta name="twitter:description" content="A calm one-touch flight by lantern light. Your oil is your sight. Free, no ads, fully offline." />
+<meta name="twitter:image" content="https://aykizintelligence.com/misbah/assets/og-misbah.png" />
+<meta name="twitter:image:alt" content="Misbah - Light in the Dark, a calm one-touch game by lantern light" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["VideoGame", "MobileApplication"],
+      "@id": "https://aykizintelligence.com/misbah/#game",
+      "name": "Misbah: Light in the Dark",
+      "alternateName": "مصباح",
+      "url": "https://aykizintelligence.com/misbah/",
+      "applicationCategory": "GameApplication",
+      "genre": ["Casual", "Arcade", "Relaxing"],
+      "gamePlatform": ["Android"],
+      "operatingSystem": "Android",
+      "description": "A calm one-touch game about carrying a small light through the dark. Hold to rise, release to fall. Your oil is your sight: the more light you carry, the more of the dark opens before you. A consoling line of poetry ends every run. No ads, no tracking, fully offline.",
+      "image": "https://aykizintelligence.com/misbah/assets/icon-512.png",
+      "screenshot": "https://aykizintelligence.com/misbah/assets/og-misbah.png",
+      "inLanguage": "en",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": [
+        "One-touch flight: hold to rise, release to fall",
+        "Oil is sight: light is the only resource",
+        "Islamic geometry, pointed arches and eight-point stars",
+        "A consoling line of poetry at the end of every run",
+        "Three quiet themes: Night, Ramadan, and Dawn",
+        "Follows the Hijri calendar through Ramadan and the blessed ten days",
+        "Gentle mode for a slower drift",
+        "No ads, no tracking, no purchases, fully offline"
+      ],
+      "author": { "@id": "https://aykizintelligence.com/#organization" },
+      "publisher": { "@id": "https://aykizintelligence.com/#organization" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Aykiz Intelligence", "item": "https://aykizintelligence.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Misbah", "item": "https://aykizintelligence.com/misbah/" }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --ground: #0a0d1f;
+    --ground-raised: #141a38;
+    --ground-deep: #06080f;
+    --gold: #ebb732;
+    --gold-warm: #f4c95d;
+    --gold-deep: #b88a1f;
+    --teal: #007776;
+    --ink: rgba(248, 244, 235, 0.92);
+    --ink-soft: rgba(248, 244, 235, 0.64);
+    --ink-faint: rgba(248, 244, 235, 0.38);
+    --hairline: rgba(235, 183, 50, 0.16);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ground-deep);
+    color: var(--ink);
+    font-family: "EB Garamond", Georgia, serif;
+    font-size: 19px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: rgba(235, 183, 50, 0.28); }
+
+  .sky {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(120% 90% at 50% 0%, #1a2147 0%, var(--ground) 52%, var(--ground-deep) 100%);
+    z-index: -2;
+  }
+
+  .stars {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .stars i {
+    position: absolute;
+    width: 2px; height: 2px;
+    border-radius: 50%;
+    background: rgba(248, 244, 235, 0.7);
+    animation: twinkle 5s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.15; }
+    50% { opacity: 0.7; }
+  }
+
+  main { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 96px 0 72px;
+  }
+  .lamp {
+    position: relative;
+    width: 168px; height: 168px;
+    margin-bottom: 40px;
+  }
+  .lamp::before {
+    content: "";
+    position: absolute;
+    inset: -56px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(244, 201, 93, 0.30) 0%, rgba(235, 183, 50, 0.10) 42%, transparent 70%);
+    animation: breathe 5.5s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); opacity: 0.85; }
+    50% { transform: scale(1.12); opacity: 1; }
+  }
+  .lamp img {
+    position: relative;
+    width: 100%; height: 100%;
+    border-radius: 36px;
+    box-shadow: 0 12px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--hairline);
+  }
+  .hero .arabic {
+    font-family: "Amiri", serif;
+    font-size: 56px;
+    color: var(--gold-warm);
+    line-height: 1.2;
+    text-shadow: 0 0 40px rgba(235, 183, 50, 0.35);
+  }
+  .hero h1 {
+    font-family: "EB Garamond", serif;
+    font-weight: 500;
+    font-size: clamp(40px, 7vw, 64px);
+    letter-spacing: 0.04em;
+    margin-top: 6px;
+  }
+  .hero .strap {
+    margin-top: 14px;
+    font-size: 13px;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .hero .lede {
+    margin-top: 26px;
+    max-width: 480px;
+    font-size: 22px;
+    color: var(--ink-soft);
+  }
+  .cta-row {
+    margin-top: 44px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .btn {
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-family: "EB Garamond", serif;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .btn-gold {
+    background: linear-gradient(180deg, var(--gold-warm), var(--gold));
+    color: #0a0d1f;
+    font-weight: 600;
+    box-shadow: 0 6px 28px rgba(235, 183, 50, 0.28);
+  }
+  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(235, 183, 50, 0.4); }
+  .btn-ghost {
+    color: var(--ink-faint);
+    border: 1px solid var(--hairline);
+    cursor: default;
+  }
+
+  /* ---------- sections ---------- */
+  section { padding: 88px 0; border-top: 1px solid rgba(235, 183, 50, 0.08); }
+
+  .kicker {
+    font-size: 12px;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 14px;
+  }
+  h2 {
+    font-family: "EB Garamond", serif;
+    font-weight: 500;
+    font-size: clamp(30px, 4.5vw, 42px);
+    line-height: 1.25;
+    max-width: 520px;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .row.flip .text { order: 2; }
+  .row.flip .shot { order: 1; }
+  .row p { margin-top: 20px; color: var(--ink-soft); max-width: 460px; }
+  .shot img {
+    width: 100%;
+    max-width: 360px;
+    display: block;
+    margin: 0 auto;
+    border-radius: 22px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--hairline);
+  }
+
+  .poetry blockquote {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: clamp(26px, 4vw, 36px);
+    line-height: 1.4;
+    color: var(--gold-warm);
+    max-width: 480px;
+    margin-top: 28px;
+  }
+  .poetry cite {
+    display: block;
+    margin-top: 16px;
+    font-family: "EB Garamond", serif;
+    font-style: normal;
+    font-size: 15px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* ---------- seasons ---------- */
+  .seasons { text-align: center; }
+  .seasons h2 { margin: 0 auto; }
+  .seasons > p { margin: 20px auto 0; color: var(--ink-soft); max-width: 560px; }
+  .season-grid {
+    margin-top: 52px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .season {
+    padding: 36px 24px;
+    border-radius: 18px;
+    border: 1px solid var(--hairline);
+    background: rgba(20, 26, 56, 0.45);
+  }
+  .season .swatch {
+    width: 44px; height: 44px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    box-shadow: 0 0 24px rgba(235, 183, 50, 0.25);
+  }
+  .season.night .swatch { background: radial-gradient(circle at 35% 30%, #2a3263, #0a0d1f); }
+  .season.ramadan .swatch { background: radial-gradient(circle at 35% 30%, #5c3354, #2a1430); }
+  .season.dawn .swatch { background: radial-gradient(circle at 35% 30%, #4a4a8a, #1d1d45); }
+  .season h3 { font-weight: 500; font-size: 21px; letter-spacing: 0.06em; }
+  .season p { margin-top: 8px; font-size: 16px; color: var(--ink-faint); }
+
+  /* ---------- intention ---------- */
+  .intention { text-align: center; }
+  .intention h2 { margin: 0 auto; }
+  .vows {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+  }
+  .vow {
+    padding: 26px 12px;
+    border-radius: 14px;
+    border: 1px solid var(--hairline);
+    background: rgba(10, 13, 31, 0.6);
+    font-size: 17px;
+    color: var(--ink-soft);
+  }
+  .vow strong {
+    display: block;
+    font-weight: 600;
+    color: var(--gold-warm);
+    margin-bottom: 4px;
+    font-size: 18px;
+  }
+  .intention .closing {
+    margin: 56px auto 0;
+    max-width: 520px;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- footer ---------- */
+  footer {
+    border-top: 1px solid rgba(235, 183, 50, 0.08);
+    padding: 56px 24px 64px;
+    text-align: center;
+    font-size: 16px;
+    color: var(--ink-faint);
+  }
+  footer .links { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+  footer a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px solid var(--hairline); padding-bottom: 1px; }
+  footer a:hover { color: var(--gold-warm); }
+
+  @media (max-width: 760px) {
+    body { font-size: 18px; }
+    .row { grid-template-columns: 1fr; gap: 40px; }
+    .row.flip .text { order: 1; }
+    .row.flip .shot { order: 2; }
+    .season-grid { grid-template-columns: 1fr; }
+    .vows { grid-template-columns: 1fr 1fr; }
+    .vows .vow:last-child { grid-column: 1 / -1; }
+    section { padding: 64px 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lamp::before, .stars i { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sky"></div>
+<div class="stars" aria-hidden="true">
+  <i style="top:8%;left:12%;animation-delay:0s"></i>
+  <i style="top:14%;left:78%;animation-delay:1.2s"></i>
+  <i style="top:22%;left:38%;animation-delay:2.4s"></i>
+  <i style="top:31%;left:88%;animation-delay:0.8s"></i>
+  <i style="top:39%;left:7%;animation-delay:3.1s"></i>
+  <i style="top:12%;left:55%;animation-delay:1.9s"></i>
+  <i style="top:47%;left:64%;animation-delay:2.7s"></i>
+  <i style="top:55%;left:21%;animation-delay:0.4s"></i>
+  <i style="top:66%;left:81%;animation-delay:3.6s"></i>
+  <i style="top:74%;left:43%;animation-delay:1.5s"></i>
+  <i style="top:83%;left:14%;animation-delay:2.2s"></i>
+  <i style="top:88%;left:69%;animation-delay:0.9s"></i>
+</div>
+
+<main>
+
+  <header class="hero">
+    <div class="lamp">
+      <img src="assets/icon-512.png" alt="Misbah app icon: a flame inside an eight-point star" width="512" height="512" />
+    </div>
+    <div class="arabic" lang="ar">مصباح</div>
+    <h1>Misbah</h1>
+    <div class="strap">Light in the Dark</div>
+    <p class="lede">A calm one-touch flight by lantern light. Your oil is your sight.</p>
+    <div class="cta-row">
+      <span class="btn btn-ghost">Google Play, in review</span>
+      <span class="btn btn-ghost">App Store, on its way</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="row">
+      <div class="text">
+        <div class="kicker">The idea</div>
+        <h2>The more light you carry, the more you can see</h2>
+        <p>Your lamp's oil is your sight into the darkness. Carry a full flame and the world opens wide before you: arches, stars, the path ahead. Let it burn low and the dark closes in. Gather oil to keep the flame alive, and see how far your light will reach.</p>
+      </div>
+      <div class="shot">
+        <img src="assets/visual-2.jpg" alt="Oil is sight: the lamp's light revealing the dark world of Misbah" loading="lazy" width="720" height="1280" />
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="row flip">
+      <div class="text">
+        <div class="kicker">The play</div>
+        <h2>One finger is the whole game</h2>
+        <p>Hold to rise. Release to fall. That is everything. Drift through a quiet world of pointed arches and eight-point stars, lit gold as your flame passes. There is no rush here, and nothing shouts. Patience over points.</p>
+      </div>
+      <div class="shot">
+        <img src="assets/visual-3.jpg" alt="One-touch play: hold to rise, release to fall" loading="lazy" width="720" height="1280" />
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="row">
+      <div class="text">
+        <div class="kicker">The way</div>
+        <h2>Thread the arches, gather the oil</h2>
+        <p>Ornate arches stand between you and the far dark. Slip through their gaps, catch the drops of oil that hang near them, and your flame answers with more sight. Every step of distance is a step your light was carried.</p>
+      </div>
+      <div class="shot">
+        <img src="assets/visual-4.jpg" alt="Threading the ornate arches in Misbah" loading="lazy" width="720" height="1280" />
+      </div>
+    </div>
+  </section>
+
+  <section class="poetry">
+    <div class="row flip">
+      <div class="text">
+        <div class="kicker">The soul</div>
+        <h2>When the light goes out, a kindness</h2>
+        <p>A run does not end with a score screen that scolds you. It ends with a breath, a relighting lantern, and a line of reflection from the poets. Then a soft light to begin again.</p>
+        <blockquote>
+          "Patience is the lantern of the heart."
+          <cite>after al-Ghazali</cite>
+        </blockquote>
+      </div>
+      <div class="shot">
+        <img src="assets/visual-5.jpg" alt="A consoling line of poetry shown at the end of a run" loading="lazy" width="720" height="1280" />
+      </div>
+    </div>
+  </section>
+
+  <section class="seasons">
+    <div class="kicker">The calendar</div>
+    <h2>It quietly keeps the Hijri calendar</h2>
+    <p>Misbah knows what night it is. Through Ramadan the world takes on a warmer plum and a fuller crescent. Through the blessed ten days, it softens toward dawn. On Eid, it greets you.</p>
+    <div class="season-grid">
+      <div class="season night">
+        <div class="swatch"></div>
+        <h3>Night</h3>
+        <p>The deep indigo every journey begins in</p>
+      </div>
+      <div class="season ramadan">
+        <div class="swatch"></div>
+        <h3>Ramadan</h3>
+        <p>Warm plum skies and a fuller crescent</p>
+      </div>
+      <div class="season dawn">
+        <div class="swatch"></div>
+        <h3>Dawn</h3>
+        <p>A softer indigo for the blessed days</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="intention">
+    <div class="kicker">The promise</div>
+    <h2>Made with intention</h2>
+    <div class="vows">
+      <div class="vow"><strong>No ads</strong>nothing interrupts</div>
+      <div class="vow"><strong>No tracking</strong>nothing watches</div>
+      <div class="vow"><strong>No purchases</strong>nothing is sold</div>
+      <div class="vow"><strong>Fully offline</strong>nothing leaves your phone</div>
+      <div class="vow"><strong>Free</strong>for everyone, always</div>
+    </div>
+    <p class="closing">Misbah means lamp. A small game about light, patience, and finding your way through the dark, one calm breath at a time.</p>
+    <div class="cta-row">
+      <span class="btn btn-ghost">Arriving on Google Play and the App Store</span>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="links">
+    <a href="https://aykizintelligence.com/">Aykiz Intelligence</a>
+    <a href="https://mumullickm.github.io/misbah-site/privacy.html">Privacy</a>
+    <a href="https://mumullickm.github.io/misbah-site/">Support</a>
+  </div>
+  <div>Misbah is made by Aykiz Intelligence, the studio of Miraz Mullick. It collects nothing and asks for nothing.</div>
+</footer>
+
+</body>
+</html>
