@@ -152,10 +152,10 @@ header.nav {
   padding: 24px clamp(20px, 5vw, 56px);
   background: linear-gradient(180deg, rgba(2,3,10,0.72) 0%, rgba(2,3,10,0.3) 62%, transparent 100%);
 }
-/* Aykiz logotype — Manrope, lowercase dotless ı, "Intelligence" tucked under the kız. The moon lives in the Ai mark, not the wordmark. */
+/* Aykiz logotype — Geist, lowercase dotless ı, "Intelligence" tucked under the kız. The moon lives in the alif mark, not the wordmark. */
 .brandmark { display: inline-flex; flex-direction: column; align-items: flex-end; line-height: 1; text-decoration: none; }
-.brandmark .bm-word { font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700; letter-spacing: -0.03em; color: var(--moon); }
-.brandmark .bm-sub { font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 600; text-transform: uppercase; color: var(--moon-mute); letter-spacing: 0.14em; padding-left: 0.14em; }
+.brandmark .bm-word { font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 600; letter-spacing: -0.03em; color: var(--moon); }
+.brandmark .bm-sub { font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 500; text-transform: uppercase; color: var(--moon-mute); letter-spacing: 0.14em; padding-left: 0.14em; }
 .nav .brandmark .bm-word { font-size: 21px; text-shadow: 0 1px 12px rgba(2,3,10,0.9); }
 .nav .brandmark .bm-sub { font-size: 8px; margin-top: 4px; }
 .nav .links { display: flex; gap: 30px; }
@@ -201,6 +201,19 @@ header.nav {
 }
 @keyframes cue { 0%{transform:scaleY(0);transform-origin:top} 40%{transform:scaleY(1);transform-origin:top}
                  60%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+
+/* Desktop: split hero — alif mark breathes on the left, text reads as a left-aligned
+   column on the right, both vertically centred. Mobile keeps the stacked, centred layout. */
+@media (min-width: 900px) {
+  .hero {
+    justify-content: center; align-items: flex-end; text-align: left;
+    padding: 0 clamp(48px, 8vw, 150px) 0 0;
+  }
+  .hero .eyebrow { width: min(560px, 47vw); margin-bottom: 22px; }
+  .hero h1 { font-size: clamp(42px, 5.4vw, 78px); line-height: 1.0; width: min(560px, 47vw); }
+  .hero .lede { width: min(500px, 44vw); margin: 30px 0 0; }
+  .hero .scroll-cue { left: auto; right: clamp(48px, 8vw, 150px); transform: none; align-items: flex-start; }
+}
 
 .reveal { will-change: transform, opacity; }
 

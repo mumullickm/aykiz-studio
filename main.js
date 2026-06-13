@@ -452,7 +452,11 @@ function fitMark(p) {
   const vW = vH * camera.aspect;
   const fit = Math.min(0.9, (0.82 * vW) / 5.4);
   points.scale.setScalar(fit);
-  points.position.y = 1.35 + p * 1.2;
+  // Desktop: the mark sits left-of-centre and vertically centred, leaving the right
+  // half for the headline. Narrow/portrait keeps it top-centre, stacked above the text.
+  const wide = camera.aspect > 1.05;
+  points.position.x = wide ? -0.24 * vW : 0;
+  points.position.y = (wide ? 0.15 : 1.35) + p * 1.2;
   uniforms.uScale.value = fit;
   uniforms.uOffset.value.set(points.position.x, points.position.y);
 }
