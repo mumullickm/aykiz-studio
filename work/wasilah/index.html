@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3RFHL0Q74F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3RFHL0Q74F');
+</script>
+
+<meta charset="utf-8" />
+<title>Wasilah — building a free Islamic app solo, with brand as the moat | Aykiz Intelligence</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="description" content="A case study: building Wasilah, a free, offline-first Islamic companion app, solo in Flutter. Treating the absence of monetization as the brand's competitive advantage." />
+<meta name="keywords" content="Wasilah case study, Islamic app, Flutter app, brand marketing, product marketing, offline-first app, App Store rejection, Muslim audience marketing, Miraz Mullick, Aykiz Intelligence" />
+<meta name="author" content="Miraz Mullick" />
+<meta name="theme-color" content="#02030A" />
+<link rel="icon" type="image/png" sizes="128x128" href="/assets/favicon.png" />
+<link rel="apple-touch-icon" href="/assets/icon-512.png" />
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Aykiz Intelligence" />
+<meta property="og:url" content="https://aykizintelligence.com/work/wasilah/" />
+<meta property="og:title" content="Wasilah — a free Islamic app, with brand as the moat" />
+<meta property="og:description" content="Building a free, offline-first Islamic companion solo in Flutter, and treating no-monetization as the brand position." />
+<meta property="og:image" content="https://aykizintelligence.com/assets/icon-512.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Wasilah — a case study" />
+<meta name="twitter:description" content="A free, offline-first Islamic app built solo. Brand as the moat." />
+<meta name="twitter:image" content="https://aykizintelligence.com/assets/icon-512.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+<link rel="canonical" href="https://aykizintelligence.com/work/wasilah/" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Wasilah — building a free Islamic app solo, with brand as the moat",
+  "author": { "@type": "Person", "name": "Miraz Mullick", "url": "https://aykizintelligence.com/founder/" },
+  "publisher": { "@type": "Organization", "name": "Aykiz Intelligence", "url": "https://aykizintelligence.com/" },
+  "about": { "@type": "MobileApplication", "name": "Wasilah", "operatingSystem": "iOS, Android", "applicationCategory": "LifestyleApplication" },
+  "mainEntityOfPage": "https://aykizintelligence.com/work/wasilah/",
+  "inLanguage": "en"
+}
+</script>
+
+<style>
+  :root{
+    --space:#04060D; --space-3:#0D111C;
+    --moon:#EEF2FA; --moon-soft:#C2CAD9; --moon-mute:#8A92A4;
+    --teal:#6BC5BD; --teal-deep:#2F8C84; --emerald:#1F6F5C;
+    --line:rgba(238,242,250,.08); --line-strong:rgba(238,242,250,.18);
+    --f-display:'Space Grotesk',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+    --f-body:'Geist',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+    --f-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+    --ease:cubic-bezier(0.16,1,0.3,1);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:radial-gradient(120% 90% at 50% -10%,#0a1024 0%,#04060f 46%,#02030A 100%);
+    background-attachment:fixed; color:var(--moon);
+    font-family:var(--f-body); line-height:1.7; -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility; overflow-x:hidden;
+  }
+  ::selection{background:var(--teal-deep);color:var(--moon)}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:4px}
+
+  .wrap{width:min(720px,90vw);margin:0 auto}
+
+  header.nav{display:flex;align-items:center;justify-content:space-between;padding:24px clamp(20px,5vw,56px)}
+  .brandmark{display:inline-flex;flex-direction:column;align-items:flex-end;line-height:1;text-decoration:none}
+  .brandmark .bm-word{font-family:'Geist',sans-serif;font-weight:600;letter-spacing:-.03em;color:var(--moon);font-size:21px}
+  .brandmark .bm-sub{font-family:'Geist',sans-serif;font-weight:500;text-transform:uppercase;color:var(--moon-mute);letter-spacing:.14em;padding-left:.14em;font-size:8px;margin-top:4px}
+  .nav .back{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--moon-soft);text-decoration:none;transition:color .3s var(--ease)}
+  .nav .back:hover{color:var(--moon)}
+
+  .hero{padding:clamp(56px,11vh,120px) 0 clamp(32px,6vh,64px)}
+  .hero .eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--teal);margin-bottom:22px}
+  .hero h1{font-family:var(--f-display);font-weight:600;font-size:clamp(34px,6vw,60px);line-height:1.02;letter-spacing:-.03em}
+  .hero .dek{margin-top:22px;font-size:clamp(16px,2.2vw,19px);color:var(--moon-soft);max-width:38ch}
+  .meta{display:flex;flex-wrap:wrap;gap:14px 28px;margin-top:32px;padding-top:24px;border-top:1px solid var(--line)}
+  .meta div{min-width:120px}
+  .meta .k{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--moon-mute)}
+  .meta .v{font-size:14px;color:var(--moon-soft);margin-top:5px}
+
+  article{padding-bottom:64px}
+  section{padding:clamp(32px,5vh,52px) 0;border-top:1px solid var(--line)}
+  section h2{font-family:var(--f-display);font-weight:600;font-size:clamp(22px,3.2vw,30px);letter-spacing:-.02em;line-height:1.15;margin-bottom:20px}
+  section p{color:var(--moon-soft);font-size:16px;margin-bottom:18px}
+  section p strong{color:var(--moon);font-weight:600}
+  section .num{font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;color:var(--teal);display:block;margin-bottom:12px}
+  ul.tight{list-style:none;margin:0 0 18px;padding:0}
+  ul.tight li{position:relative;padding-left:22px;color:var(--moon-soft);font-size:16px;margin-bottom:10px}
+  ul.tight li::before{content:"";position:absolute;left:0;top:11px;width:7px;height:7px;border-radius:50%;background:var(--teal);opacity:.8}
+  blockquote{margin:26px 0;padding:4px 0 4px 22px;border-left:2px solid var(--teal-deep);font-family:var(--f-display);font-weight:500;font-size:clamp(18px,2.6vw,23px);line-height:1.4;color:var(--moon);letter-spacing:-.01em}
+
+  .cta{margin-top:14px;padding:32px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,rgba(31,111,92,.10),rgba(255,255,255,0))}
+  .cta p{color:var(--moon-soft);font-size:15px;margin-bottom:18px}
+  .badges{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  .badges a{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-decoration:none;color:var(--moon);border:1px solid var(--line-strong);border-radius:999px;padding:10px 18px;transition:border-color .3s var(--ease),color .3s var(--ease)}
+  .badges a:hover{border-color:var(--teal);color:var(--teal)}
+
+  footer{border-top:1px solid var(--line);padding:40px 0 64px;text-align:center}
+  footer .l{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--moon-mute)}
+  footer a{color:var(--moon-soft);text-decoration:none}
+  footer a:hover{color:var(--moon)}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a href="/" class="brandmark" aria-label="Aykiz Intelligence home">
+    <span class="bm-word">aykız</span>
+    <span class="bm-sub">Intelligence</span>
+  </a>
+  <a class="back" href="/work/">← back to work</a>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Case study · Wasilah</div>
+    <h1>The app I refuse to make money from.</h1>
+    <p class="dek">A free, offline-first Islamic companion, built solo in Flutter. A study in treating the absence of monetization as the brand's moat.</p>
+    <div class="meta">
+      <div><div class="k">Role</div><div class="v">Solo: brand, product, build, growth</div></div>
+      <div><div class="k">Stack</div><div class="v">Flutter, fully client-side</div></div>
+      <div><div class="k">Status</div><div class="v">Live on App Store &amp; Google Play, free</div></div>
+    </div>
+  </div>
+
+  <article>
+    <section>
+      <span class="num">01 · The brief</span>
+      <h2>The brief I wrote for myself.</h2>
+      <p>Walk the Islamic app category for ten minutes and the pattern is obvious: interstitial ads on the prayer-time screen, a "Pro" tier that locks the Tasbih counter, dark-pattern notifications, and a Zakat calculator that hardcodes US dollars and silently breaks for everyone else.</p>
+      <p>The audience deserves better, and is more design-literate and more skeptical than most playbooks assume. The gap: there is no mainstream Islamic app built like a well-funded, well-mannered consumer product, but with the economics of charity instead of extraction. So I built it, not as a startup, but as <em>sadaqah jariyah</em>, ongoing charity.</p>
+      <blockquote>The reward is not in the dashboard. That sentence is the brief. Everything else followed from it.</blockquote>
+    </section>
+
+    <section>
+      <span class="num">02 · The constraint</span>
+      <h2>The constraint that did the heavy lifting.</h2>
+      <p>Never monetizing wasn't a flourish. It was the single most useful product constraint I could give myself. It forced:</p>
+      <ul class="tight">
+        <li><strong>No ads.</strong> Every screen is the actual product. Nothing to skip, dismiss, or wait through.</li>
+        <li><strong>No IAP, no Pro tier.</strong> Every feature is free from install. No upgrade prompt, ever.</li>
+        <li><strong>No dark-pattern notifications.</strong> Alerts fire only for prayers the user opted into. Engagement is structural, not manufactured.</li>
+        <li><strong>No account, no email capture.</strong> Wasilah doesn't know who you are. There is no funnel.</li>
+      </ul>
+      <p>Every trade-off where a normal product optimizes for revenue, I optimized for <strong>dignity</strong>. The result is a brand position no competitor holds: one product in the category whose message is genuinely "we do not want anything from you." That is the moat.</p>
+    </section>
+
+    <section>
+      <span class="num">03 · Brand</span>
+      <h2>The brand decisions.</h2>
+      <p><strong>Champagne gold on emerald green, never gold on cream.</strong> The rule lives in the codebase as a theme constraint that refuses to render gold text on the cream surface. Finicky, and the reason every screen reads as one brand. Emerald is the Madinah association; gold is the <em>tadhhib</em> gilding of Mamluk and Ottoman manuscripts. Centuries old, and almost no Islamic app uses it well.</p>
+      <p>The hardest call was illustration. My first three attempts at figurative SVG (Kaaba scenes, mosque silhouettes) were rejected in review, mine and others'. The lesson, now a standing rule: stop drawing the architecture. Use Arabic calligraphy and mihrab geometry as the visual language, because calligraphy is what the tradition has always been about.</p>
+      <p>And <strong>bilingual is not translated.</strong> English and Bangla from day one, Arabic in v1.1. Each language gets its own creative treatment, written native, not run through a translator.</p>
+    </section>
+
+    <section>
+      <span class="num">04 · The build</span>
+      <h2>Built solo, in the open.</h2>
+      <p>Flutter, fully client-side, no backend of my own. That was deliberate: no backend means no data collection, no servers, no recurring cost, no security surface beyond what the platforms provide. Privacy and terms pages sit on GitHub Pages at wasilah.site; prayer and audio data come from open APIs.</p>
+      <p>The work was AI-augmented from week one, as a review-decide-ship loop, not autopilot. The discipline that made it hold: I never shipped a feature I hadn't read and understood line by line. The audio architecture is the example I'd give in an interview, gapless Quran recitation across surahs needs the player's state and current-index streams <strong>merged into one provider</strong>, because the naive implementation silently misses track-advance events. Small fix; the difference between audio that "works" and audio that works.</p>
+      <p>A solo, non-CS-degree marketer shipping a polished cross-platform product in months is the meta-insight here. The tools are here. The bar has moved.</p>
+    </section>
+
+    <section>
+      <span class="num">05 · Launch</span>
+      <h2>The launch, and the App Store cycle.</h2>
+      <p>The first builds were rejected, once on the location pre-prompt UX. The fix was a single screen: a brand-styled explainer that appears <em>before</em> the native permission dialog and says, in plain language, why location is needed (prayer times, Qibla) and what is not done with it (no tracking, no transmission off-device). Reframed, not re-architected.</p>
+      <blockquote>App Store rejections feel catastrophic at 2 AM and look routine at 10 AM. If the feature is sound, the fix is usually UX scaffolding around the same code.</blockquote>
+      <p>In parallel I built the marketing system: a daily bilingual content rhythm on a principle I call <strong>"calling, not converting."</strong> The posts are not about Wasilah; they are about the tradition. The store badges sit in the footer, structural, never an in-body "download now." A custom HTML-to-image renderer turns one markdown file into square, story, and thumbnail in a single command, saving hours of design labour a week.</p>
+    </section>
+
+    <section>
+      <span class="num">06 · What it taught me</span>
+      <h2>Marketing to Muslim audiences, at scale.</h2>
+      <p><strong>1. The audience is sophisticated and undermarketed-to.</strong> Treat them like adults. Sincerity is read through specifics and restraint, not performative reverence. Assume your audience already knows what Maghrib is.</p>
+      <p><strong>2. Bilingual is not translated.</strong> The same caption in three languages reads as machine-translated to native speakers in all three. The right pattern is parallel writing, native in each. A hiring problem, not a tooling one.</p>
+      <p><strong>3. "Calling, not converting" compounds; ask-driven content corrodes.</strong> Posts that ask for nothing build a trust account. The badge in the footer is enough. Uncomfortable for direct-response training, and the only thing that works in faith-adjacent verticals at scale.</p>
+    </section>
+
+    <section>
+      <span class="num">07 · What it proves</span>
+      <h2>What Wasilah stands for.</h2>
+      <p>One product, end to end: a brand position held under a self-imposed quality bar, a polished cross-platform build, a daily bilingual content system, and an App Store review cycle survived without breaking voice or velocity. Made for the global Muslim consumer market, an audience I understand rather than have to learn.</p>
+      <p>It is live, it is free, and it will stay free.</p>
+      <div class="cta">
+        <p>See it for yourself.</p>
+        <div class="badges">
+          <a href="https://wasilah.site" target="_blank" rel="noopener">wasilah.site</a>
+          <a href="https://apps.apple.com/app/id6767919573" target="_blank" rel="noopener">App Store</a>
+          <a href="https://play.google.com/store/apps/details?id=site.wasilah.wasilah" target="_blank" rel="noopener">Google Play</a>
+        </div>
+      </div>
+    </section>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="l">Aykiz Intelligence · <a href="/work/">more work</a> · <a href="/founder/">about the founder</a></div>
+  </div>
+</footer>
+
+</body>
+</html>
