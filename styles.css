@@ -152,7 +152,7 @@ header.nav {
   padding: 24px clamp(20px, 5vw, 56px);
   background: linear-gradient(180deg, rgba(2,3,10,0.72) 0%, rgba(2,3,10,0.3) 62%, transparent 100%);
 }
-/* Aykiz logotype — Geist, lowercase dotless ı, "Intelligence" tucked under the kız. The moon lives in the alif mark, not the wordmark. */
+/* Aykiz logotype, Geist, lowercase dotless ı, "Intelligence" tucked under the kız. The moon lives in the alif mark, not the wordmark. */
 .brandmark { display: inline-flex; flex-direction: column; align-items: flex-end; line-height: 1; text-decoration: none; }
 .brandmark .bm-word { font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 600; letter-spacing: -0.03em; color: var(--moon); }
 .brandmark .bm-sub { font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 500; text-transform: uppercase; color: var(--moon-mute); letter-spacing: 0.14em; padding-left: 0.14em; }
@@ -202,7 +202,7 @@ header.nav {
 @keyframes cue { 0%{transform:scaleY(0);transform-origin:top} 40%{transform:scaleY(1);transform-origin:top}
                  60%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
 
-/* Desktop: split hero — alif mark breathes on the left, text reads as a left-aligned
+/* Desktop: split hero, alif mark breathes on the left, text reads as a left-aligned
    column on the right, both vertically centred. Mobile keeps the stacked, centred layout. */
 @media (min-width: 900px) {
   .hero {
