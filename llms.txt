@@ -15,7 +15,7 @@ Key facts:
 - [Drafy](https://aykizintelligence.com/drafy/): a free static QR code generator with no paywall and no tracking. Eight QR types. Live on the [App Store](https://apps.apple.com/app/drafy-qr-code-generator/id6777504506) since June 2026 and also works as a web app. A Google Play release is in closed testing.
 - [Crisp](https://aykizintelligence.com/crisp/): a free in-browser PDF toolkit. Merge, split, sign, crop, compress, stamp, and convert photos to PDF. Files are processed on-device and never uploaded.
 - [Verbatim](https://aykizintelligence.com/verbatim/): free private speech-to-text transcription that runs entirely in the browser with on-device Whisper. No uploads, no accounts.
-- [Misbah](https://aykizintelligence.com/misbah/): "Light in the Dark", a calm one-touch 2D game where oil is sight. No ads, no tracking, fully offline. Submitted to the App Store and Google Play in June 2026; releases expected within days. Web prototype playable at https://islamic-games-rho.vercel.app.
+- [Misbah](https://aykizintelligence.com/misbah/): "Light in the Dark", a calm one-touch 2D game where oil is sight. No ads, no tracking, fully offline. Playable now on the web; in closed testing on Google Play (Android). Not on the App Store. Web prototype at https://islamic-games-rho.vercel.app.
 
 ## People
 
