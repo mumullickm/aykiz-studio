@@ -1,75 +1,55 @@
-/* The Hirra cat: a flat 2.5D SVG face that follows the cursor, blinks, and
-   smiles when you come near. Pupils are clipped inside the eye so the gaze can
-   never leave the face. Eyes follow even under reduced motion (calm, non
-   vestibular); blinking and idle float are gated on motion preference and
-   pause when the mascot is offscreen. */
+/* The Hirra cat: Microsoft Fluent "Cat face" emoji (MIT licensed), recolored to
+   the Hirra palette and rigged to stay alive. The eyes translate toward the
+   cursor, blink on a human-like random cadence, and squint into a happy smile
+   with blushed cheeks when the cursor comes near. Eye-follow works under
+   reduced motion (calm, non vestibular); the float and blink are gated on motion
+   preference and pause when the cat is offscreen. */
 (function () {
   var wrap = document.getElementById('catMascot');
   if (!wrap) return;
   var svg = wrap.querySelector('.cat-svg');
-  var face = svg.querySelector('#catFace');
-  var mouth = svg.querySelector('#mouth');
-  var pupilL = svg.querySelector('#pupilL');
-  var pupilR = svg.querySelector('#pupilR');
-
-  var eyes = [
-    { el: pupilL, hx: 88, hy: 113, rx: 7, ry: 8 },
-    { el: pupilR, hx: 152, hy: 113, rx: 7, ry: 8 }
-  ];
-
-  var MOUTH_CALM = 'M120 148 Q120 156 109 158 M120 148 Q120 156 131 158';
-  var MOUTH_HAPPY = 'M120 149 Q120 163 103 162 M120 149 Q120 163 137 162';
+  if (!svg) return;
+  var tracks = Array.prototype.slice.call(svg.querySelectorAll('.eyeTrack'));
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var running = true, happy = false, blinkTimer = null, saccadeTimer = null;
-  var aim = { x: 0, y: 0, tx: 0, ty: 0, has: false };
+  var has = false;
 
-  function toSvg(clientX, clientY) {
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+  // map a client point into the svg viewBox (0..32), return offset from center
+  function aimEyes(clientX, clientY) {
     var r = svg.getBoundingClientRect();
     var vb = svg.viewBox.baseVal;
-    return { x: (clientX - r.left) / r.width * vb.width, y: (clientY - r.top) / r.height * vb.height };
+    var x = (clientX - r.left) / r.width * vb.width;
+    var y = (clientY - r.top) / r.height * vb.height;
+    var dx = clamp((x - 16) / 13, -1, 1) * 1.05;
+    var dy = clamp((y - 17) / 13, -1, 1) * 0.85;
+    setEyes(dx, dy);
   }
-
-  function placePupils(tx, ty) {
-    eyes.forEach(function (e) {
-      var dx = tx - e.hx, dy = ty - e.hy;
-      var mag = Math.sqrt((dx * dx) / (e.rx * e.rx) + (dy * dy) / (e.ry * e.ry));
-      if (mag > 1) { dx /= mag; dy /= mag; }
-      e.el.setAttribute('cx', (e.hx + dx).toFixed(2));
-      e.el.setAttribute('cy', (e.hy + dy).toFixed(2));
-    });
+  function setEyes(dx, dy) {
+    var t = 'translate(' + dx.toFixed(2) + ' ' + dy.toFixed(2) + ')';
+    tracks.forEach(function (g) { g.setAttribute('transform', t); });
   }
-  function centerPupils() { eyes.forEach(function (e) { e.el.setAttribute('cx', e.hx); e.el.setAttribute('cy', e.hy); }); }
-
-  function tiltFace(tx, ty) {
-    var dx = Math.max(-1, Math.min(1, (tx - 120) / 120));
-    var dy = Math.max(-1, Math.min(1, (ty - 110) / 110));
-    face.setAttribute('transform', 'translate(' + (dx * 4).toFixed(2) + ' ' + (dy * 3).toFixed(2) + ')');
-  }
-  function resetFace() { face.setAttribute('transform', 'translate(0 0)'); }
 
   function setHappy(on) {
     if (happy === on) return;
     happy = on;
     svg.classList.toggle('is-happy', on);
-    mouth.setAttribute('d', on ? MOUTH_HAPPY : MOUTH_CALM);
   }
 
   function onMove(ev) {
-    var p = toSvg(ev.clientX, ev.clientY);
-    aim.tx = p.x; aim.ty = p.y; aim.has = true;
-    placePupils(p.x, p.y);
-    if (!reduce) tiltFace(p.x, p.y);
-    var r = wrap.getBoundingClientRect(), pad = 90;
+    has = true;
+    aimEyes(ev.clientX, ev.clientY);
+    var r = wrap.getBoundingClientRect(), pad = 95;
     setHappy(ev.clientX > r.left - pad && ev.clientX < r.right + pad && ev.clientY > r.top - pad && ev.clientY < r.bottom + pad);
   }
-  function onLeave() { aim.has = false; centerPupils(); resetFace(); setHappy(false); }
+  function onLeave() { has = false; setEyes(0, 0); setHappy(false); }
 
   window.addEventListener('pointermove', onMove, { passive: true });
   window.addEventListener('blur', onLeave);
   document.addEventListener('mouseleave', onLeave);
 
-  // blink: random 2.6 to 6.5s with occasional quick double blink
   function blink(after) {
     svg.classList.add('is-blinking');
     setTimeout(function () { svg.classList.remove('is-blinking'); if (after) after(); }, 110);
@@ -83,16 +63,16 @@
       });
     }, 2600 + Math.random() * 3900);
   }
-  // idle micro-saccade: tiny gaze drift when the cursor is away, so it stays alive
+  // gentle idle gaze drift when the cursor is away, so it never freezes
   function scheduleSaccade() {
     if (reduce || !running) { saccadeTimer = null; return; }
     saccadeTimer = setTimeout(function () {
-      if (!aim.has) {
-        var a = Math.random() * Math.PI * 2, m = 0.4 + Math.random() * 0.5;
-        eyes.forEach(function (e) { e.el.setAttribute('cx', (e.hx + Math.cos(a) * e.rx * m).toFixed(2)); e.el.setAttribute('cy', (e.hy + Math.sin(a) * e.ry * m).toFixed(2)); });
+      if (!has && !happy) {
+        var a = Math.random() * Math.PI * 2, m = 0.25 + Math.random() * 0.35;
+        setEyes(Math.cos(a) * m, Math.sin(a) * m * 0.7);
       }
       scheduleSaccade();
-    }, 1400 + Math.random() * 2200);
+    }, 1500 + Math.random() * 2400);
   }
   function stop() { if (blinkTimer) clearTimeout(blinkTimer); if (saccadeTimer) clearTimeout(saccadeTimer); blinkTimer = saccadeTimer = null; svg.classList.remove('is-blinking'); }
 
@@ -104,8 +84,7 @@
     }, { threshold: 0.1 }).observe(wrap);
   }
 
-  centerPupils();
-  setHappy(false);
+  setEyes(0, 0);
   scheduleBlink();
   scheduleSaccade();
 })();
