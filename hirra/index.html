@@ -84,7 +84,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;1,6..12,400&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;1,6..12,400&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
 
 <style>
   :root {
@@ -395,6 +395,32 @@
     .hero-clouds i, .cat-svg { animation: none !important; }
     .pin-step { opacity: 1; transform: none; }
   }
+
+  /* ---------- language toggle ---------- */
+  .lang-toggle { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: transparent; cursor: pointer; }
+  .lang-toggle span { font-family: "Space Grotesk", monospace; font-size: 0.74rem; line-height: 1; padding: 4px 9px; border-radius: 999px; color: var(--slate); transition: background 0.25s ease, color 0.25s ease; }
+  .lang-toggle span[data-l="ar"] { font-family: "Cairo", sans-serif; font-size: 0.86rem; }
+  .lang-toggle[data-lang="en"] span[data-l="en"], .lang-toggle[data-lang="ar"] span[data-l="ar"] { background: var(--ink); color: var(--ground); }
+  .lang-toggle:hover { border-color: var(--slate-faint); }
+
+  /* ---------- Arabic typography + RTL ---------- */
+  body.lang-ar { font-family: "Cairo", "Nunito Sans", sans-serif; }
+  body.lang-ar h1, body.lang-ar h2, body.lang-ar h3, body.lang-ar h4,
+  body.lang-ar .hero h1, body.lang-ar .intent .big, body.lang-ar .pin-statement,
+  body.lang-ar .section-head h2, body.lang-ar .index .row h3, body.lang-ar .plan .p-name,
+  body.lang-ar .plan .p-price, body.lang-ar .trust .cell .q, body.lang-ar .f-pitch,
+  body.lang-ar .faq summary, body.lang-ar .nav .brand { font-family: "Cairo", sans-serif; letter-spacing: 0; line-height: 1.3; }
+  body.lang-ar .hero h1 { line-height: 1.18; }
+  body.lang-ar .eyebrow, body.lang-ar .label, body.lang-ar .nav .links a.menu,
+  body.lang-ar .nav .cta, body.lang-ar .ticker .item, body.lang-ar .signup label,
+  body.lang-ar .f-cols .col h5, body.lang-ar .plan .p-cta, body.lang-ar .hero-note,
+  body.lang-ar .scroll-cue { font-family: "Cairo", sans-serif; letter-spacing: 0; text-transform: none; }
+  body.lang-ar .num, body.lang-ar .n, body.lang-ar .s-n, body.lang-ar .p-price { font-family: "Space Grotesk", monospace; }
+  /* RTL position fixes */
+  html[dir="rtl"] .scroll-cue { left: auto; right: var(--gutter); }
+  html[dir="rtl"] .f-legal .copy { margin-left: 0; margin-right: auto; }
+  html[dir="rtl"] .index .row:hover, html[dir="rtl"] .index .row:focus-within { padding-left: 0; padding-right: 1.4rem; }
+  html[dir="rtl"] .pin-step { text-align: right; }
 </style>
 </head>
 <body>
@@ -404,11 +430,12 @@
 <nav class="nav" id="nav">
   <a class="brand" href="#top"><img src="assets/icon-1024.png" alt="" />Hirra</a>
   <div class="links">
-    <a class="menu" href="#how">Features</a>
-    <a class="menu" href="#early">Early warning</a>
-    <a class="menu" href="#plus">Plus</a>
-    <a class="menu" href="#faq">FAQ</a>
-    <a class="cta" href="#notify">Notify me</a>
+    <a class="menu" href="#how" data-i18n="nav.features">Features</a>
+    <a class="menu" href="#early" data-i18n="nav.early">Early warning</a>
+    <a class="menu" href="#plus" data-i18n="nav.plus">Plus</a>
+    <a class="menu" href="#faq" data-i18n="nav.faq">FAQ</a>
+    <button id="langToggle" class="lang-toggle" type="button" aria-label="Switch language / تغيير اللغة" data-lang="en"><span data-l="en">EN</span><span data-l="ar">ع</span></button>
+    <a class="cta" href="#notify" data-i18n="nav.cta">Notify me</a>
   </div>
 </nav>
 
@@ -419,16 +446,16 @@
     <div class="hero-clouds" aria-hidden="true"><i class="c1"></i><i class="c2"></i><i class="c3"></i></div>
     <div class="hero-grid">
       <div class="hero-copy">
-        <span class="kicker"><span class="dot" aria-hidden="true"></span><span class="eyebrow">A cat health companion · هِرّة</span></span>
-        <h1 class="lines" aria-label="Catch the quiet signs.">
+        <span class="kicker"><span class="dot" aria-hidden="true"></span><span class="eyebrow" data-i18n="hero.kicker">A cat health companion · هِرّة</span></span>
+        <h1 class="lines" aria-label="Catch the quiet signs." data-i18n="hero.h1">
           <span class="line"><span>Catch the</span></span>
           <span class="line"><span><em class="accent" style="font-style:normal">quiet</em> signs</span></span>
           <span class="line"><span>in your cat.</span></span>
         </h1>
-        <p class="lede">A ten second daily check-in that learns your cat's own normal, then notices the trouble cats are built to hide. Care, not alarm.</p>
+        <p class="lede" data-i18n="hero.lede">A ten second daily check-in that learns your cat's own normal, then notices the trouble cats are built to hide. Care, not alarm.</p>
         <div class="hero-actions">
           <span class="store-badge soon"><img src="assets/App_Store.svg" alt="Coming soon to the App Store" /></span>
-          <span class="hero-note"><b>Coming soon</b> to iPhone</span>
+          <span class="hero-note" data-i18n="hero.note"><b>Coming soon</b> to iPhone</span>
         </div>
       </div>
       <div class="hero-cat" id="catMascot" role="img" aria-label="Hirra, a friendly cat whose eyes follow your cursor">
@@ -768,17 +795,17 @@
 </svg>
       </div>
     </div>
-    <a class="scroll-cue" href="#why"><span class="bar" aria-hidden="true"></span>Scroll</a>
+    <a class="scroll-cue" href="#why" data-i18n="hero.scroll"><span class="bar" aria-hidden="true"></span>Scroll</a>
   </header>
 
   <!-- TICKER -->
   <div class="ticker" aria-label="What Hirra stands for">
     <div class="row">
       <div class="track">
-        <span class="item">On-device</span><span class="item">No account</span><span class="item">Never diagnoses</span><span class="item">Routes to your vet</span><span class="item">Care, not alarm</span><span class="item">Arabic first</span>
+        <span class="item" data-i18n="t.ondevice">On-device</span><span class="item" data-i18n="t.noaccount">No account</span><span class="item" data-i18n="t.neverdx">Never diagnoses</span><span class="item" data-i18n="t.routes">Routes to your vet</span><span class="item" data-i18n="t.care">Care, not alarm</span><span class="item" data-i18n="t.arabic">Arabic first</span>
       </div>
       <div class="track" aria-hidden="true">
-        <span class="item">On-device</span><span class="item">No account</span><span class="item">Never diagnoses</span><span class="item">Routes to your vet</span><span class="item">Care, not alarm</span><span class="item">Arabic first</span>
+        <span class="item" data-i18n="t.ondevice">On-device</span><span class="item" data-i18n="t.noaccount">No account</span><span class="item" data-i18n="t.neverdx">Never diagnoses</span><span class="item" data-i18n="t.routes">Routes to your vet</span><span class="item" data-i18n="t.care">Care, not alarm</span><span class="item" data-i18n="t.arabic">Arabic first</span>
       </div>
     </div>
   </div>
@@ -787,9 +814,9 @@
   <section class="band" id="why">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="eyebrow">The reason</span>
-        <h2>Cats are built to hide illness. By the time it shows, it is often late.</h2>
-        <p>The three most common silent killers, kidney disease, hyperthyroidism and diabetes, all leak the same quiet early signs through the litter box, the water bowl and the scales, long before a cat looks unwell. Hirra is the calm habit that helps you notice.</p>
+        <span class="eyebrow" data-i18n="why.eyebrow">The reason</span>
+        <h2 data-i18n="why.h2">Cats are built to hide illness. By the time it shows, it is often late.</h2>
+        <p data-i18n="why.p">The three most common silent killers, kidney disease, hyperthyroidism and diabetes, all leak the same quiet early signs through the litter box, the water bowl and the scales, long before a cat looks unwell. Hirra is the calm habit that helps you notice.</p>
       </div>
     </div>
   </section>
@@ -798,29 +825,29 @@
   <section class="band tight" id="how">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="eyebrow">How it works</span>
-        <h2>Four quiet things, working together.</h2>
+        <span class="eyebrow" data-i18n="how.eyebrow">How it works</span>
+        <h2 data-i18n="how.h2">Four quiet things, working together.</h2>
       </div>
       <ol class="index" style="list-style:none">
         <li class="row reveal" tabindex="0">
           <span class="n num">(01)</span>
-          <h3>The ten second check-in</h3>
-          <p>Tap once to log appetite, water, litter, activity and weight. Smart defaults mean a normal day is a single tap.</p>
+          <h3 data-i18n="i1.h3">The ten second check-in</h3>
+          <p data-i18n="i1.p">Tap once to log appetite, water, litter, activity and weight. Smart defaults mean a normal day is a single tap.</p>
         </li>
         <li class="row reveal" tabindex="0">
           <span class="n num">(02)</span>
-          <h3>An engine that learns your cat</h3>
-          <p>Hirra builds a baseline from your cat's own normal, then watches for drift instead of guessing from a generic chart.</p>
+          <h3 data-i18n="i2.h3">An engine that learns your cat</h3>
+          <p data-i18n="i2.p">Hirra builds a baseline from your cat's own normal, then watches for drift instead of guessing from a generic chart.</p>
         </li>
         <li class="row reveal" tabindex="0">
           <span class="n num">(03)</span>
-          <h3>The pattern vets recognise</h3>
-          <p>Steady weight loss with rising thirst is the signal clinicians look for. Hirra connects the dots owners usually miss.</p>
+          <h3 data-i18n="i3.h3">The pattern vets recognise</h3>
+          <p data-i18n="i3.p">Steady weight loss with rising thirst is the signal clinicians look for. Hirra connects the dots owners usually miss.</p>
         </li>
         <li class="row reveal" tabindex="0">
           <span class="n num">(04)</span>
-          <h3>Private by design</h3>
-          <p>Your cat's record stays on your device. No account, no tracking, nothing sold. Your data is yours.</p>
+          <h3 data-i18n="i4.h3">Private by design</h3>
+          <p data-i18n="i4.p">Your cat's record stays on your device. No account, no tracking, nothing sold. Your data is yours.</p>
         </li>
       </ol>
     </div>
@@ -829,32 +856,32 @@
   <!-- INTENT LINE -->
   <section class="band intent">
     <div class="wrap reveal">
-      <p class="big">Care, <span class="amber">not alarm.</span></p>
-      <p>Amber when something is genuinely worth a look. Calm the rest of the time. Hirra is built to be kept up with, not to make you anxious.</p>
+      <p class="big" data-i18n="intent.big">Care, <span class="amber">not alarm.</span></p>
+      <p data-i18n="intent.p">Amber when something is genuinely worth a look. Calm the rest of the time. Hirra is built to be kept up with, not to make you anxious.</p>
     </div>
   </section>
 
   <!-- EARLY WARNING (pinned) -->
   <section class="band pin-parent" id="early" style="padding-bottom:0">
     <div class="wrap pin-inner">
-      <span class="eyebrow reveal">The difference</span>
-      <p class="pin-statement reveal">Amber, <span class="amber">before</span> it becomes alarm.</p>
+      <span class="eyebrow reveal" data-i18n="early.eyebrow">The difference</span>
+      <p class="pin-statement reveal" data-i18n="early.statement">Amber, <span class="amber">before</span> it becomes alarm.</p>
       <div class="pin-steps">
         <div class="pin-step" data-step="0">
           <span class="s-n num">01</span>
-          <div><h4>It learns the baseline</h4><p>A few taps a week and Hirra knows your cat's own normal weight, thirst and litter rhythm.</p></div>
+          <div><h4 data-i18n="s1.h4">It learns the baseline</h4><p data-i18n="s1.p">A few taps a week and Hirra knows your cat's own normal weight, thirst and litter rhythm.</p></div>
         </div>
         <div class="pin-step" data-step="1">
           <span class="s-n num">02</span>
-          <div><h4>It watches for drift</h4><p>Not one bad day. A sustained move away from normal, the kind a busy owner cannot see by eye.</p></div>
+          <div><h4 data-i18n="s2.h4">It watches for drift</h4><p data-i18n="s2.p">Not one bad day. A sustained move away from normal, the kind a busy owner cannot see by eye.</p></div>
         </div>
         <div class="pin-step" data-step="2">
           <span class="s-n num">03</span>
-          <div><h4>It connects the signs</h4><p>Weight loss with rising thirst is the pattern vets recognise. Hirra surfaces it as one clear concern.</p></div>
+          <div><h4 data-i18n="s3.h4">It connects the signs</h4><p data-i18n="s3.p">Weight loss with rising thirst is the pattern vets recognise. Hirra surfaces it as one clear concern.</p></div>
         </div>
         <div class="pin-step" data-step="3">
           <span class="s-n num">04</span>
-          <div><h4>It routes you to a vet</h4><p>Plainly, calmly, with what to mention. Hirra never diagnoses. The decision and the visit are yours.</p></div>
+          <div><h4 data-i18n="s4.h4">It routes you to a vet</h4><p data-i18n="s4.p">Plainly, calmly, with what to mention. Hirra never diagnoses. The decision and the visit are yours.</p></div>
         </div>
       </div>
     </div>
@@ -864,13 +891,13 @@
   <section class="band" id="trust">
     <div class="wrap">
       <div class="section-head reveal" style="margin-bottom:50px">
-        <span class="eyebrow">Built with care</span>
-        <h2>Honest by design.</h2>
+        <span class="eyebrow" data-i18n="trust.eyebrow">Built with care</span>
+        <h2 data-i18n="trust.h2">Honest by design.</h2>
       </div>
       <div class="trust reveal">
-        <div class="cell"><p class="q">It never diagnoses.</p><p class="a">Hirra triages and routes to a qualified vet. It is guidance to help you notice, not a medical verdict.</p></div>
-        <div class="cell"><p class="q">It stays on your phone.</p><p class="a">No account, no analytics, no advertising identifiers. Your cat's health record never leaves your device.</p></div>
-        <div class="cell"><p class="q">It is calm on purpose.</p><p class="a">Amber for watch, never a red wall. No upsell on a worrying moment. Care is the whole point.</p></div>
+        <div class="cell"><p class="q" data-i18n="tc1.q">It never diagnoses.</p><p class="a" data-i18n="tc1.a">Hirra triages and routes to a qualified vet. It is guidance to help you notice, not a medical verdict.</p></div>
+        <div class="cell"><p class="q" data-i18n="tc2.q">It stays on your phone.</p><p class="a" data-i18n="tc2.a">No account, no analytics, no advertising identifiers. Your cat's health record never leaves your device.</p></div>
+        <div class="cell"><p class="q" data-i18n="tc3.q">It is calm on purpose.</p><p class="a" data-i18n="tc3.a">Amber for watch, never a red wall. No upsell on a worrying moment. Care is the whole point.</p></div>
       </div>
     </div>
   </section>
@@ -879,34 +906,34 @@
   <section class="band" id="plus">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="eyebrow">Pricing</span>
-        <h2>Safety is free. Plus goes further.</h2>
-        <p>The daily check-in, the living status face and the rules-based early-warning engine are free, always. Hirra Plus adds the deeper tools for owners who want them.</p>
+        <span class="eyebrow" data-i18n="plus.eyebrow">Pricing</span>
+        <h2 data-i18n="plus.h2">Safety is free. Plus goes further.</h2>
+        <p data-i18n="plus.p">The daily check-in, the living status face and the rules-based early-warning engine are free, always. Hirra Plus adds the deeper tools for owners who want them.</p>
       </div>
       <div class="plans">
         <div class="plan reveal">
-          <span class="p-name">Hirra</span>
-          <span class="p-price">Free</span>
+          <span class="p-name" data-i18n="plan1.name">Hirra</span>
+          <span class="p-price" data-i18n="plan1.price">Free</span>
           <ul>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg>The ten second daily check-in</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg>Living status face and reminders</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg>Rules-based early-warning engine</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg>Widgets and Siri logging</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg>On-device and private</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg><span data-i18n="plan1.f1">The ten second daily check-in</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg><span data-i18n="plan1.f2">Living status face and reminders</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg><span data-i18n="plan1.f3">Rules-based early-warning engine</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg><span data-i18n="plan1.f4">Widgets and Siri logging</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg><span data-i18n="plan1.f5">On-device and private</span></li>
           </ul>
-          <span class="p-cta">Included at launch</span>
+          <span class="p-cta" data-i18n="plan1.cta">Included at launch</span>
         </div>
         <div class="plan featured reveal" style="--i:1">
-          <span class="p-name">Hirra Plus</span>
-          <span class="p-price">$4.99<span> / month · 7 day trial</span></span>
+          <span class="p-name" data-i18n="plan2.name">Hirra Plus</span>
+          <span class="p-price" data-i18n="plan2.price">$4.99<span> / month · 7 day trial</span></span>
           <ul>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg>Everything in free</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg>AI vet triage for a symptom or photo</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg>A weekly health digest</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg>A vet-ready PDF to take to the clinic</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg>More than one cat</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg><span data-i18n="plan2.f1">Everything in free</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg><span data-i18n="plan2.f2">AI vet triage for a symptom or photo</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg><span data-i18n="plan2.f3">A weekly health digest</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg><span data-i18n="plan2.f4">A vet-ready PDF to take to the clinic</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m5 13 4 4L19 7"/></svg><span data-i18n="plan2.f5">More than one cat</span></li>
           </ul>
-          <a class="p-cta" href="#notify">Notify me at launch</a>
+          <a class="p-cta" href="#notify" data-i18n="plan2.cta">Notify me at launch</a>
         </div>
       </div>
     </div>
@@ -915,40 +942,40 @@
   <!-- PRIVACY -->
   <section class="band intent" id="privacy">
     <div class="wrap reveal">
-      <span class="eyebrow" style="display:block;margin-bottom:22px">The promise</span>
-      <p class="big">On-device.<br>No account.<br>Yours.</p>
-      <p>Your cat's health data stays on your phone. We do not run an account system, we do not track you, and we do not sell anything about you or your cat.</p>
+      <span class="eyebrow" style="display:block;margin-bottom:22px" data-i18n="privacy.eyebrow">The promise</span>
+      <p class="big" data-i18n="privacy.big">On-device.<br>No account.<br>Yours.</p>
+      <p data-i18n="privacy.p">Your cat's health data stays on your phone. We do not run an account system, we do not track you, and we do not sell anything about you or your cat.</p>
     </div>
   </section>
 
   <!-- FAQ -->
   <section class="band tight" id="faq">
     <div class="wrap">
-      <div class="section-head reveal"><span class="eyebrow">Questions</span><h2>Asked, answered.</h2></div>
+      <div class="section-head reveal"><span class="eyebrow" data-i18n="faq.eyebrow">Questions</span><h2 data-i18n="faq.h2">Asked, answered.</h2></div>
       <div class="faq reveal">
         <details>
-          <summary>What does Hirra mean?<span class="ic" aria-hidden="true"></span></summary>
-          <p>Hirra (هِرّة) is the classical Arabic word for a female cat. Cats are loved in Islamic tradition, and Hirra is built first for cat owners in the Gulf, in Arabic and English.</p>
+          <summary data-i18n="faq.q1">What does Hirra mean?<span class="ic" aria-hidden="true"></span></summary>
+          <p data-i18n="faq.a1">Hirra (هِرّة) is the classical Arabic word for a female cat. Cats are loved in Islamic tradition, and Hirra is built first for cat owners in the Gulf, in Arabic and English.</p>
         </details>
         <details>
-          <summary>Does Hirra diagnose my cat?<span class="ic" aria-hidden="true"></span></summary>
-          <p>No. Hirra never diagnoses. It learns your cat's normal, helps you notice changes worth a look, and helps you bring them to a qualified vet. The visit and the decision are always yours.</p>
+          <summary data-i18n="faq.q2">Does Hirra diagnose my cat?<span class="ic" aria-hidden="true"></span></summary>
+          <p data-i18n="faq.a2">No. Hirra never diagnoses. It learns your cat's normal, helps you notice changes worth a look, and helps you bring them to a qualified vet. The visit and the decision are always yours.</p>
         </details>
         <details>
-          <summary>Is my cat's data private?<span class="ic" aria-hidden="true"></span></summary>
-          <p>Yes. The health record stays on your device. There is no account, no analytics, no advertising identifiers, and nothing is sold. Deleting the app removes its data.</p>
+          <summary data-i18n="faq.q3">Is my cat's data private?<span class="ic" aria-hidden="true"></span></summary>
+          <p data-i18n="faq.a3">Yes. The health record stays on your device. There is no account, no analytics, no advertising identifiers, and nothing is sold. Deleting the app removes its data.</p>
         </details>
         <details>
-          <summary>What does the amber mean?<span class="ic" aria-hidden="true"></span></summary>
-          <p>Amber is Hirra's way of saying something is genuinely worth a look, calmly. It is never a red alarm and there is never an upsell on a worrying moment. Most days are quiet.</p>
+          <summary data-i18n="faq.q4">What does the amber mean?<span class="ic" aria-hidden="true"></span></summary>
+          <p data-i18n="faq.a4">Amber is Hirra's way of saying something is genuinely worth a look, calmly. It is never a red alarm and there is never an upsell on a worrying moment. Most days are quiet.</p>
         </details>
         <details>
-          <summary>Do I need Hirra Plus?<span class="ic" aria-hidden="true"></span></summary>
-          <p>No. The daily check-in and the rules-based early-warning engine are free. Plus adds AI vet triage, a weekly digest, a vet-ready PDF and support for more than one cat, for owners who want them.</p>
+          <summary data-i18n="faq.q5">Do I need Hirra Plus?<span class="ic" aria-hidden="true"></span></summary>
+          <p data-i18n="faq.a5">No. The daily check-in and the rules-based early-warning engine are free. Plus adds AI vet triage, a weekly digest, a vet-ready PDF and support for more than one cat, for owners who want them.</p>
         </details>
         <details>
-          <summary>When is Hirra coming out?<span class="ic" aria-hidden="true"></span></summary>
-          <p>Hirra is coming soon to iPhone, Gulf first. Leave your email below and we will send you the launch note. Android comes later.</p>
+          <summary data-i18n="faq.q6">When is Hirra coming out?<span class="ic" aria-hidden="true"></span></summary>
+          <p data-i18n="faq.a6">Hirra is coming soon to iPhone, Gulf first. Leave your email below and we will send you the launch note. Android comes later.</p>
         </details>
       </div>
     </div>
@@ -959,12 +986,12 @@
 <footer class="footer" id="notify">
   <div class="wrap">
     <div class="f-top">
-      <p class="f-pitch reveal">A calm, private way to keep an eye on the cat you love.</p>
+      <p class="f-pitch reveal" data-i18n="footer.pitch">A calm, private way to keep an eye on the cat you love.</p>
       <form class="signup reveal" id="notify-form" novalidate>
-        <label for="email">Get the launch note</label>
+        <label for="email" data-i18n="footer.notelabel">Get the launch note</label>
         <div class="row">
-          <input id="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required aria-label="Your email" />
-          <button type="submit">Notify me &rarr;</button>
+          <input id="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" data-i18n-ph="footer.emailph" required aria-label="Your email" />
+          <button type="submit" data-i18n="footer.notifybtn">Notify me &rarr;</button>
         </div>
         <p id="notify-msg" style="margin-top:14px;font-size:0.84rem;color:#5BE0CF;min-height:1.2em" aria-live="polite"></p>
       </form>
@@ -972,26 +999,26 @@
 
     <div class="f-cols">
       <div class="col">
-        <h5>Hirra</h5>
-        <a href="#how">Features</a>
-        <a href="#early">Early warning</a>
-        <a href="#plus">Hirra Plus</a>
-        <a href="#faq">FAQ</a>
+        <h5 data-i18n="footer.col1h">Hirra</h5>
+        <a href="#how" data-i18n="footer.f1">Features</a>
+        <a href="#early" data-i18n="footer.f2">Early warning</a>
+        <a href="#plus" data-i18n="footer.f3">Hirra Plus</a>
+        <a href="#faq" data-i18n="footer.f4">FAQ</a>
       </div>
       <div class="col">
-        <h5>Legal</h5>
-        <a href="privacy.html">Privacy policy</a>
-        <a href="support.html">Support</a>
+        <h5 data-i18n="footer.col2h">Legal</h5>
+        <a href="privacy.html" data-i18n="footer.legal1">Privacy policy</a>
+        <a href="support.html" data-i18n="footer.legal2">Support</a>
       </div>
       <div class="col">
-        <h5>The studio</h5>
+        <h5 data-i18n="footer.col3h">The studio</h5>
         <a href="https://aykizintelligence.com/">Aykiz Intelligence</a>
         <a href="https://wasilah.site/">Wasilah</a>
         <a href="https://aykizintelligence.com/drafy/">Drafy</a>
         <a href="https://aykizintelligence.com/crisp/">Crisp</a>
       </div>
       <div class="col">
-        <h5>Contact</h5>
+        <h5 data-i18n="footer.col4h">Contact</h5>
         <a href="mailto:hello@aykizintelligence.com">hello@aykizintelligence.com</a>
         <a href="https://www.instagram.com/" rel="noopener">Instagram</a>
       </div>
@@ -1007,9 +1034,9 @@
 
   <div class="wrap">
     <div class="f-legal">
-      <a href="privacy.html">Privacy</a>
-      <a href="support.html">Support</a>
-      <span>Hirra is a product of Aykiz Intelligence</span>
+      <a href="privacy.html" data-i18n="footer.fl_privacy">Privacy</a>
+      <a href="support.html" data-i18n="footer.legal2">Support</a>
+      <span data-i18n="footer.fl_product">Hirra is a product of Aykiz Intelligence</span>
       <span class="copy">© <span id="year">2026</span> Aykiz Intelligence</span>
     </div>
   </div>
@@ -1017,6 +1044,146 @@
 
 <script src="cat.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.23/dist/lenis.min.js" defer></script>
+<script>
+  /* bilingual: Arabic is the first language of the product, English is the
+     toggle. English copy lives in the markup; Arabic comes from this map. */
+  var I18N_AR = {
+    "nav.features": "المزايا",
+    "nav.early": "الإنذار المبكر",
+    "nav.plus": "بلس",
+    "nav.faq": "الأسئلة",
+    "nav.cta": "أبلغيني",
+    "hero.kicker": "رفيقة صحة قطتك · هِرّة",
+    "hero.h1": "<span class=\"line\"><span>اكتشفي</span></span><span class=\"line\"><span>العلامات <em class=\"accent\" style=\"font-style:normal\">الصامتة</em></span></span><span class=\"line\"><span>في قطتك.</span></span>",
+    "hero.lede": "تسجيل يومي في عشر ثوانٍ يتعلّم الحالة الطبيعية لقطتك، ثم يلاحظ المتاعب التي تجيد القطط إخفاءها. رعاية لا إنذار.",
+    "hero.note": "<b>قريبًا</b> على iPhone",
+    "hero.scroll": "<span class=\"bar\" aria-hidden=\"true\"></span>مرّري",
+    "t.ondevice": "على جهازك",
+    "t.noaccount": "بلا حساب",
+    "t.neverdx": "لا تُشخّص أبدًا",
+    "t.routes": "توجّهك إلى الطبيب البيطري",
+    "t.care": "رعاية لا إنذار",
+    "t.arabic": "بالعربية أولًا",
+    "why.eyebrow": "السبب",
+    "why.h2": "القطط مجبولة على إخفاء المرض، وحين تظهر العلامات يكون الوقت قد تأخّر غالبًا.",
+    "why.p": "أكثر ثلاثة أمراض صامتة فتكًا، وهي أمراض الكلى وفرط نشاط الغدة الدرقية والسكري، تترك العلامات المبكرة نفسها في صندوق الفضلات ووعاء الماء وعلى الميزان، قبل وقت طويل من ظهور المرض على قطتك. هِرّة هي العادة الهادئة التي تساعدك على الملاحظة.",
+    "how.eyebrow": "كيف تعمل",
+    "how.h2": "أربعة أمور هادئة، تعمل معًا.",
+    "i1.h3": "تسجيل في عشر ثوانٍ",
+    "i1.p": "بضغطة واحدة سجّلي الشهية والماء وصندوق الفضلات والنشاط والوزن. الإعدادات الذكية تجعل اليوم الطبيعي بضغطة واحدة.",
+    "i2.h3": "محرّك يتعلّم قطتك",
+    "i2.p": "تبني هِرّة مرجعًا من الحالة الطبيعية لقطتك، ثم تراقب أي انحراف عنها بدل التخمين من رسم بياني عام.",
+    "i3.h3": "النمط الذي يعرفه الأطباء",
+    "i3.p": "فقدان الوزن المستمر مع زيادة العطش هو العلامة التي يبحث عنها الأطباء. تربط هِرّة الخيوط التي تفوت أصحاب القطط عادةً.",
+    "i4.h3": "خاصة بطبيعتها",
+    "i4.p": "يبقى سجل قطتك على جهازك. بلا حساب، بلا تتبّع، ولا شيء يُباع. بياناتك ملكك.",
+    "intent.big": "رعاية، <span class=\"amber\">لا إنذار.</span>",
+    "intent.p": "كهرماني حين يستحق الأمر النظر فعلًا، وهادئ في بقية الوقت. صُمّمت هِرّة لتواظبي عليها، لا لتثير قلقك.",
+    "early.eyebrow": "الفارق",
+    "early.statement": "كهرماني، <span class=\"amber\">قبل</span> أن يصبح إنذارًا.",
+    "s1.h4": "تتعلّم الحالة الطبيعية",
+    "s1.p": "بضع نقرات في الأسبوع وتعرف هِرّة وزن قطتك وعطشها وإيقاع فضلاتها الطبيعي.",
+    "s2.h4": "تراقب الانحراف",
+    "s2.p": "ليس يومًا سيئًا واحدًا، بل ابتعادًا مستمرًا عن الطبيعي، من النوع الذي لا تراه العين المشغولة.",
+    "s3.h4": "تربط العلامات",
+    "s3.p": "فقدان الوزن مع زيادة العطش هو النمط الذي يعرفه الأطباء. تُبرزه هِرّة بوصفه أمرًا واحدًا واضحًا يستحق الانتباه.",
+    "s4.h4": "توجّهك إلى الطبيب",
+    "s4.p": "بوضوح وهدوء، ومع ما ينبغي ذكره. هِرّة لا تُشخّص أبدًا. القرار والزيارة لك وحدك.",
+    "trust.eyebrow": "صُنعت بعناية",
+    "trust.h2": "صادقة بتصميمها.",
+    "tc1.q": "لا تُشخّص أبدًا.",
+    "tc1.a": "تُجري هِرّة فرزًا أوليًا وتوجّهك إلى طبيب بيطري مؤهل. هي إرشاد يساعدك على الملاحظة، لا حكم طبي.",
+    "tc2.q": "تبقى على هاتفك.",
+    "tc2.a": "بلا حساب، بلا تحليلات، بلا مُعرّفات إعلانية. لا يغادر سجل صحة قطتك جهازك أبدًا.",
+    "tc3.q": "هادئة عن قصد.",
+    "tc3.a": "كهرماني للمتابعة، لا جدار أحمر. ولا عرض ترويجي في لحظة قلق. الرعاية هي الغاية كلها.",
+    "plus.eyebrow": "الأسعار",
+    "plus.h2": "الأمان مجاني. وبلس تذهب أبعد.",
+    "plus.p": "التسجيل اليومي ووجه الحالة الحيّ ومحرّك الإنذار المبكر القائم على القواعد، كلها مجانية دائمًا. تضيف هِرّة بلس الأدوات الأعمق لمن يريدها.",
+    "plan1.name": "هِرّة",
+    "plan1.price": "مجانًا",
+    "plan1.f1": "التسجيل اليومي في عشر ثوانٍ",
+    "plan1.f2": "وجه حالة حيّ وتذكيرات",
+    "plan1.f3": "محرّك إنذار مبكر قائم على القواعد",
+    "plan1.f4": "أدوات الشاشة والتسجيل عبر Siri",
+    "plan1.f5": "على الجهاز وخاصة",
+    "plan1.cta": "مشمولة عند الإطلاق",
+    "plan2.name": "هِرّة بلس",
+    "plan2.price": "$4.99<span> / شهريًا · تجربة 7 أيام</span>",
+    "plan2.f1": "كل ما في المجاني",
+    "plan2.f2": "فرز بيطري بالذكاء الاصطناعي لعَرَض أو صورة",
+    "plan2.f3": "ملخّص صحي أسبوعي",
+    "plan2.f4": "ملف PDF جاهز للعيادة",
+    "plan2.f5": "أكثر من قطة",
+    "plan2.cta": "أبلغيني عند الإطلاق",
+    "privacy.eyebrow": "الوعد",
+    "privacy.big": "على جهازك.<br>بلا حساب.<br>ملكك.",
+    "privacy.p": "تبقى بيانات صحة قطتك على هاتفك. لا نُشغّل نظام حسابات، ولا نتتبّعك، ولا نبيع أي شيء عنك أو عن قطتك.",
+    "faq.eyebrow": "أسئلة",
+    "faq.h2": "سُئلت، فأُجيبت.",
+    "faq.q1": "ما معنى هِرّة؟<span class=\"ic\" aria-hidden=\"true\"></span>",
+    "faq.a1": "هِرّة كلمة عربية فصيحة تعني القطة الأنثى. القطط محبوبة في التقاليد الإسلامية، وهِرّة مبنية أولًا لأصحاب القطط في الخليج، بالعربية والإنجليزية.",
+    "faq.q2": "هل تُشخّص هِرّة قطتي؟<span class=\"ic\" aria-hidden=\"true\"></span>",
+    "faq.a2": "لا. هِرّة لا تُشخّص أبدًا. تتعلّم الحالة الطبيعية لقطتك، وتساعدك على ملاحظة التغيّرات التي تستحق النظر، ثم على عرضها على طبيب بيطري مؤهل. الزيارة والقرار لك دائمًا.",
+    "faq.q3": "هل بيانات قطتي خاصة؟<span class=\"ic\" aria-hidden=\"true\"></span>",
+    "faq.a3": "نعم. يبقى السجل الصحي على جهازك. لا حساب، ولا تحليلات، ولا مُعرّفات إعلانية، ولا شيء يُباع. حذف التطبيق يحذف بياناته.",
+    "faq.q4": "ماذا يعني اللون الكهرماني؟<span class=\"ic\" aria-hidden=\"true\"></span>",
+    "faq.a4": "الكهرماني هو طريقة هِرّة لتقول بهدوء إن أمرًا ما يستحق النظر فعلًا. ليس إنذارًا أحمر أبدًا، ولا عرض ترويجي في لحظة قلق. معظم الأيام هادئة.",
+    "faq.q5": "هل أحتاج هِرّة بلس؟<span class=\"ic\" aria-hidden=\"true\"></span>",
+    "faq.a5": "لا. التسجيل اليومي ومحرّك الإنذار المبكر القائم على القواعد مجانيان. تضيف بلس الفرز البيطري بالذكاء الاصطناعي والملخّص الأسبوعي وملف PDF جاهزًا للعيادة ودعم أكثر من قطة، لمن يريدها.",
+    "faq.q6": "متى تصدر هِرّة؟<span class=\"ic\" aria-hidden=\"true\"></span>",
+    "faq.a6": "هِرّة قادمة قريبًا إلى iPhone، الخليج أولًا. اتركي بريدك أدناه وسنرسل لك إشعار الإطلاق. أندرويد لاحقًا.",
+    "footer.pitch": "طريقة هادئة وخاصة لتتابعي صحة القطة التي تحبّينها.",
+    "footer.notelabel": "احصلي على إشعار الإطلاق",
+    "footer.emailph": "بريدك الإلكتروني",
+    "footer.notifybtn": "أبلغيني ←",
+    "footer.col1h": "هِرّة",
+    "footer.f1": "المزايا",
+    "footer.f2": "الإنذار المبكر",
+    "footer.f3": "هِرّة بلس",
+    "footer.f4": "الأسئلة",
+    "footer.col2h": "قانوني",
+    "footer.legal1": "سياسة الخصوصية",
+    "footer.legal2": "الدعم",
+    "footer.col3h": "الأستوديو",
+    "footer.col4h": "تواصل",
+    "footer.fl_privacy": "الخصوصية",
+    "footer.fl_product": "هِرّة منتج من Aykiz Intelligence"
+  };
+  (function () {
+    var nodes = Array.prototype.slice.call(document.querySelectorAll('[data-i18n]'));
+    var phNodes = Array.prototype.slice.call(document.querySelectorAll('[data-i18n-ph]'));
+    var EN = {}, ENPH = {};
+    nodes.forEach(function (el) { EN[el.getAttribute('data-i18n')] = el.innerHTML; });
+    phNodes.forEach(function (el) { ENPH[el.getAttribute('data-i18n-ph')] = el.getAttribute('placeholder'); });
+
+    function apply(lang) {
+      var ar = lang === 'ar';
+      nodes.forEach(function (el) {
+        var k = el.getAttribute('data-i18n');
+        var v = ar ? (I18N_AR[k] != null ? I18N_AR[k] : EN[k]) : EN[k];
+        if (el.innerHTML !== v) el.innerHTML = v;
+      });
+      phNodes.forEach(function (el) {
+        var k = el.getAttribute('data-i18n-ph');
+        el.setAttribute('placeholder', ar ? (I18N_AR[k] || ENPH[k]) : ENPH[k]);
+      });
+      document.documentElement.lang = ar ? 'ar' : 'en';
+      document.documentElement.dir = ar ? 'rtl' : 'ltr';
+      document.body.classList.toggle('lang-ar', ar);
+      var tg = document.getElementById('langToggle');
+      if (tg) tg.setAttribute('data-lang', ar ? 'ar' : 'en');
+      try { localStorage.setItem('hirra-lang', ar ? 'ar' : 'en'); } catch (e) {}
+    }
+
+    var saved = null; try { saved = localStorage.getItem('hirra-lang'); } catch (e) {}
+    if (!saved) saved = (navigator.language || '').slice(0, 2) === 'ar' ? 'ar' : 'en';
+    apply(saved);
+
+    var tg = document.getElementById('langToggle');
+    if (tg) tg.addEventListener('click', function () { apply(document.documentElement.dir === 'rtl' ? 'en' : 'ar'); });
+  })();
+</script>
 <script>
   (function () {
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
