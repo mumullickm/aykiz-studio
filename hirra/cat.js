@@ -1,164 +1,111 @@
-import * as THREE from 'three';
+/* The Hirra cat: a flat 2.5D SVG face that follows the cursor, blinks, and
+   smiles when you come near. Pupils are clipped inside the eye so the gaze can
+   never leave the face. Eyes follow even under reduced motion (calm, non
+   vestibular); blinking and idle float are gated on motion preference and
+   pause when the mascot is offscreen. */
+(function () {
+  var wrap = document.getElementById('catMascot');
+  if (!wrap) return;
+  var svg = wrap.querySelector('.cat-svg');
+  var face = svg.querySelector('#catFace');
+  var mouth = svg.querySelector('#mouth');
+  var pupilL = svg.querySelector('#pupilL');
+  var pupilR = svg.querySelector('#pupilR');
 
-/* The floating Hirra cat. A glossy teal clay head, coral inner ears, that
-   drifts like a cloud and turns to watch the cursor. If the model is later
-   replaced with a real GLTF from the brand pipeline, swap buildCat() for a
-   loader and keep the same float + look-at rig. */
+  var eyes = [
+    { el: pupilL, hx: 88, hy: 113, rx: 7, ry: 8 },
+    { el: pupilR, hx: 152, hy: 113, rx: 7, ry: 8 }
+  ];
 
-const stage = document.getElementById('cat-stage');
-const canvas = document.getElementById('cat-canvas');
+  var MOUTH_CALM = 'M120 148 Q120 156 109 158 M120 148 Q120 156 131 158';
+  var MOUTH_HAPPY = 'M120 149 Q120 163 103 162 M120 149 Q120 163 137 162';
 
-if (stage && canvas) {
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let renderer = null;
-  try {
-    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'low-power' });
-  } catch (e) { renderer = null; }
-  if (renderer && renderer.getContext()) start(renderer, reduce);
-}
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var running = true, happy = false, blinkTimer = null, saccadeTimer = null;
+  var aim = { x: 0, y: 0, tx: 0, ty: 0, has: false };
 
-function start(renderer, reduce) {
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.08;
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-  camera.position.set(0, 0.05, 6.5);
-
-  scene.add(new THREE.HemisphereLight(0xffffff, 0xc6e0e4, 1.0));
-  const key = new THREE.DirectionalLight(0xffffff, 1.7);
-  key.position.set(-3.5, 4.5, 5);
-  scene.add(key);
-  const fill = new THREE.DirectionalLight(0xc4ecff, 0.55);
-  fill.position.set(4, -1.5, 3);
-  scene.add(fill);
-  const rim = new THREE.DirectionalLight(0xffffff, 0.9);
-  rim.position.set(1, 3, -4);
-  scene.add(rim);
-
-  const cat = buildCat();
-  scene.add(cat);
-
-  const pointer = { x: 0, y: 0, tx: 0, ty: 0, active: false };
-  window.addEventListener('mousemove', (e) => {
-    const r = stage.getBoundingClientRect();
-    const cx = r.left + r.width / 2;
-    const cy = r.top + r.height / 2;
-    pointer.tx = clamp((e.clientX - cx) / (window.innerWidth / 2), -1.6, 1.6);
-    pointer.ty = clamp((e.clientY - cy) / (window.innerHeight / 2), -1.6, 1.6);
-    pointer.active = true;
-  }, { passive: true });
-
-  function resize() {
-    const w = stage.clientWidth, h = stage.clientHeight;
-    if (!w || !h) return;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
+  function toSvg(clientX, clientY) {
+    var r = svg.getBoundingClientRect();
+    var vb = svg.viewBox.baseVal;
+    return { x: (clientX - r.left) / r.width * vb.width, y: (clientY - r.top) / r.height * vb.height };
   }
-  window.addEventListener('resize', resize);
-  resize();
 
-  let visible = true, running = true, raf = null;
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver((es) => { visible = es[0].isIntersecting; if (visible) loop(); }).observe(stage);
-  }
-  document.addEventListener('visibilitychange', () => { running = !document.hidden; if (running) loop(); });
-
-  stage.classList.add('live');
-
-  const clock = new THREE.Clock();
-  function frame() {
-    raf = null;
-    const t = clock.getElapsedTime();
-    pointer.x += (pointer.tx - pointer.x) * 0.06;
-    pointer.y += (pointer.ty - pointer.y) * 0.06;
-
-    cat.position.y = reduce ? 0 : Math.sin(t * 0.7) * 0.14;
-    cat.rotation.z = reduce ? 0 : Math.sin(t * 0.45) * 0.035;
-
-    const ry = pointer.x * 0.42;
-    const rx = pointer.y * 0.3;
-    cat.rotation.y += (ry - cat.rotation.y) * 0.07;
-    cat.rotation.x += (rx - cat.rotation.x) * 0.07;
-
-    const px = pointer.x * 0.12, py = -pointer.y * 0.1;
-    cat.userData.pupils.forEach((p) => {
-      p.position.x += (px - p.position.x) * 0.12;
-      p.position.y += (py + p.userData.baseY - p.position.y) * 0.12;
+  function placePupils(tx, ty) {
+    eyes.forEach(function (e) {
+      var dx = tx - e.hx, dy = ty - e.hy;
+      var mag = Math.sqrt((dx * dx) / (e.rx * e.rx) + (dy * dy) / (e.ry * e.ry));
+      if (mag > 1) { dx /= mag; dy /= mag; }
+      e.el.setAttribute('cx', (e.hx + dx).toFixed(2));
+      e.el.setAttribute('cy', (e.hy + dy).toFixed(2));
     });
-
-    renderer.render(scene, camera);
-    if (running && visible) raf = requestAnimationFrame(frame);
   }
-  function loop() { if (!raf && running && visible) raf = requestAnimationFrame(frame); }
-  loop();
-}
+  function centerPupils() { eyes.forEach(function (e) { e.el.setAttribute('cx', e.hx); e.el.setAttribute('cy', e.hy); }); }
 
-function buildCat() {
-  const teal = new THREE.MeshPhysicalMaterial({ color: 0x12a294, roughness: 0.46, metalness: 0, clearcoat: 0.6, clearcoatRoughness: 0.35, sheen: 0.4, sheenColor: 0x5be0cf });
-  const coral = new THREE.MeshPhysicalMaterial({ color: 0xff8fa3, roughness: 0.5, clearcoat: 0.4 });
-  const cream = new THREE.MeshStandardMaterial({ color: 0xf4fbfb, roughness: 0.32 });
-  const dark = new THREE.MeshStandardMaterial({ color: 0x0c2429, roughness: 0.3 });
-  const white = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2 });
-  const whisker = new THREE.MeshStandardMaterial({ color: 0xbcd6d9, roughness: 0.6 });
+  function tiltFace(tx, ty) {
+    var dx = Math.max(-1, Math.min(1, (tx - 120) / 120));
+    var dy = Math.max(-1, Math.min(1, (ty - 110) / 110));
+    face.setAttribute('transform', 'translate(' + (dx * 4).toFixed(2) + ' ' + (dy * 3).toFixed(2) + ')');
+  }
+  function resetFace() { face.setAttribute('transform', 'translate(0 0)'); }
 
-  const cat = new THREE.Group();
+  function setHappy(on) {
+    if (happy === on) return;
+    happy = on;
+    svg.classList.toggle('is-happy', on);
+    mouth.setAttribute('d', on ? MOUTH_HAPPY : MOUTH_CALM);
+  }
 
-  const head = new THREE.Mesh(new THREE.SphereGeometry(1.5, 56, 56), teal);
-  head.scale.set(1.14, 1.0, 0.92);
-  cat.add(head);
+  function onMove(ev) {
+    var p = toSvg(ev.clientX, ev.clientY);
+    aim.tx = p.x; aim.ty = p.y; aim.has = true;
+    placePupils(p.x, p.y);
+    if (!reduce) tiltFace(p.x, p.y);
+    var r = wrap.getBoundingClientRect(), pad = 90;
+    setHappy(ev.clientX > r.left - pad && ev.clientX < r.right + pad && ev.clientY > r.top - pad && ev.clientY < r.bottom + pad);
+  }
+  function onLeave() { aim.has = false; centerPupils(); resetFace(); setHappy(false); }
 
-  const ear = (side) => {
-    const g = new THREE.Group();
-    const outer = new THREE.Mesh(new THREE.ConeGeometry(0.66, 1.05, 40), teal);
-    const inner = new THREE.Mesh(new THREE.ConeGeometry(0.36, 0.66, 40), coral);
-    inner.position.set(0, -0.05, 0.16);
-    g.add(outer, inner);
-    g.position.set(side * 0.95, 1.2, 0.04);
-    g.rotation.z = side * -0.3;
-    g.rotation.x = -0.16;
-    return g;
-  };
-  cat.add(ear(-1), ear(1));
+  window.addEventListener('pointermove', onMove, { passive: true });
+  window.addEventListener('blur', onLeave);
+  document.addEventListener('mouseleave', onLeave);
 
-  const pupils = [];
-  const eye = (side) => {
-    const g = new THREE.Group();
-    const ball = new THREE.Mesh(new THREE.SphereGeometry(0.44, 40, 40), cream);
-    ball.scale.set(1, 1.16, 0.68);
-    const pupil = new THREE.Mesh(new THREE.SphereGeometry(0.23, 36, 36), dark);
-    pupil.userData.baseY = 0.02;
-    pupil.position.set(0, 0.02, 0.36);
-    const glint = new THREE.Mesh(new THREE.SphereGeometry(0.06, 16, 16), white);
-    glint.position.set(0.08, 0.09, 0.18);
-    pupil.add(glint);
-    g.add(ball, pupil);
-    g.position.set(side * 0.53, 0.14, 1.16);
-    pupils.push(pupil);
-    return g;
-  };
-  cat.add(eye(-1), eye(1));
+  // blink: random 2.6 to 6.5s with occasional quick double blink
+  function blink(after) {
+    svg.classList.add('is-blinking');
+    setTimeout(function () { svg.classList.remove('is-blinking'); if (after) after(); }, 110);
+  }
+  function scheduleBlink() {
+    if (reduce || !running) { blinkTimer = null; return; }
+    blinkTimer = setTimeout(function () {
+      blink(function () {
+        if (Math.random() < 0.22) setTimeout(function () { blink(scheduleBlink); }, 165);
+        else scheduleBlink();
+      });
+    }, 2600 + Math.random() * 3900);
+  }
+  // idle micro-saccade: tiny gaze drift when the cursor is away, so it stays alive
+  function scheduleSaccade() {
+    if (reduce || !running) { saccadeTimer = null; return; }
+    saccadeTimer = setTimeout(function () {
+      if (!aim.has) {
+        var a = Math.random() * Math.PI * 2, m = 0.4 + Math.random() * 0.5;
+        eyes.forEach(function (e) { e.el.setAttribute('cx', (e.hx + Math.cos(a) * e.rx * m).toFixed(2)); e.el.setAttribute('cy', (e.hy + Math.sin(a) * e.ry * m).toFixed(2)); });
+      }
+      scheduleSaccade();
+    }, 1400 + Math.random() * 2200);
+  }
+  function stop() { if (blinkTimer) clearTimeout(blinkTimer); if (saccadeTimer) clearTimeout(saccadeTimer); blinkTimer = saccadeTimer = null; svg.classList.remove('is-blinking'); }
 
-  const nose = new THREE.Mesh(new THREE.SphereGeometry(0.13, 28, 28), coral);
-  nose.scale.set(1.35, 0.85, 0.9);
-  nose.position.set(0, -0.36, 1.46);
-  cat.add(nose);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      running = es[0].isIntersecting;
+      if (running) { if (!blinkTimer) scheduleBlink(); if (!saccadeTimer) scheduleSaccade(); }
+      else stop();
+    }, { threshold: 0.1 }).observe(wrap);
+  }
 
-  const w = (side, y, tilt) => {
-    const m = new THREE.Mesh(new THREE.CylinderGeometry(0.013, 0.013, 1.05, 8), whisker);
-    m.position.set(side * 1.02, y, 1.2);
-    m.rotation.z = Math.PI / 2 + side * tilt;
-    return m;
-  };
-  cat.add(w(-1, -0.28, 0.14), w(-1, -0.46, -0.02), w(1, -0.28, -0.14), w(1, -0.46, 0.02));
-
-  cat.userData.pupils = pupils;
-  cat.position.y = 0;
-  cat.scale.setScalar(0.92);
-  return cat;
-}
-
-function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+  centerPupils();
+  setHappy(false);
+  scheduleBlink();
+  scheduleSaccade();
+})();

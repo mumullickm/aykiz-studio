@@ -86,10 +86,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;1,6..12,400&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
 
-<script type="importmap">
-{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
-</script>
-
 <style>
   :root {
     --ground:   #EEF4F5;
@@ -206,12 +202,17 @@
   .hero-grid { position: relative; z-index: 2; max-width: var(--maxw); margin: 0 auto; width: 100%;
     display: grid; grid-template-columns: 1.04fr 0.96fr; gap: clamp(24px, 4vw, 56px); align-items: center; }
   .hero-copy { position: relative; z-index: 2; }
-  .hero-cat { position: relative; width: 100%; max-width: 560px; aspect-ratio: 1 / 1; justify-self: center; }
-  #cat-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-  .cat-fallback { position: absolute; inset: 0; margin: auto; width: 58%; height: auto;
-    filter: drop-shadow(0 30px 44px rgba(19,52,59,0.22)); animation: floaty 7s var(--ease-inout) infinite; }
-  .hero-cat.live .cat-fallback { display: none; }
-  @keyframes floaty { 0%,100% { transform: translateY(-2%); } 50% { transform: translateY(4%); } }
+  .hero-cat { position: relative; width: 100%; max-width: 480px; justify-self: center; display: grid; place-items: center; }
+  .cat-svg { width: 100%; height: auto; display: block; overflow: visible; transform-origin: 50% 60%; animation: catFloat 4.8s var(--ease-inout) infinite; }
+  @keyframes catFloat { 0%,100% { transform: translateY(-1.4%) scale(1); } 50% { transform: translateY(2.6%) scale(1.012); } }
+  .cat-svg .lid { transform-box: fill-box; transform-origin: center top; transform: scaleY(0); transition: transform 0.09s ease-in; }
+  .cat-svg.is-blinking .lid { transform: scaleY(1); transition: transform 0.07s ease-out; }
+  .cat-svg .happy-arc { opacity: 0; transition: opacity 0.2s ease; }
+  .cat-svg.is-happy .happy-arc { opacity: 1; }
+  .cat-svg.is-happy .pupil, .cat-svg.is-happy .glint, .cat-svg.is-happy .eye-well { opacity: 0; transition: opacity 0.2s ease; }
+  .cat-svg .pupil { transition: cx 0.12s var(--ease-out-expo), cy 0.12s var(--ease-out-expo); }
+  .cat-svg #catFace { transition: transform 0.5s var(--ease-out-expo); }
+  .cat-svg .mouth { transition: stroke-width 0.25s ease; }
   @media (max-width: 860px) {
     .hero-grid { grid-template-columns: 1fr; gap: 4px; }
     .hero-cat { order: -1; max-width: 320px; }
@@ -252,12 +253,14 @@
   .scroll-cue .bar::after { content: ""; position: absolute; inset: 0; background: var(--accent); transform: translateX(-100%); animation: cue 2.4s var(--ease-inout) infinite; }
   @keyframes cue { 0% { transform: translateX(-100%); } 55%,100% { transform: translateX(100%); } }
 
-  /* line-mask reveal for hero */
+  /* line-mask reveal for hero. Hidden state is gated on body.armed so the
+     headline is always visible if JS never runs. */
   .lines .line { display: block; overflow: hidden; }
-  .lines .line > span { display: block; transform: translateY(112%); transition: transform 0.95s var(--ease-out-expo); }
-  .lines.in .line > span { transform: translateY(0); }
-  .lines.in .line:nth-child(2) > span { transition-delay: 0.08s; }
-  .lines.in .line:nth-child(3) > span { transition-delay: 0.16s; }
+  .lines .line > span { display: block; transition: transform 0.95s var(--ease-out-expo); }
+  body.armed .lines .line > span { transform: translateY(112%); }
+  body.armed .lines.in .line > span { transform: translateY(0); }
+  body.armed .lines.in .line:nth-child(2) > span { transition-delay: 0.08s; }
+  body.armed .lines.in .line:nth-child(3) > span { transition-delay: 0.16s; }
 
   /* ---------- marquee ticker ---------- */
   .ticker { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--ground-2); overflow: hidden; }
@@ -391,7 +394,7 @@
     html { scroll-behavior: auto; }
     body.armed .reveal, .lines .line > span { opacity: 1 !important; transform: none !important; transition: none !important; }
     .ticker .track, .f-marquee .track, .scroll-cue .bar::after,
-    .hero-clouds i, .cat-fallback { animation: none !important; }
+    .hero-clouds i, .cat-svg { animation: none !important; }
     .pin-step { opacity: 1; transform: none; }
   }
 </style>
@@ -430,9 +433,70 @@
           <span class="hero-note"><b>Coming soon</b> to iPhone</span>
         </div>
       </div>
-      <div class="hero-cat" id="cat-stage">
-        <canvas id="cat-canvas" aria-hidden="true"></canvas>
-        <img class="cat-fallback" src="assets/icon-1024.png" alt="Hirra, a calm cat health companion" />
+      <div class="hero-cat" id="catMascot" role="img" aria-label="Hirra, a friendly cat whose eyes follow your cursor">
+        <svg class="cat-svg" viewBox="0 0 240 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <radialGradient id="headGrad" cx="38%" cy="30%" r="80%">
+              <stop offset="0%" stop-color="#3FC3B7" />
+              <stop offset="55%" stop-color="#0D9488" />
+              <stop offset="100%" stop-color="#0A7B71" />
+            </radialGradient>
+            <radialGradient id="earGrad" cx="50%" cy="38%" r="72%">
+              <stop offset="0%" stop-color="#FFB6C3" />
+              <stop offset="100%" stop-color="#FF8FA3" />
+            </radialGradient>
+            <radialGradient id="cheekGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FF8FA3" stop-opacity="0.45" />
+              <stop offset="100%" stop-color="#FF8FA3" stop-opacity="0" />
+            </radialGradient>
+            <filter id="catShadow" x="-30%" y="-30%" width="160%" height="170%">
+              <feDropShadow dx="0" dy="9" stdDeviation="9" flood-color="#0A6F66" flood-opacity="0.26" />
+            </filter>
+            <clipPath id="eyeClipL"><ellipse cx="88" cy="113" rx="18" ry="21" /></clipPath>
+            <clipPath id="eyeClipR"><ellipse cx="152" cy="113" rx="18" ry="21" /></clipPath>
+          </defs>
+
+          <g id="catFace" filter="url(#catShadow)">
+            <path d="M58 72 L43 22 Q41 13 51 18 L97 47 Z" fill="url(#earGrad)" />
+            <path d="M182 72 L197 22 Q199 13 189 18 L143 47 Z" fill="url(#earGrad)" />
+            <path d="M64 67 L56 37 Q55 31 61 34 L89 52 Z" fill="#FF8FA3" />
+            <path d="M176 67 L184 37 Q185 31 179 34 L151 52 Z" fill="#FF8FA3" />
+
+            <ellipse cx="120" cy="122" rx="88" ry="82" fill="url(#headGrad)" />
+            <ellipse cx="96" cy="80" rx="50" ry="26" fill="#FFFFFF" opacity="0.10" />
+            <circle cx="66" cy="142" r="24" fill="url(#cheekGlow)" />
+            <circle cx="174" cy="142" r="24" fill="url(#cheekGlow)" />
+
+            <g class="eye">
+              <ellipse class="eye-well" cx="88" cy="113" rx="18" ry="21" fill="#F5FBFA" />
+              <g clip-path="url(#eyeClipL)">
+                <ellipse class="pupil" id="pupilL" cx="88" cy="113" rx="11" ry="12.5" fill="#13343B" />
+                <circle class="glint" cx="83.5" cy="108" r="3.4" fill="#FFFFFF" opacity="0.95" />
+              </g>
+              <path class="happy-arc" d="M73 116 Q88 104 103 116" fill="none" stroke="#13343B" stroke-width="5" stroke-linecap="round" />
+              <rect class="lid" x="69" y="90" width="38" height="46" rx="18" fill="url(#headGrad)" />
+            </g>
+            <g class="eye">
+              <ellipse class="eye-well" cx="152" cy="113" rx="18" ry="21" fill="#F5FBFA" />
+              <g clip-path="url(#eyeClipR)">
+                <ellipse class="pupil" id="pupilR" cx="152" cy="113" rx="11" ry="12.5" fill="#13343B" />
+                <circle class="glint" cx="147.5" cy="108" r="3.4" fill="#FFFFFF" opacity="0.95" />
+              </g>
+              <path class="happy-arc" d="M137 116 Q152 104 167 116" fill="none" stroke="#13343B" stroke-width="5" stroke-linecap="round" />
+              <rect class="lid" x="133" y="90" width="38" height="46" rx="18" fill="url(#headGrad)" />
+            </g>
+
+            <path d="M113 139 L127 139 Q121 149 120 149 Q119 149 113 139 Z" fill="#FF8FA3" />
+            <path id="mouth" class="mouth" d="M120 148 Q120 156 109 158 M120 148 Q120 156 131 158" fill="none" stroke="#0A6F66" stroke-width="3.2" stroke-linecap="round" />
+
+            <g stroke="#D7EEEB" stroke-width="2" stroke-linecap="round" opacity="0.8">
+              <path d="M58 134 Q38 130 24 134" />
+              <path d="M58 144 Q38 144 24 149" />
+              <path d="M182 134 Q202 130 216 134" />
+              <path d="M182 144 Q202 144 216 149" />
+            </g>
+          </g>
+        </svg>
       </div>
     </div>
     <a class="scroll-cue" href="#why"><span class="bar" aria-hidden="true"></span>Scroll</a>
@@ -682,7 +746,7 @@
   </div>
 </footer>
 
-<script type="module" src="cat.js"></script>
+<script src="cat.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.23/dist/lenis.min.js" defer></script>
 <script>
   (function () {
@@ -703,13 +767,26 @@
       Array.prototype.forEach.call(g.children, function (c, i) { c.style.setProperty('--i', i); });
     });
 
-    // reveals + hero lines + pin steps via one observer
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
-    document.querySelectorAll('.reveal, .lines').forEach(function (el) { io.observe(el); });
+    // reveals: anything in view becomes visible immediately, the rest animate
+    // in on scroll. Multiple independent triggers so content can never stay
+    // hidden if the observer is slow or unavailable.
+    var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal, .lines'));
+    function revealInView() {
+      var vh = window.innerHeight;
+      for (var i = reveals.length - 1; i >= 0; i--) {
+        var el = reveals[i], r = el.getBoundingClientRect();
+        if (r.top < vh * 0.92 && r.bottom > 0) { el.classList.add('in'); reveals.splice(i, 1); }
+      }
+      if (!reveals.length) {
+        window.removeEventListener('scroll', revealInView);
+        window.removeEventListener('resize', revealInView);
+      }
+    }
+    revealInView();
+    requestAnimationFrame(revealInView);
+    window.addEventListener('load', revealInView);
+    window.addEventListener('scroll', revealInView, { passive: true });
+    window.addEventListener('resize', revealInView, { passive: true });
 
     // pinned step activation tied to scroll progress through the pin parent
     var pin = document.querySelector('.pin-parent');
