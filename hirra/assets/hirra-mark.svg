@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs><radialGradient id="hbg" cx="50%" cy="42%" r="72%"><stop offset="0%" stop-color="#FFFFFF"></stop><stop offset="100%" stop-color="#EEF4F5"></stop></radialGradient></defs>
+  <rect x="0" y="0" width="1024" height="1024" fill="url(#hbg)"></rect>
+  <g transform="translate(0,0)">
+    <path d="M150 1024 C138 820 176 612 236 470 C246 408 262 350 286 300 C312 358 386 420 430 452 C470 474 554 474 594 452 C638 420 712 358 738 300 C762 350 778 408 788 470 C848 612 886 820 874 1024 Z" fill="#13343B"></path>
+    <path d="M308 372 L398 452 L342 462 Z" fill="#FF8FA3"></path>
+    <path d="M716 372 L626 452 L682 462 Z" fill="#FF8FA3"></path>
+    <g stroke="#EEF4F5" stroke-width="6.5" stroke-linecap="round" fill="none" opacity="0.82">
+      <path d="M448 700 C360 690 300 700 250 712"></path><path d="M450 716 C356 716 296 724 246 740"></path><path d="M448 732 C360 742 300 754 256 770"></path>
+      <path d="M576 700 C664 690 724 700 774 712"></path><path d="M574 716 C668 716 728 724 778 740"></path><path d="M576 732 C664 742 724 754 768 770"></path>
+    </g>
+    <g>
+      <ellipse cx="424" cy="616" rx="62" ry="60" fill="#FFFFFF"></ellipse><ellipse cx="600" cy="616" rx="62" ry="60" fill="#FFFFFF"></ellipse>
+      <circle cx="424" cy="622" r="42" fill="#13343B"></circle><circle cx="600" cy="622" r="42" fill="#13343B"></circle>
+      <ellipse cx="424" cy="540" rx="74" ry="54" fill="#13343B"></ellipse><ellipse cx="600" cy="540" rx="74" ry="54" fill="#13343B"></ellipse>
+      <circle cx="408" cy="616" r="13" fill="#FFFFFF"></circle><circle cx="584" cy="616" r="13" fill="#FFFFFF"></circle>
+      <circle cx="438" cy="640" r="6" fill="#FFFFFF" opacity="0.9"></circle><circle cx="614" cy="640" r="6" fill="#FFFFFF" opacity="0.9"></circle>
+    </g>
+    <path d="M512 708 L492 686 Q512 678 532 686 Z" fill="#FF8FA3"></path>
+    <g stroke="#EEF4F5" stroke-width="5.5" stroke-linecap="round" fill="none" opacity="0.9">
+      <path d="M512 700 L512 716"></path><path d="M512 716 C506 728 494 727 484 719"></path><path d="M512 716 C518 728 530 727 540 719"></path>
+    </g>
+  </g></svg>
