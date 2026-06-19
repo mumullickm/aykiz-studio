@@ -427,6 +427,38 @@
   html[dir="rtl"] .f-legal .copy { margin-left: 0; margin-right: auto; }
   html[dir="rtl"] .index .row:hover, html[dir="rtl"] .index .row:focus-within { padding-left: 0; padding-right: 1.4rem; }
   html[dir="rtl"] .pin-step { text-align: right; }
+
+  /* ---------- interactive early-warning demo ---------- */
+  .demo { margin-top: 56px; display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(24px, 4vw, 56px); align-items: center;
+    background: var(--ground-2); border: 1px solid var(--line); border-radius: 28px; padding: clamp(26px, 4vw, 48px); }
+  .demo-face { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  .demo-face svg { width: clamp(120px, 22vw, 180px); height: auto; }
+  .demo-ring { stroke: var(--healthy); transition: stroke 0.4s ease; }
+  .demo-head { fill: #EAF7F3; transition: fill 0.4s ease; }
+  .demo-eye { fill: var(--ink); transition: transform 0.3s ease; }
+  .demo-mouth { stroke: var(--ink); transition: d 0.3s ease; }
+  .demo-status { font-family: "Space Grotesk", monospace; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.74rem; font-weight: 600; color: var(--healthy); transition: color 0.4s ease; }
+  .demo-panel { display: flex; flex-direction: column; gap: 22px; }
+  .demo-slider { display: flex; flex-direction: column; gap: 9px; }
+  .demo-lab { display: flex; align-items: baseline; justify-content: space-between; font-family: "Fredoka", sans-serif; font-weight: 500; font-size: 1.05rem; }
+  .demo-lab b { font-family: "Space Grotesk", monospace; font-weight: 500; font-size: 0.82rem; color: var(--slate); text-transform: lowercase; letter-spacing: 0.02em; }
+  .demo-slider input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 999px;
+    background: linear-gradient(90deg, var(--line), var(--line)); accent-color: var(--accent); cursor: pointer; }
+  .demo-slider input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); border: 3px solid var(--ground-2); box-shadow: 0 2px 8px rgba(13,148,136,0.4); cursor: grab; }
+  .demo-slider input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border: 3px solid var(--ground-2); border-radius: 50%; background: var(--accent); box-shadow: 0 2px 8px rgba(13,148,136,0.4); cursor: grab; }
+  .demo-scale { display: flex; justify-content: space-between; font-family: "Space Grotesk", monospace; font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--slate-faint); }
+  .demo-verdict { border-radius: 16px; padding: 18px; background: var(--ground); border: 1px solid var(--line); transition: background 0.4s ease, border-color 0.4s ease; }
+  .demo-tag { display: inline-block; font-family: "Space Grotesk", monospace; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.66rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: rgba(16,185,129,0.16); color: #0a7c5a; transition: background 0.4s ease, color 0.4s ease; }
+  .demo-verdict p { margin-top: 10px; font-size: 0.98rem; color: var(--ink-soft); }
+  .demo-foot { font-size: 0.82rem; color: var(--slate); }
+  /* states */
+  .demo[data-state="watch"] .demo-ring, .demo[data-state="alert"] .demo-ring { stroke: var(--amber); }
+  .demo[data-state="watch"] .demo-status, .demo[data-state="alert"] .demo-status { color: #B7791F; }
+  .demo[data-state="watch"] .demo-head, .demo[data-state="alert"] .demo-head { fill: #FDF2E1; }
+  .demo[data-state="alert"] .demo-verdict { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.4); }
+  .demo[data-state="watch"] .demo-tag, .demo[data-state="alert"] .demo-tag { background: rgba(245,158,11,0.18); color: #B7791F; }
+  @media (max-width: 760px) { .demo { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .demo-ring, .demo-head, .demo-mouth, .demo-eye, .demo-verdict, .demo-tag, .demo-status { transition: none; } }
 </style>
 </head>
 <body>
@@ -568,6 +600,45 @@
           <p data-i18n="i4.p">Your cat's record stays on your device. No account, no tracking, nothing sold. Your data is yours.</p>
         </li>
       </ol>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE EARLY-WARNING DEMO -->
+  <section class="band tight" id="try">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="try.eyebrow">Try it</span>
+        <h2 data-i18n="try.h2">Watch Hirra catch a problem.</h2>
+        <p data-i18n="try.p">Drag the sliders the way a sick cat drifts: weight down, water up. This is the quiet pattern Hirra connects, the one owners miss.</p>
+      </div>
+      <div class="demo reveal" data-state="healthy">
+        <div class="demo-face">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="demo-ring" cx="60" cy="60" r="54" fill="none" stroke-width="5" />
+            <circle cx="60" cy="62" r="46" class="demo-head" />
+            <ellipse cx="46" cy="56" rx="5.5" ry="7" class="demo-eye" /><ellipse cx="74" cy="56" rx="5.5" ry="7" class="demo-eye" />
+            <path class="demo-mouth" d="M50 76 Q60 84 70 76" fill="none" stroke-width="3.4" stroke-linecap="round" />
+          </svg>
+          <span class="demo-status" id="dStatus" data-i18n="try.s_healthy">Looks normal</span>
+        </div>
+        <div class="demo-panel">
+          <label class="demo-slider">
+            <span class="demo-lab"><span data-i18n="try.weight">Weight</span><b id="dWeightVal" data-i18n="try.normal">normal</b></span>
+            <input type="range" id="dWeight" min="0" max="100" value="72" aria-label="Weight" />
+            <span class="demo-scale"><span data-i18n="try.lower">lower</span><span data-i18n="try.higher">higher</span></span>
+          </label>
+          <label class="demo-slider">
+            <span class="demo-lab"><span data-i18n="try.water">Water</span><b id="dWaterVal" data-i18n="try.normal">normal</b></span>
+            <input type="range" id="dWater" min="0" max="100" value="40" aria-label="Water" />
+            <span class="demo-scale"><span data-i18n="try.less">less</span><span data-i18n="try.more">more</span></span>
+          </label>
+          <div class="demo-verdict" id="dVerdict" aria-live="polite">
+            <span class="demo-tag" id="dTag" data-i18n="try.t_ok">All clear</span>
+            <p id="dMsg" data-i18n="try.v_healthy">Luna looks like her usual self. Most days are quiet, and that is the point.</p>
+          </div>
+          <p class="demo-foot" data-i18n="try.foot">Hirra never diagnoses. It helps you notice, then take it to your vet.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -787,6 +858,20 @@
     "why.p": "أكثر ثلاثة أمراض صامتة فتكًا، وهي أمراض الكلى وفرط نشاط الغدة الدرقية والسكري، تترك العلامات المبكرة نفسها في صندوق الفضلات ووعاء الماء وعلى الميزان، قبل وقت طويل من ظهور المرض على قطتك. هِرّة هي العادة الهادئة التي تساعدك على الملاحظة.",
     "how.eyebrow": "كيف تعمل",
     "how.h2": "أربعة أمور هادئة، تعمل معًا.",
+    "try.eyebrow": "جرّبيها",
+    "try.h2": "شاهدي هِرّة وهي تلتقط مشكلة.",
+    "try.p": "اسحبي المؤشرين كما تنحرف القطة المريضة: الوزن إلى أسفل والماء إلى أعلى. هذا هو النمط الصامت الذي تربطه هِرّة، والذي يفوت أصحاب القطط.",
+    "try.weight": "الوزن",
+    "try.water": "الماء",
+    "try.normal": "طبيعي",
+    "try.lower": "أقل",
+    "try.higher": "أعلى",
+    "try.less": "أقل",
+    "try.more": "أكثر",
+    "try.s_healthy": "يبدو طبيعيًا",
+    "try.t_ok": "كل شيء طبيعي",
+    "try.v_healthy": "تبدو لونا على حالها المعتادة. معظم الأيام هادئة، وهذا هو المقصود.",
+    "try.foot": "هِرّة لا تُشخّص أبدًا. تساعدك على الملاحظة، ثم على عرضها على طبيبك.",
     "i1.h3": "تسجيل في عشر ثوانٍ",
     "i1.p": "بضغطة واحدة سجّلي الشهية والماء وصندوق الفضلات والنشاط والوزن. الإعدادات الذكية تجعل اليوم الطبيعي بضغطة واحدة.",
     "i2.h3": "محرّك يتعلّم قطتك",
@@ -900,6 +985,44 @@
 
     var tg = document.getElementById('langToggle');
     if (tg) tg.addEventListener('click', function () { apply(document.documentElement.dir === 'rtl' ? 'en' : 'ar'); });
+  })();
+</script>
+<script>
+  /* interactive early-warning demo: drag weight down and water up, watch the
+     connected-concern pattern trigger. Mirrors the app's rules, no backend. */
+  (function () {
+    var demo = document.querySelector('.demo');
+    if (!demo) return;
+    var w = document.getElementById('dWeight'), wa = document.getElementById('dWater');
+    var wVal = document.getElementById('dWeightVal'), waVal = document.getElementById('dWaterVal');
+    var statusEl = document.getElementById('dStatus'), tagEl = document.getElementById('dTag'), msgEl = document.getElementById('dMsg');
+    var mouth = demo.querySelector('.demo-mouth');
+    var T = {
+      en: { wn: 'normal', wlo: 'low', wan: 'normal', wah: 'high',
+        healthy: ['Looks normal', 'All clear', 'Luna looks like her usual self. Most days are quiet, and that is the point.'],
+        watch: ['Worth a look', 'Watch', 'One reading is drifting from normal. Not urgent, just worth noting.'],
+        alert: ['Worth a vet visit', 'Connected concern', 'Weight down and thirst up together. That pairing is the pattern vets look for, and the one owners miss.'] },
+      ar: { wn: 'طبيعي', wlo: 'منخفض', wan: 'طبيعي', wah: 'مرتفع',
+        healthy: ['يبدو طبيعيًا', 'كل شيء طبيعي', 'تبدو لونا على حالها المعتادة. معظم الأيام هادئة، وهذا هو المقصود.'],
+        watch: ['تستحق النظر', 'متابعة', 'قراءة واحدة تنحرف عن الطبيعي. ليس عاجلًا، لكنه يستحق التدوين.'],
+        alert: ['تستحق زيارة الطبيب', 'قلق مترابط', 'الوزن إلى أسفل والعطش إلى أعلى معًا. هذا الاقتران هو النمط الذي يبحث عنه الأطباء، والذي يفوت أصحاب القطط.'] }
+    };
+    function L() { return document.documentElement.lang === 'ar' ? T.ar : T.en; }
+    function update() {
+      var t = L(), wv = +w.value, av = +wa.value;
+      var weightLow = wv < 55, waterHigh = av > 60;
+      wVal.textContent = weightLow ? t.wlo : t.wn;
+      waVal.textContent = waterHigh ? t.wah : t.wan;
+      var state = (weightLow && waterHigh) ? 'alert' : ((weightLow || waterHigh) ? 'watch' : 'healthy');
+      demo.setAttribute('data-state', state);
+      var s = t[state];
+      statusEl.textContent = s[0]; tagEl.textContent = s[1]; msgEl.textContent = s[2];
+      mouth.setAttribute('d', state === 'healthy' ? 'M50 76 Q60 84 70 76' : (state === 'alert' ? 'M50 80 Q60 73 70 80' : 'M50 78 L70 78'));
+    }
+    w.addEventListener('input', update);
+    wa.addEventListener('input', update);
+    new MutationObserver(update).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+    update();
   })();
 </script>
 <script>
