@@ -86,6 +86,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;1,6..12,400&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
 
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+
 <style>
   :root {
     --ground:   #EEF4F5;
@@ -191,15 +195,27 @@
     padding: 140px var(--gutter) 60px;
     overflow: hidden;
   }
-  .hero::before {
-    content: ""; position: absolute; z-index: 0;
-    width: 60vw; height: 60vw; max-width: 720px; max-height: 720px;
-    right: -10vw; top: 8vh;
-    background: radial-gradient(circle, rgba(13,148,136,0.16), rgba(14,165,233,0.07) 45%, transparent 70%);
-    filter: blur(20px);
-    pointer-events: none;
+  .hero-clouds { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .hero-clouds i { position: absolute; display: block; border-radius: 50%; filter: blur(48px); }
+  .hero-clouds .c1 { width: 40vw; height: 40vw; right: 0; top: 4vh; background: radial-gradient(circle, rgba(13,148,136,0.22), transparent 70%); animation: drift1 19s ease-in-out infinite; }
+  .hero-clouds .c2 { width: 32vw; height: 32vw; right: 16vw; top: 32vh; background: radial-gradient(circle, rgba(14,165,233,0.18), transparent 70%); animation: drift2 24s ease-in-out infinite; }
+  .hero-clouds .c3 { width: 26vw; height: 26vw; left: 2vw; bottom: 4vh; background: radial-gradient(circle, rgba(91,224,207,0.18), transparent 70%); animation: drift1 28s ease-in-out infinite reverse; }
+  @keyframes drift1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-3%, 4%); } }
+  @keyframes drift2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(4%, -3%); } }
+
+  .hero-grid { position: relative; z-index: 2; max-width: var(--maxw); margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1.04fr 0.96fr; gap: clamp(24px, 4vw, 56px); align-items: center; }
+  .hero-copy { position: relative; z-index: 2; }
+  .hero-cat { position: relative; width: 100%; max-width: 560px; aspect-ratio: 1 / 1; justify-self: center; }
+  #cat-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .cat-fallback { position: absolute; inset: 0; margin: auto; width: 58%; height: auto;
+    filter: drop-shadow(0 30px 44px rgba(19,52,59,0.22)); animation: floaty 7s var(--ease-inout) infinite; }
+  .hero-cat.live .cat-fallback { display: none; }
+  @keyframes floaty { 0%,100% { transform: translateY(-2%); } 50% { transform: translateY(4%); } }
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 4px; }
+    .hero-cat { order: -1; max-width: 320px; }
   }
-  .hero-inner { position: relative; z-index: 1; max-width: var(--maxw); margin: 0 auto; width: 100%; }
   .hero .kicker { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 30px; }
   .hero .kicker .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(13,148,136,0.14); }
   .hero h1 {
@@ -248,7 +264,7 @@
   .ticker .row { display: flex; gap: 0; }
   .ticker .track {
     flex-shrink: 0; display: flex; align-items: center; min-width: 100%;
-    animation: ticker 32s linear infinite;
+    animation: ticker 52s linear infinite;
   }
   .ticker:hover .track { animation-play-state: paused; }
   .ticker .item {
@@ -292,48 +308,6 @@
   }
   .intent .big .amber { color: var(--amber); }
   .intent p { margin: 28px auto 0; max-width: 50ch; color: var(--slate); font-size: var(--step-sm); }
-
-  /* screenshots strip */
-  .shots-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-  .shots-strip {
-    margin-top: 56px; display: flex; gap: clamp(20px, 3vw, 40px);
-    overflow-x: auto; scroll-snap-type: x mandatory; padding: 8px 0 28px;
-    scrollbar-width: none;
-  }
-  .shots-strip::-webkit-scrollbar { display: none; }
-  .shot { flex: 0 0 auto; scroll-snap-align: center; width: min(80vw, 300px); }
-  .shot figcaption { margin-top: 18px; }
-  .shot figcaption .c-num { font-size: 0.8rem; color: var(--slate); }
-  .shot figcaption .c-text { display: block; margin-top: 5px; font-family: "Fredoka", sans-serif; font-weight: 500; font-size: 1.1rem; }
-
-  /* phone frame */
-  .phone {
-    position: relative; width: 100%; aspect-ratio: 9 / 19.3;
-    background: #0c2429; border-radius: 40px; padding: 9px;
-    box-shadow: 0 50px 90px -40px rgba(19,52,59,0.5), 0 18px 40px -22px rgba(19,52,59,0.35);
-  }
-  .phone .screen { position: relative; width: 100%; height: 100%; border-radius: 32px; overflow: hidden; background: var(--ground); }
-  .phone .island { position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 32%; height: 18px; background: #0c2429; border-radius: 999px; z-index: 5; }
-  .scr { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 40px 16px 16px; gap: 12px; }
-  .scr .sb { display: flex; align-items: center; justify-content: space-between; font-family: "Space Grotesk", monospace; font-size: 0.62rem; color: var(--slate); }
-  .scr .h { display: flex; align-items: center; gap: 9px; }
-  .scr .h img { width: 30px; height: 30px; border-radius: 8px; }
-  .scr .h .t { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 0.92rem; }
-  .scr .h .t small { display: block; font-family: "Nunito Sans"; font-weight: 400; font-size: 0.6rem; color: var(--slate); }
-  .card-ui { background: var(--ground-2); border: 1px solid var(--line); border-radius: 16px; padding: 13px; }
-  .face { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; margin: 0 auto; }
-  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; }
-  .pill { font-size: 0.62rem; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--slate); }
-  .pill.on { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .btn-ui { margin-top: auto; background: var(--ink); color: var(--ground); text-align: center; border-radius: 14px; padding: 13px; font-family: "Fredoka", sans-serif; font-weight: 500; font-size: 0.85rem; }
-  .mini-stat { display: flex; align-items: baseline; gap: 6px; }
-  .mini-stat b { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.3rem; }
-  .mini-stat .u { font-size: 0.62rem; color: var(--slate); }
-  .spark { display: flex; align-items: flex-end; gap: 3px; height: 38px; margin-top: 8px; }
-  .spark i { flex: 1; background: var(--line); border-radius: 2px; }
-  .tag { display: inline-flex; align-items: center; gap: 5px; font-size: 0.6rem; font-weight: 700; padding: 4px 8px; border-radius: 999px; }
-  .tag.amber { background: rgba(245,158,11,0.14); color: #B7791F; }
-  .tag.ok { background: rgba(16,185,129,0.14); color: #0a7c5a; }
 
   /* pinned differentiator */
   .pin-parent { position: relative; }
@@ -416,7 +390,8 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     body.armed .reveal, .lines .line > span { opacity: 1 !important; transform: none !important; transition: none !important; }
-    .ticker .track, .f-marquee .track, .scroll-cue .bar::after { animation: none !important; }
+    .ticker .track, .f-marquee .track, .scroll-cue .bar::after,
+    .hero-clouds i, .cat-fallback { animation: none !important; }
     .pin-step { opacity: 1; transform: none; }
   }
 </style>
@@ -440,17 +415,24 @@
 
   <!-- HERO -->
   <header class="hero">
-    <div class="hero-inner">
-      <span class="kicker"><span class="dot" aria-hidden="true"></span><span class="eyebrow">A cat health companion · هِرّة</span></span>
-      <h1 class="lines" aria-label="Catch the quiet signs.">
-        <span class="line"><span>Catch the</span></span>
-        <span class="line"><span><em class="accent" style="font-style:normal">quiet</em> signs</span></span>
-        <span class="line"><span>in your cat.</span></span>
-      </h1>
-      <p class="lede">A ten second daily check-in that learns your cat's own normal, then notices the trouble cats are built to hide. Care, not alarm.</p>
-      <div class="hero-actions">
-        <span class="store-badge soon"><img src="assets/App_Store.svg" alt="Coming soon to the App Store" /></span>
-        <span class="hero-note"><b>Coming soon</b> to iPhone</span>
+    <div class="hero-clouds" aria-hidden="true"><i class="c1"></i><i class="c2"></i><i class="c3"></i></div>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="kicker"><span class="dot" aria-hidden="true"></span><span class="eyebrow">A cat health companion · هِرّة</span></span>
+        <h1 class="lines" aria-label="Catch the quiet signs.">
+          <span class="line"><span>Catch the</span></span>
+          <span class="line"><span><em class="accent" style="font-style:normal">quiet</em> signs</span></span>
+          <span class="line"><span>in your cat.</span></span>
+        </h1>
+        <p class="lede">A ten second daily check-in that learns your cat's own normal, then notices the trouble cats are built to hide. Care, not alarm.</p>
+        <div class="hero-actions">
+          <span class="store-badge soon"><img src="assets/App_Store.svg" alt="Coming soon to the App Store" /></span>
+          <span class="hero-note"><b>Coming soon</b> to iPhone</span>
+        </div>
+      </div>
+      <div class="hero-cat" id="cat-stage">
+        <canvas id="cat-canvas" aria-hidden="true"></canvas>
+        <img class="cat-fallback" src="assets/icon-1024.png" alt="Hirra, a calm cat health companion" />
       </div>
     </div>
     <a class="scroll-cue" href="#why"><span class="bar" aria-hidden="true"></span>Scroll</a>
@@ -516,106 +498,6 @@
     <div class="wrap reveal">
       <p class="big">Care, <span class="amber">not alarm.</span></p>
       <p>Amber when something is genuinely worth a look. Calm the rest of the time. Hirra is built to be kept up with, not to make you anxious.</p>
-    </div>
-  </section>
-
-  <!-- SCREENSHOTS -->
-  <section class="band tight" id="screens">
-    <div class="wrap">
-      <div class="shots-head reveal">
-        <div class="section-head">
-          <span class="eyebrow">A look inside</span>
-          <h2>Designed around one calm habit.</h2>
-        </div>
-        <p class="hero-note" style="max-width:24ch">A preview of the iPhone app. Real device screens at launch.</p>
-      </div>
-
-      <div class="shots-strip reveal">
-        <!-- 1 Today -->
-        <figure class="shot">
-          <div class="phone"><div class="island" aria-hidden="true"></div><div class="screen"><div class="scr">
-            <div class="sb"><span>9:41</span><span>Today</span></div>
-            <div class="h"><img src="assets/icon-1024.png" alt="" /><span class="t">Luna<small>3 years · today</small></span></div>
-            <div class="face" style="background:rgba(245,158,11,0.16)">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#B7791F" stroke-width="1.6" stroke-linecap="round"><circle cx="9" cy="10" r="1.2" fill="#B7791F"/><circle cx="15" cy="10" r="1.2" fill="#B7791F"/><path d="M9 15c1-0.6 2-0.6 3-0.6s2 0 3 0.6"/></svg>
-            </div>
-            <p style="text-align:center;font-family:'Fredoka';font-weight:500;font-size:0.82rem">One thing to keep an eye on</p>
-            <div class="card-ui">
-              <span class="tag amber">Worth a look</span>
-              <p style="font-size:0.7rem;margin-top:8px;color:var(--ink-soft)">Weight is drifting down while water is up. Worth noting.</p>
-            </div>
-            <div class="btn-ui">Log today</div>
-          </div></div></div>
-          <figcaption><span class="c-num num">(01)</span><span class="c-text">See how your cat is, at a glance.</span></figcaption>
-        </figure>
-
-        <!-- 2 Health connected concern -->
-        <figure class="shot">
-          <div class="phone"><div class="island" aria-hidden="true"></div><div class="screen"><div class="scr">
-            <div class="sb"><span>9:41</span><span>Health</span></div>
-            <div class="h"><span class="t" style="font-size:1rem">Health</span></div>
-            <div class="card-ui" style="border-color:rgba(245,158,11,0.5)">
-              <span class="tag amber">Connected concern</span>
-              <p style="font-family:'Fredoka';font-weight:500;font-size:0.82rem;margin-top:9px">Weight down, thirst up</p>
-              <p style="font-size:0.68rem;margin-top:5px;color:var(--slate)">This pairing is worth a vet visit.</p>
-              <div class="spark"><i style="height:80%"></i><i style="height:74%"></i><i style="height:70%"></i><i style="height:64%;background:var(--amber)"></i><i style="height:58%;background:var(--amber)"></i></div>
-            </div>
-            <div class="card-ui">
-              <div class="mini-stat"><b>3.9</b><span class="u">kg · down 6%</span></div>
-            </div>
-            <div class="btn-ui" style="background:var(--accent)">Find a vet nearby</div>
-          </div></div></div>
-          <figcaption><span class="c-num num">(02)</span><span class="c-text">Catches what owners miss.</span></figcaption>
-        </figure>
-
-        <!-- 3 Quick log -->
-        <figure class="shot">
-          <div class="phone"><div class="island" aria-hidden="true"></div><div class="screen"><div class="scr">
-            <div class="sb"><span>9:41</span><span>Log</span></div>
-            <div class="h"><span class="t" style="font-size:1rem">How is Luna today?</span></div>
-            <p style="font-size:0.66rem;color:var(--slate)">Appetite</p>
-            <div class="pill-row"><span class="pill on">Normal</span><span class="pill">Less</span><span class="pill">More</span></div>
-            <p style="font-size:0.66rem;color:var(--slate);margin-top:4px">Water</p>
-            <div class="pill-row"><span class="pill">Normal</span><span class="pill on">More</span><span class="pill">Less</span></div>
-            <p style="font-size:0.66rem;color:var(--slate);margin-top:4px">Litter</p>
-            <div class="pill-row"><span class="pill on">Normal</span><span class="pill">Loose</span><span class="pill">None</span></div>
-            <div class="btn-ui">Save · 1 tap</div>
-          </div></div></div>
-          <figcaption><span class="c-num num">(03)</span><span class="c-text">A ten second daily check-in.</span></figcaption>
-        </figure>
-
-        <!-- 4 Trend -->
-        <figure class="shot">
-          <div class="phone"><div class="island" aria-hidden="true"></div><div class="screen"><div class="scr">
-            <div class="sb"><span>9:41</span><span>Trends</span></div>
-            <div class="h"><span class="t" style="font-size:1rem">Weight</span></div>
-            <div class="card-ui">
-              <div class="mini-stat"><b>3.9</b><span class="u">kg</span></div>
-              <p style="font-size:0.64rem;color:var(--slate);margin-top:2px">Below the usual band for 3 weeks</p>
-              <div class="spark" style="height:64px"><i style="height:92%"></i><i style="height:88%"></i><i style="height:90%"></i><i style="height:78%"></i><i style="height:72%"></i><i style="height:64%;background:var(--amber)"></i><i style="height:58%;background:var(--amber)"></i></div>
-            </div>
-            <div class="card-ui"><span class="tag ok">Baseline learned</span><p style="font-size:0.66rem;margin-top:7px;color:var(--slate)">Hirra knows Luna's normal and flags the drift.</p></div>
-          </div></div></div>
-          <figcaption><span class="c-num num">(04)</span><span class="c-text">Spots the drift early.</span></figcaption>
-        </figure>
-
-        <!-- 5 Plus triage -->
-        <figure class="shot">
-          <div class="phone"><div class="island" aria-hidden="true"></div><div class="screen"><div class="scr">
-            <div class="sb"><span>9:41</span><span>Hirra Plus</span></div>
-            <div class="h"><span class="t" style="font-size:1rem">Ask about a symptom</span></div>
-            <div class="card-ui">
-              <p style="font-size:0.7rem;color:var(--ink-soft)">"Luna vomited twice and skipped dinner."</p>
-            </div>
-            <div class="card-ui" style="background:var(--ground)">
-              <span class="tag amber">See a vet soon</span>
-              <p style="font-size:0.66rem;margin-top:8px;color:var(--slate)">Two signs together. This is worth a same-week visit. Hirra does not diagnose.</p>
-            </div>
-            <div class="btn-ui" style="background:var(--accent)">Make a vet-ready PDF</div>
-          </div></div></div>
-          <figcaption><span class="c-num num">(05)</span><span class="c-text">A calm second opinion, in Plus.</span></figcaption>
-        </figure>
-      </div>
     </div>
   </section>
 
@@ -800,6 +682,7 @@
   </div>
 </footer>
 
+<script type="module" src="cat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.23/dist/lenis.min.js" defer></script>
 <script>
   (function () {
