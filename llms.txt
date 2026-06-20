@@ -1,12 +1,12 @@
 # Aykiz Intelligence
 
-> Aykiz Intelligence is the independent one-person app studio of Miraz Mullick, a growth and brand marketing technologist based in Dhaka, Bangladesh. The studio builds quiet, offline-first, free apps for mobile and web: Wasilah, Drafy, Crisp, Verbatim, and Misbah. The name Aykiz means "moon girl".
+> Aykiz Intelligence is the independent one-person app studio of Miraz Mullick, a growth and brand marketing technologist based in Dhaka, Bangladesh. The studio builds quiet, offline-first apps for mobile and web: Wasilah, Drafy, Crisp, Verbatim, Misbah, and Hirra. The name Aykiz means "moon girl".
 
 Key facts:
 
 - Founded and run solo by Miraz Mullick. He does the strategy, design, code, and marketing for every product himself.
 - Miraz has around nine years in brand and digital marketing across agency and in-house leadership (dentsu, US-Bangla Airlines, Hajee Air) and a computer science background.
-- Every Aykiz product is free to use, with no paywalls.
+- Every Aykiz product is free to use. One app, Hirra, keeps its health core free and adds an optional Hirra Plus subscription for AI features.
 - The studio is based in Dhaka, Bangladesh. Contact: hello@aykizintelligence.com.
 
 ## Apps
@@ -16,6 +16,7 @@ Key facts:
 - [Crisp](https://aykizintelligence.com/crisp/): a free in-browser PDF toolkit. Merge, split, sign, crop, compress, stamp, and convert photos to PDF. Files are processed on-device and never uploaded.
 - [Verbatim](https://aykizintelligence.com/verbatim/): free private speech-to-text transcription that runs entirely in the browser with on-device Whisper. No uploads, no accounts.
 - [Misbah](https://aykizintelligence.com/misbah/): "Light in the Dark", a calm one-touch 2D game where oil is sight. No ads, no tracking, fully offline. Live on [Google Play](https://play.google.com/store/apps/details?id=com.mumullickm.misbah) since June 2026 and playable on the web. Not on the App Store. Web prototype at https://islamic-games-rho.vercel.app.
+- [Hirra](https://aykizintelligence.com/hirra/): an AI-first cat health app for the Gulf and wider MENA, in pre-launch on iOS. A private health record with low-friction daily logging and a rules-based early-warning engine that flags weight loss and thirst drift early, routing owners to a vet without ever diagnosing. The core is free; an optional Hirra Plus subscription adds AI vet triage, a weekly health digest, and a vet-ready PDF. Arabic-first and English. By Aykiz Intelligence.
 
 ## People
 
