@@ -95,4 +95,22 @@
       <image:title>Verbatim - private audio and video transcription</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://aykizintelligence.com/hirra/</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://aykizintelligence.com/hirra/support/</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aykizintelligence.com/hirra/privacy/</loc>
+    <lastmod>2026-06-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
 </urlset>
