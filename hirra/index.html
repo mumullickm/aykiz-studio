@@ -174,7 +174,7 @@
     border-bottom: 1px solid var(--line);
   }
   .nav .brand { display: flex; align-items: center; gap: 11px; font-family: "Nunito", sans-serif; font-weight: 800; font-size: 1.25rem; letter-spacing: -0.01em; }
-  .nav .brand img { width: 30px; height: 30px; border-radius: 8px; }
+  .nav .brand img { height: 32px; width: auto; }
   .nav .links { display: flex; align-items: center; gap: 30px; }
   .nav .links a.menu { font-family: "Space Grotesk", monospace; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.78rem; color: var(--slate); transition: color 0.2s ease; }
   .nav .links a.menu:hover { color: var(--ink); }
@@ -458,7 +458,7 @@
 <div class="grain" aria-hidden="true"></div>
 
 <nav class="nav" id="nav">
-  <a class="brand" href="#top"><img src="assets/icon-1024.png" alt="" />Hirra</a>
+  <a class="brand" href="#top" aria-label="Hirra"><img src="assets/hirra-logo.svg" alt="Hirra" /></a>
   <div class="links">
     <a class="menu" href="#how" data-i18n="nav.features">Features</a>
     <a class="menu" href="#early" data-i18n="nav.early">Early warning</a>
