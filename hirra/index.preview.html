@@ -265,7 +265,7 @@
   function el(cx,cy,rx,ry){ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.fill();}
   function paw(x,y,rot,a,sc){
     ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.scale(sc,sc);
-    ctx.globalAlpha=a;ctx.shadowColor='rgba(244,184,113,'+(0.6*a)+')';ctx.shadowBlur=30;ctx.fillStyle='#EEF4F5';
+    ctx.globalAlpha=a;ctx.fillStyle='#EEF4F5';
     ctx.beginPath();
     ctx.moveTo(-19,8);
     ctx.bezierCurveTo(-21,24,-11,31,0,31);
@@ -304,8 +304,6 @@
         if(a>bestA){bestA=a;bx=x;by=y;}
       }
     }
-    if(bestA>0.02){spotX+=(bx-spotX)*0.12; spotY+=(by-spotY)*0.12;}
-    if(spot) spot.style.transform='translate('+(spotX-260)+'px,'+(spotY-260)+'px)';
     requestAnimationFrame(loop);
   }
   if(reduce){ size(); loop(0); } else requestAnimationFrame(loop);
