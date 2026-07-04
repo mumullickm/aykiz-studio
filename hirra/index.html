@@ -66,7 +66,7 @@
         { "@type": "Question", "name": "What does Hirra mean?", "acceptedAnswer": { "@type": "Answer", "text": "Hirra (هِرّة) is the classical Arabic word for a female cat. Cats are loved in Islamic tradition, and Hirra is built for cat owners in the Gulf and everywhere." } },
         { "@type": "Question", "name": "Does Hirra diagnose my cat?", "acceptedAnswer": { "@type": "Answer", "text": "No. Hirra never diagnoses. It learns your cat's normal and helps you notice changes worth a look, then helps you bring them to a qualified vet. It is care, not alarm." } },
         { "@type": "Question", "name": "Is my cat's data private?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Your cat's health record stays on your device. There is no account, no tracking, no analytics, and nothing is sold." } },
-        { "@type": "Question", "name": "Is Hirra free?", "acceptedAnswer": { "@type": "Answer", "text": "The daily check-in, the living status face and the rules-based early-warning engine are free. Hirra Plus is an optional subscription that adds AI vet triage, a weekly digest, a vet-ready PDF and multiple cats." } },
+        { "@type": "Question", "name": "Is Hirra free?", "acceptedAnswer": { "@type": "Answer", "text": "The daily check-in, the living status face and the rules-based early-warning engine are free, always. Hirra Plus is an optional subscription at $2.99 a month or $19.99 a year, with a 7-day free trial, that adds AI vet triage, personalized feeding plans, a weekly digest, a vet-ready PDF and multiple cats." } },
         { "@type": "Question", "name": "Where can I get Hirra?", "acceptedAnswer": { "@type": "Answer", "text": "Hirra is live on the App Store for iPhone. The daily check-in and early-warning engine are free; an optional Hirra Plus subscription adds AI vet triage." } }
       ]
     },
@@ -152,6 +152,20 @@
   .row:first-child{border-top:1px solid var(--line)}
   .row .tag{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;letter-spacing:.14em;color:var(--cream);min-width:74px;padding-top:2px}
   .row p{font-size:16px;line-height:1.55;color:var(--slate)}
+  .price{font-family:'Nunito',sans-serif;font-weight:700;font-size:15px;color:var(--cream);margin-top:26px}
+  .pricenote{font-size:13px;color:var(--faint);margin-top:6px;max-width:520px;line-height:1.6}
+
+  .shots{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:44px}
+  .shots img{width:100%;height:auto;display:block;border-radius:22px;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+  @media(max-width:760px){.shots{grid-template-columns:1fr;gap:22px;max-width:320px;margin-left:auto;margin-right:auto}}
+
+  .note{background:rgba(238,244,245,.025);border:1px solid var(--line);border-radius:18px;padding:34px 36px;max-width:680px}
+  .note p{font-size:16px;line-height:1.75;color:var(--slate)}
+  .note .sig{margin-top:18px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;color:var(--cream)}
+
+  .promise{text-align:center}
+  .promise img{width:min(320px,78vw);height:auto;border-radius:20px;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+  .promise .caveat{font-size:13px;color:var(--faint);margin-top:18px;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.6}
 
   .get{text-align:center;padding:170px 0}
   .get .badge{margin:6px auto 0}
@@ -226,14 +240,43 @@
 </div></section>
 
 <section class="block"><div class="wrap reveal">
+  <span class="kicker" data-en="THE APP" data-ar="التطبيق">THE APP</span>
+  <h2 data-en="Exactly as it ships" data-ar="كما يصل تمامًا">Exactly as it ships</h2>
+  <p class="blocktext" data-en="Real screens from the shipping app. No mockups." data-ar="شاشات حقيقية من التطبيق كما يصل. لا نماذج تصميمية.">Real screens from the shipping app. No mockups.</p>
+  <div class="shots">
+    <img src="assets/shots/en-1.png" data-src-en="assets/shots/en-1.png" data-src-ar="assets/shots/ar-1.png" alt="Hirra Today screen: the daily check-in and the living status face" loading="lazy" width="660" height="1434" />
+    <img src="assets/shots/en-2.png" data-src-en="assets/shots/en-2.png" data-src-ar="assets/shots/ar-2.png" alt="Hirra Health screen: weight trend and the early-warning flags" loading="lazy" width="660" height="1434" />
+    <img src="assets/shots/en-3.png" data-src-en="assets/shots/en-3.png" data-src-ar="assets/shots/ar-3.png" alt="Ask Hirra AI: a banded answer that routes to a vet" loading="lazy" width="660" height="1434" />
+  </div>
+</div></section>
+
+<section class="block"><div class="wrap reveal">
   <span class="kicker" data-en="WHAT YOU GET" data-ar="ما تحصلين عليه">WHAT YOU GET</span>
   <h2 data-en="Free, and Plus" data-ar="مجاني، وبلس">Free, and Plus</h2>
   <div class="plans">
     <div class="row"><span class="tag" data-en="FREE" data-ar="مجاني">FREE</span>
-      <p data-en="The daily check-in and the early-warning engine, always." data-ar="التسجيل اليومي ومحرّك الإنذار المبكر، دائمًا.">The daily check-in and the early-warning engine, always.</p></div>
+      <p data-en="The ten second daily check-in, the early-warning engine, vaccination tracking, the offline emergency card and the food-safety lookup. The safety layer never goes behind a paywall." data-ar="التسجيل اليومي في عشر ثوانٍ، محرّك الإنذار المبكر، متابعة التطعيمات، بطاقة الطوارئ دون إنترنت، والبحث في أمان الأطعمة. طبقة الأمان لا تقف خلف اشتراك أبدًا.">The ten second daily check-in, the early-warning engine, vaccination tracking, the offline emergency card and the food-safety lookup. The safety layer never goes behind a paywall.</p></div>
     <div class="row"><span class="tag" data-en="PLUS" data-ar="بلس">PLUS</span>
-      <p data-en="Adds AI vet triage for a symptom or a photo." data-ar="يضيف الفرز البيطري بالذكاء الاصطناعي لعَرَضٍ أو صورة.">Adds AI vet triage for a symptom or a photo.</p></div>
+      <p data-en="Ask Hirra AI about a symptom or a photo, personalized feeding plans, the weekly digest, a vet-ready PDF, and every cat in your home." data-ar="اسألي ذكاء هِرّة عن عَرَضٍ أو صورة، خطط تغذية مخصّصة، الملخّص الأسبوعي، تقرير PDF جاهز للطبيب البيطري، وكل قطط منزلك.">Ask Hirra AI about a symptom or a photo, personalized feeding plans, the weekly digest, a vet-ready PDF, and every cat in your home.</p></div>
   </div>
+  <div class="price" data-en="Hirra Plus: $2.99 a month, or $19.99 a year." data-ar="هِرّة بلس: 2.99 دولار شهريًا، أو 19.99 دولارًا سنويًا.">Hirra Plus: $2.99 a month, or $19.99 a year.</div>
+  <div class="pricenote" data-en="Every plan starts with a 7-day free trial, and we remind you on day 5. Cancel anytime; everything free stays yours." data-ar="كل خطة تبدأ بتجربة مجانية لمدة 7 أيام، ونذكّركِ في اليوم الخامس. يمكنك الإلغاء في أي وقت، وكل ما هو مجاني يبقى لكِ.">Every plan starts with a 7-day free trial, and we remind you on day 5. Cancel anytime; everything free stays yours.</div>
+</div></section>
+
+<section class="block"><div class="wrap reveal">
+  <span class="kicker" data-en="FROM THE MAKER" data-ar="من الصانع">FROM THE MAKER</span>
+  <h2 data-en="A note from Miraz" data-ar="كلمة من ميراز">A note from Miraz</h2>
+  <div class="note">
+    <p data-en="I'm Miraz. I built Hirra because cat owners in the Gulf deserved better than guesswork between vet visits. Your cat's records live on your phone, there is no account, and your data is never sold or used for ads. The app is free to use; Hirra Plus pays for the AI triage that it unlocks, and Hirra never diagnoses, it tells you when a vet should look. If something is broken or confusing, tell me and I will fix it." data-ar="أنا ميراز. صنعتُ هِرّة لأن أصحاب القطط في الخليج يستحقون أفضل من التخمين بين زيارات الطبيب البيطري. سجلات قطّتكِ تبقى على هاتفكِ، لا حساب هناك، وبياناتكِ لا تُباع ولا تُستخدم للإعلانات أبدًا. التطبيق مجاني الاستخدام؛ واشتراك هِرّة بلس يموّل الفحص الذكي الذي يفتحه، وهِرّة لا تُشخّص أبدًا، بل تخبركِ متى ينبغي أن يطّلع الطبيب البيطري. إن كان شيء معطّلًا أو غير واضح، أخبريني وسأصلحه.">I'm Miraz. I built Hirra because cat owners in the Gulf deserved better than guesswork between vet visits. Your cat's records live on your phone, there is no account, and your data is never sold or used for ads. The app is free to use; Hirra Plus pays for the AI triage that it unlocks, and Hirra never diagnoses, it tells you when a vet should look. If something is broken or confusing, tell me and I will fix it.</p>
+    <div class="sig" data-en="MIRAZ · AYKIZ INTELLIGENCE" data-ar="ميراز · أيكيز إنتلجنس">MIRAZ · AYKIZ INTELLIGENCE</div>
+  </div>
+</div></section>
+
+<section class="block"><div class="wrap reveal promise">
+  <span class="kicker" data-en="THE PROMISE" data-ar="الوعد">THE PROMISE</span>
+  <h2 data-en="Open it. It works." data-ar="افتحيه. يعمل.">Open it. It works.</h2>
+  <a href="https://aykizintelligence.com/" target="_blank" rel="noopener"><img src="assets/seal.png" alt="The Aykiz Promise seal: works offline, no account, nothing sold, built by a human" loading="lazy" width="320" height="320" /></a>
+  <p class="caveat" data-en="One honest caveat: the optional AI check needs a connection. Everything else lives on your phone." data-ar="ملاحظة صادقة واحدة: الفحص الذكي الاختياري يحتاج اتصالًا بالإنترنت. كل ما عدا ذلك يعيش على هاتفكِ.">One honest caveat: the optional AI check needs a connection. Everything else lives on your phone.</p>
 </div></section>
 
 <section class="block get" id="get"><div class="wrap reveal">
@@ -328,6 +371,7 @@
     cur=cur==='en'?'ar':'en';
     root.setAttribute('dir',cur==='ar'?'rtl':'ltr'); root.setAttribute('lang',cur);
     document.querySelectorAll('[data-en]').forEach(function(el){ el.innerHTML=el.getAttribute('data-'+cur); });
+    document.querySelectorAll('img[data-src-en]').forEach(function(im){ im.src=im.getAttribute('data-src-'+cur); });
     this.textContent=cur==='ar'?'EN':'العربية'; layout();
   });
 })();
