@@ -2,14 +2,6 @@
    Aykiz means moon girl. Black universe, moonlight type, stardust, a black-hole cursor.
    Palette: cosmic black ground, white/silver stardust, teal the only accent. */
 
-@font-face {
-  font-family: 'Geist Pixel Square';
-  src: url('fonts/GeistPixel-Square.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
   --space:      #04060D;
   --space-2:    #080B15;
@@ -375,93 +367,6 @@ footer { border-top: 1px solid var(--line); padding: 54px 0 40px; position: rela
 .footer-social a { color: var(--moon-soft); display: inline-flex; transition: color .3s var(--ease); }
 .footer-social a:hover { color: var(--teal); }
 .footer-social svg { width: 18px; height: 18px; display: block; }
-
-/* ───────────────────────── Athena (lab) ───────────────────────── */
-#athena .work-head p { max-width: 480px; }
-.athena-shell{
-  display:flex; justify-content:center; margin-top: 12px;
-  background: radial-gradient(circle at 50% 50%, var(--space-3) 0%, var(--space-2) 70%, var(--space) 100%);
-  border:1px solid var(--line); border-radius:20px; padding:28px 14px;
-}
-.neural-frame{ position:relative; width:100%; max-width:640px; aspect-ratio:1/1; overflow:hidden; border-radius:14px; }
-#athena-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; cursor:grab; touch-action:none }
-#athena-canvas:active{ cursor:grabbing }
-.hub{
-  position:absolute; left:0; top:0; pointer-events:auto; cursor:pointer;
-  border:1px solid color-mix(in srgb, var(--hc) 55%, transparent);
-  background:rgba(8,11,21,0.6); backdrop-filter:blur(3px);
-  border-radius:7px; padding:5px 9px; white-space:nowrap;
-  font-family: 'Geist Pixel Square', var(--f-mono); transition:border-color .25s, background .25s;
-}
-.hub:hover, .hub.is-active{ background:rgba(8,11,21,0.85); border-color:var(--hc) }
-.hub .hub-name{font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--hc)}
-.hub .hub-stat{font-size:9px; color:var(--moon-mute); margin-top:2px; font-family:'Saira', var(--f-body)}
-.hub .hub-stat .n{color:var(--moon-soft)}
-@media (max-width:520px){
-  .hub{padding:3px 6px; border-radius:5px}
-  .hub .hub-name{font-size:7.5px}
-  .hub .hub-stat{font-size:6.5px}
-}
-
-.frame-hint{
-  display:flex; justify-content:center; gap:18px; margin-top:14px;
-  font-family: 'Geist Pixel Square', var(--f-mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
-  color: var(--moon-faint);
-}
-
-.hub-detail{
-  position:absolute; inset:auto 16px 16px 16px; z-index:5;
-  background:rgba(8,11,21,0.72); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-  border:1px solid var(--hc, var(--line-strong)); border-radius:16px; padding:20px 22px;
-  opacity:0; transform:translateY(12px); pointer-events:none;
-  transition:opacity .35s ease, transform .35s ease;
-}
-.hub-detail.is-open{ opacity:1; transform:translateY(0); pointer-events:auto }
-.hub-detail .hd-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px }
-.hub-detail h3{ font-family: var(--f-display); font-size:20px; color:var(--hc, var(--moon)); letter-spacing:-.01em }
-.hub-detail .hd-close{
-  background:none; border:1px solid var(--line-strong); border-radius:8px; color:var(--moon-mute);
-  width:26px; height:26px; cursor:pointer; font-size:14px; line-height:1; flex:none;
-}
-.hub-detail .hd-close:hover{ color:var(--moon); border-color:var(--moon-mute) }
-.hub-detail p{ margin-top:10px; color:var(--moon-soft); font-size:13.5px; max-width:52ch; font-family:'Saira', var(--f-body) }
-.hub-detail ul{ list-style:none; margin-top:14px; display:flex; flex-direction:column; gap:6px }
-.hub-detail li{
-  font-family: 'Geist Pixel Square', var(--f-mono); font-size:11.5px; color:var(--moon-mute);
-  border-left:2px solid var(--hc, var(--line-strong)); padding-left:10px;
-}
-@media (max-width:520px){
-  .hub-detail{ inset:auto 10px 10px 10px; padding:16px 18px }
-  .hub-detail h3{ font-size:17px }
-}
-
-.feed-input{ margin-top:20px; display:flex; gap:10px; }
-.feed-input input{
-  flex:1; background:var(--space-2); border:1px solid var(--line); border-radius:12px;
-  padding:13px 16px; color:var(--moon); font-family:'Saira', var(--f-body); font-size:14px;
-  outline:none; transition:border-color .3s;
-}
-.feed-input input::placeholder{color:var(--moon-faint)}
-.feed-input input:focus{border-color:var(--teal)}
-.feed-input button{
-  width:46px; border:1px solid var(--line); border-radius:12px; background:var(--space-2);
-  color:var(--teal); font-size:18px; cursor:pointer; transition:border-color .3s, background .3s;
-}
-.feed-input button:hover{border-color:var(--teal); background:var(--space-3)}
-
-.feed{
-  margin-top:24px; border:1px solid var(--line); border-radius:14px;
-  background: var(--space-2); padding:16px 20px; height:190px; overflow:hidden;
-  font-family: 'Geist Pixel Square', var(--f-mono); font-size:13px; color:var(--moon-soft);
-  display:flex; flex-direction:column-reverse; gap:8px;
-}
-.feed .line{opacity:0; animation:athenaFeedIn .4s ease forwards; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.feed .line .t{color:var(--moon-faint); margin-right:10px}
-.feed .line .k{font-weight:600}
-@keyframes athenaFeedIn{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:translateY(0)}}
-
-.athena-note{ margin-top: 22px; color: var(--moon-soft); font-size: 14px; max-width: 62ch; }
-.athena-note .mut{ color: var(--moon-mute); display:block; margin-top: 8px; }
 
 /* respect reduced motion: still the ambient animation, keep content readable */
 @media (prefers-reduced-motion: reduce) {
