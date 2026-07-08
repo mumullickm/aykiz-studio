@@ -25,39 +25,39 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
   ];
 
   var HUBS = [
-    { key: 'prefrontal', name: 'Prefrontal', color: 0xE8A54C,
+    { key: 'prefrontal', name: 'Prefrontal', color: 0xFFA53D,
       desc: "Decides what matters first. Reads the request, weighs the options, sets the plan before a single line changes.",
       neurons: ['prioritize the auth fix', 'should this wait for review', 'plan: refactor before extending'],
       count: 142, rate: 2.4 },
-    { key: 'language', name: 'Language', color: 0xE8615C,
+    { key: 'language', name: 'Language', color: 0xFF3D5C,
       desc: "Turns intent into syntax. Every variable name, every branch, every string is a small translation from thought to code.",
       neurons: ['const or let', 'name this handleSubmit', 'docstring for parseConfig'],
       count: 210, rate: 3.4 },
-    { key: 'hippocampus', name: 'Hippocampus', color: 0x5B8DEF,
+    { key: 'hippocampus', name: 'Hippocampus', color: 0x3D7DFF,
       desc: "Holds what came before. Past files touched, past decisions made, the context that lets a session pick up where the last one left off.",
       neurons: ['recall the schema from migration 003', 'this pattern was rejected last week', 'remembers the naming convention'],
       count: 88, rate: 1.2 },
-    { key: 'sensory', name: 'Sensory Cortex', color: 0x4FD1E8,
+    { key: 'sensory', name: 'Sensory Cortex', color: 0x2DF3FF,
       desc: "Reads before it writes. Every file, every error message, every diff is data flowing in before anything flows back out.",
       neurons: ['reading auth/session.ts', 'parsing the stack trace', 'scanning for existing tests'],
       count: 104, rate: 1.8 },
-    { key: 'motor', name: 'Motor Cortex', color: 0x6FCF7A,
+    { key: 'motor', name: 'Motor Cortex', color: 0x3DFF7A,
       desc: "Where thought becomes action. The actual edit, the actual commit, the keystrokes that leave the mind and land in the repo.",
       neurons: ['writing the fix', 'running the test suite', 'git commit -m'],
       count: 132, rate: 2.0 },
-    { key: 'cerebellum', name: 'Cerebellum', color: 0xE87FC0,
+    { key: 'cerebellum', name: 'Cerebellum', color: 0xFF3DE0,
       desc: "Fine-tunes the motion. Catches the awkward line, smooths the edge case, coordinates small corrections into one clean change.",
       neurons: ['tightening the diff', 'removing a stray console.log', 'aligning indentation'],
       count: 76, rate: 1.1 },
-    { key: 'feature', name: 'Feature Layer', color: 0xE8D34C,
+    { key: 'feature', name: 'Feature Layer', color: 0xFFEE3D,
       desc: "Extracts what's actually being asked for, underneath the words. A request is rarely as simple as it first sounds.",
       neurons: ['unpacking the requirement', 'spotting the missing edge case', 'scoping the smallest honest version'],
       count: 96, rate: 1.6 },
-    { key: 'association', name: 'Association', color: 0x9B7FE0,
+    { key: 'association', name: 'Association', color: 0xA53DFF,
       desc: "Connects this to everything else. Why this file, why this pattern, why now, reasoning is mostly finding the right thread to pull.",
       neurons: ['relates to the auth refactor', 'similar bug fixed in v1.2', 'because the tests expect this shape'],
       count: 154, rate: 2.8 },
-    { key: 'concept', name: 'Concept Layer', color: 0x6BC5BD,
+    { key: 'concept', name: 'Concept Layer', color: 0x3DFFD3,
       desc: "Understands the request before touching anything. What is actually being asked, stripped of how it was phrased.",
       neurons: ["the real ask is caching, not speed", 'this is a naming problem, not a logic bug', "defining 'done' for this task"],
       count: 128, rate: 2.1 }
@@ -92,8 +92,8 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
     return pts;
   }
 
-  var CORE_R = 1.05;
-  var HUB_R = 3.1;
+  var CORE_R = 0.9;
+  var HUB_R = 2.9;
   var positions = fibonacciSphere(HUBS.length, HUB_R);
   HUBS.forEach(function (hub, i) { hub.anchor = positions[i]; });
 
@@ -104,21 +104,21 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-  camera.position.set(0, 0.6, 8.5);
+  camera.position.set(0, 0.4, 7.2);
 
   var controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.07;
   controls.enablePan = false;
-  controls.minDistance = 4.5;
-  controls.maxDistance = 13;
+  controls.minDistance = 3.6;
+  controls.maxDistance = 11;
   controls.autoRotate = true;
   controls.autoRotateSpeed = 0.35;
   var desiredTarget = new THREE.Vector3(0, 0, 0);
 
   var composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  var bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.55, 0.4, 0.38);
+  var bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.85, 0.45, 0.22);
   composer.addPass(bloom);
 
   function resize() {
@@ -147,6 +147,44 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
     }
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     var mat = new THREE.PointsMaterial({ color: 0xdce6f5, size: 0.05, transparent: true, opacity: 0.55, depthWrite: false });
+    scene.add(new THREE.Points(geo, mat));
+  })();
+
+  // ---------- particle sprite texture (used by both dust and hub clouds) ----------
+  var dotTexture = (function () {
+    var c = document.createElement('canvas'); c.width = c.height = 32;
+    var x = c.getContext('2d');
+    var g = x.createRadialGradient(16, 16, 0, 16, 16, 16);
+    g.addColorStop(0, 'rgba(255,255,255,1)');
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    x.fillStyle = g; x.fillRect(0, 0, 32, 32);
+    return new THREE.CanvasTexture(c);
+  })();
+
+  // ---------- ambient dust: fills the void between core and clusters so the
+  // whole frame reads as one dense field instead of separated islands ----------
+  (function ambientDust() {
+    var n = 900;
+    var geo = new THREE.BufferGeometry();
+    var pos = new Float32Array(n * 3);
+    var col = new Float32Array(n * 3);
+    var palette = HUBS.map(function (h) { return new THREE.Color(h.color); });
+    for (var i = 0; i < n; i++) {
+      var r = 0.8 + Math.random() * (HUB_R * 1.5);
+      var theta = Math.random() * Math.PI * 2;
+      var phi = Math.acos(2 * Math.random() - 1);
+      pos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      pos[i * 3 + 2] = r * Math.cos(phi) * 0.6;
+      var c = palette[Math.floor(Math.random() * palette.length)];
+      col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
+    }
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    var mat = new THREE.PointsMaterial({
+      size: 0.045, map: dotTexture, vertexColors: true, transparent: true,
+      opacity: 0.55, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true
+    });
     scene.add(new THREE.Points(geo, mat));
   })();
 
@@ -202,32 +240,21 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
       var c = document.createElement('canvas'); c.width = c.height = 128;
       var x = c.getContext('2d');
       var g = x.createRadialGradient(64, 64, 0, 64, 64, 64);
-      g.addColorStop(0, 'rgba(140,180,255,0.32)');
-      g.addColorStop(1, 'rgba(140,180,255,0)');
+      g.addColorStop(0, 'rgba(150,190,255,0.5)');
+      g.addColorStop(1, 'rgba(150,190,255,0)');
       x.fillStyle = g; x.fillRect(0, 0, 128, 128);
       return new THREE.CanvasTexture(c);
     })(),
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
   });
   var halo = new THREE.Sprite(haloMat);
-  halo.scale.set(CORE_R * 3.1, CORE_R * 3.1, 1);
+  halo.scale.set(CORE_R * 2.6, CORE_R * 2.6, 1);
   scene.add(halo);
 
-  // ---------- particle sprite texture ----------
-  var dotTexture = (function () {
-    var c = document.createElement('canvas'); c.width = c.height = 32;
-    var x = c.getContext('2d');
-    var g = x.createRadialGradient(16, 16, 0, 16, 16, 16);
-    g.addColorStop(0, 'rgba(255,255,255,1)');
-    g.addColorStop(1, 'rgba(255,255,255,0)');
-    x.fillStyle = g; x.fillRect(0, 0, 32, 32);
-    return new THREE.CanvasTexture(c);
-  })();
-
   // ---------- per-hub geometry: mesh network + spine strands + particle cloud + hitbox ----------
-  var SPINE_PER_HUB = 3;
-  var NODES_PER_HUB = 34;
-  var NEIGHBORS_PER_NODE = 3;
+  var SPINE_PER_HUB = 6;
+  var NODES_PER_HUB = 60;
+  var NEIGHBORS_PER_NODE = 4;
 
   HUBS.forEach(function (hub) {
     var css = colorCss(hub.color);
@@ -243,9 +270,9 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
     var nodes = [];
     for (var n = 0; n < NODES_PER_HUB; n++) {
       nodes.push(new THREE.Vector3(
-        (Math.random() - 0.5) * 1.35,
-        (Math.random() - 0.5) * 1.35,
-        (Math.random() - 0.5) * 1.35
+        (Math.random() - 0.5) * 1.9,
+        (Math.random() - 0.5) * 1.9,
+        (Math.random() - 0.5) * 1.9
       ));
     }
     hub.nodes = nodes;
@@ -270,7 +297,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
     });
     var meshGeo = new THREE.BufferGeometry();
     meshGeo.setAttribute('position', new THREE.Float32BufferAttribute(meshPositions, 3));
-    var meshMat = new THREE.LineBasicMaterial({ color: hub.color, transparent: true, opacity: 0.24 });
+    var meshMat = new THREE.LineBasicMaterial({ color: hub.color, transparent: true, opacity: 0.42, blending: THREE.AdditiveBlending });
     var meshLines = new THREE.LineSegments(meshGeo, meshMat);
     meshLines.position.copy(hub.anchor);
     scene.add(meshLines);
@@ -290,7 +317,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
       var curve = new THREE.QuadraticBezierCurve3(hub.origin, mid, target);
       var pts = curve.getPoints(24);
       var geo = new THREE.BufferGeometry().setFromPoints(pts);
-      var mat = new THREE.LineBasicMaterial({ color: hub.color, transparent: true, opacity: 0.3 });
+      var mat = new THREE.LineBasicMaterial({ color: hub.color, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending });
       var line = new THREE.Line(geo, mat);
       strandGroup.add(line);
       hub.strands.push({ curve: curve, mat: mat, phase: Math.random() * Math.PI * 2, speed: 0.5 + Math.random() * 0.6 });
@@ -302,8 +329,8 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
     var pGeo = new THREE.BufferGeometry();
     pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
     var pMat = new THREE.PointsMaterial({
-      color: hub.color, size: 0.1, map: dotTexture, transparent: true,
-      opacity: 0.9, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true
+      color: hub.color, size: 0.13, map: dotTexture, transparent: true,
+      opacity: 1, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true
     });
     var points = new THREE.Points(pGeo, pMat);
     points.position.copy(hub.anchor);
@@ -311,7 +338,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
     hub.points = points;
     hub.burstT = 0;
 
-    var hitGeo = new THREE.SphereGeometry(0.95, 12, 12);
+    var hitGeo = new THREE.SphereGeometry(1.25, 12, 12);
     var hitMat = new THREE.MeshBasicMaterial({ visible: false });
     var hitMesh = new THREE.Mesh(hitGeo, hitMat);
     hitMesh.position.copy(hub.anchor);
@@ -473,16 +500,16 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 
     HUBS.forEach(function (hub) {
       hub.strands.forEach(function (s) {
-        s.mat.opacity = 0.2 + 0.12 * Math.sin(now / 900 * s.speed + s.phase);
+        s.mat.opacity = 0.42 + 0.18 * Math.sin(now / 900 * s.speed + s.phase);
       });
-      hub.meshMat.opacity = 0.16 + 0.12 * Math.sin(now / 1000 * hub.meshSpeed + hub.meshPhase);
+      hub.meshMat.opacity = 0.38 + 0.16 * Math.sin(now / 1000 * hub.meshSpeed + hub.meshPhase);
       if (hub.burstT > 0) {
         hub.burstT = Math.max(0, hub.burstT - 0.02);
         var s = 1 + hub.burstT * 0.9;
         hub.points.scale.setScalar(s);
-        hub.points.material.opacity = 0.9 + hub.burstT * 0.1;
+        hub.points.material.opacity = 1;
         hub.meshLines.scale.setScalar(s);
-        hub.meshMat.opacity = Math.min(0.85, hub.meshMat.opacity + hub.burstT * 0.5);
+        hub.meshMat.opacity = Math.min(0.95, hub.meshMat.opacity + hub.burstT * 0.5);
       } else {
         hub.points.scale.setScalar(1);
         hub.meshLines.scale.setScalar(1);
