@@ -1,10 +1,10 @@
 (function () {
-  var canvas = document.getElementById('radar');
+  var canvas = document.getElementById('athena-canvas');
   var ctx = canvas.getContext('2d');
   var feed = document.getElementById('feed');
 
   var FILES = [
-    'auth/session.ts', 'api/routes.py', 'components/Radar.tsx',
+    'auth/session.ts', 'api/routes.py', 'components/Chart.tsx',
     'db/migrations/003_index.sql', 'lib/cache.rs', 'workers/queue.go',
     'styles/tokens.css', 'tests/agent.spec.ts', 'scripts/deploy.sh',
     'lib/parser.rs', 'components/Feed.tsx', 'api/webhook.ts',

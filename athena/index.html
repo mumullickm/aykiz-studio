@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3RFHL0Q74F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3RFHL0Q74F');
+</script>
+
+<meta charset="utf-8" />
+<title>Athena · a neural map of a coding agent thinking | Aykiz Intelligence</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="description" content="Athena is a neural map of a coding agent's work, six layers firing as it moves from reading a task to writing the change. A scripted lab piece from Aykiz Intelligence, the one-person studio of Miraz Mullick." />
+<meta name="author" content="Miraz Mullick" />
+<meta name="theme-color" content="#04060D" />
+<meta name="color-scheme" content="dark" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-round.png" />
+<link rel="icon" href="/favicon.ico" sizes="48x48" />
+<link rel="apple-touch-icon" href="/assets/icon-512.png" />
+<link rel="canonical" href="https://aykizintelligence.com/athena/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Aykiz Intelligence" />
+<meta property="og:url" content="https://aykizintelligence.com/athena/" />
+<meta property="og:title" content="Athena · a neural map of a coding agent thinking" />
+<meta property="og:description" content="Six layers firing as a coding agent moves from reading a task to writing the change." />
+<meta property="og:image" content="https://aykizintelligence.com/assets/og-card.png" />
+<meta property="og:image:alt" content="Athena, a lab piece from Aykiz Intelligence" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@aykizintel" />
+<meta name="twitter:title" content="Athena · a neural map of a coding agent thinking" />
+<meta name="twitter:description" content="Six layers firing as a coding agent moves from reading a task to writing the change." />
+<meta name="twitter:image" content="https://aykizintelligence.com/assets/og-card.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@400;500;600;700&display=swap" />
+
+<style>
+  @font-face{
+    font-family: 'Geist Pixel Square';
+    src: url('fonts/GeistPixel-Square.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  :root{
+    --space:      #04060D;
+    --space-2:    #080B15;
+    --space-3:    #0D111C;
+    --moon:       #EEF2FA;
+    --moon-soft:  #C2CAD9;
+    --moon-mute:  #8A92A4;
+    --moon-faint: #5A6273;
+    --teal:       #6BC5BD;
+    --teal-deep:  #2F8C84;
+    --teal-glow:  rgba(107, 197, 189, 0.55);
+    --line:        rgba(238, 242, 250, 0.08);
+    --line-strong: rgba(238, 242, 250, 0.18);
+    --f-display: 'Geist Pixel Square', 'Saira', monospace;
+    --f-body:    'Saira', -apple-system, BlinkMacSystemFont, sans-serif;
+    --f-mono:    'Geist Pixel Square', 'Saira', monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background: var(--space);
+    color: var(--moon);
+    font-family: var(--f-body);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{color:inherit}
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px}
+
+  .nav{display:flex;justify-content:space-between;align-items:center;padding:26px 0}
+  .brandmark{display:inline-flex;flex-direction:column;align-items:flex-end;line-height:1;text-decoration:none}
+  .brandmark .bm-word{font-family:var(--f-body);font-weight:600;letter-spacing:-.03em;color:var(--moon);font-size:20px}
+  .brandmark .bm-sub{font-family:var(--f-body);font-weight:500;text-transform:uppercase;color:var(--moon-mute);letter-spacing:.14em;padding-left:.14em;font-size:7.5px;margin-top:4px}
+  .nav .back{color:var(--moon-mute);text-decoration:none;font-size:13px;letter-spacing:.04em;transition:color .3s}
+  .nav .back:hover{color:var(--moon)}
+
+  header.hero{padding:48px 0 44px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--teal)}
+  h1{font-family:var(--f-display);font-weight:600;font-size:clamp(34px,7vw,58px);line-height:1.04;margin:18px 0 6px;letter-spacing:-.02em}
+  .lede{margin-top:20px;max-width:56ch;color:var(--moon-soft);font-size:16px}
+
+  section{padding:48px 0;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:none}
+  h2{font-family:var(--f-mono);font-weight:500;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--moon-mute);margin-bottom:28px}
+
+  .athena-shell{
+    display:flex; justify-content:center;
+    background: radial-gradient(circle at 50% 50%, var(--space-3) 0%, var(--space-2) 70%, var(--space) 100%);
+    border:1px solid var(--line); border-radius:20px; padding:28px 14px;
+  }
+  .neural-frame{ position:relative; width:100%; max-width:560px; aspect-ratio:1/1; }
+  #athena-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block }
+  .hub{
+    position:absolute; transform:translate(-50%,-50%); pointer-events:none;
+    left:calc(var(--hx) * 100%); top:calc(var(--hy) * 100%);
+    border:1px solid color-mix(in srgb, var(--hc) 55%, transparent);
+    background:rgba(8,11,21,0.6); backdrop-filter:blur(3px);
+    border-radius:7px; padding:5px 9px; white-space:nowrap;
+    font-family:var(--f-mono);
+  }
+  .hub .hub-name{font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--hc)}
+  .hub .hub-stat{font-size:9.5px; color:var(--moon-mute); margin-top:2px}
+  .hub .hub-stat .n{color:var(--moon-soft)}
+  @media (max-width:520px){
+    .hub{padding:4px 7px}
+    .hub .hub-name{font-size:8.5px}
+    .hub .hub-stat{font-size:8px}
+  }
+
+  .feed{
+    margin-top:24px; border:1px solid var(--line); border-radius:14px;
+    background: var(--space-2); padding:16px 20px; height:190px; overflow:hidden;
+    font-family:var(--f-mono); font-size:14px; color:var(--moon-soft);
+    display:flex; flex-direction:column-reverse; gap:8px;
+  }
+  .feed .line{opacity:0; animation:feedIn .4s ease forwards; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .feed .line .t{color:var(--moon-faint); margin-right:10px}
+  .feed .line .k{font-weight:600}
+  @keyframes feedIn{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:translateY(0)}}
+
+  .note p{color:var(--moon-soft); font-size:15px; max-width:64ch}
+  .note p + p{margin-top:14px}
+  .note .mut{color:var(--moon-mute)}
+
+  footer{padding:34px 0 60px; color:var(--moon-mute); font-size:13px; font-family:var(--f-mono)}
+  footer a{color:var(--moon-soft); border-bottom:1px solid var(--line-strong); padding-bottom:1px; transition:color .3s, border-color .3s}
+  footer a:hover{color:var(--teal); border-color:var(--teal)}
+
+  @media (prefers-reduced-motion: reduce){
+    .feed .line{animation:none; opacity:1}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="nav">
+    <a class="brandmark" href="/">
+      <span class="bm-word">aykız</span>
+      <span class="bm-sub">Intelligence</span>
+    </a>
+    <a class="back" href="/">← back to the studio</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">Lab · Athena</div>
+    <h1>A mind,<br>mid-thought.</h1>
+    <p class="lede">Athena is a live map of how a coding agent's work moves through six layers, from reading the task to writing the change, drawn as a neural network instead of a progress bar.</p>
+  </header>
+
+  <section class="athena-section">
+    <h2>Athena · neural map</h2>
+    <div class="athena-shell">
+      <div class="neural-frame">
+        <canvas id="athena-canvas" width="560" height="560" aria-hidden="true"></canvas>
+        <div class="hub" data-hub="reasoning" style="--hx:0.30; --hy:0.22; --hc:#9B7FE0">
+          <div class="hub-name">Reasoning</div>
+          <div class="hub-stat"><span class="n">154</span> instances · firing <span class="n rate">2.8k</span></div>
+        </div>
+        <div class="hub" data-hub="memory" style="--hx:0.62; --hy:0.18; --hc:#5B8DEF">
+          <div class="hub-name">Memory</div>
+          <div class="hub-stat"><span class="n">88</span> instances · firing <span class="n rate">1.2k</span></div>
+        </div>
+        <div class="hub" data-hub="language" style="--hx:0.76; --hy:0.42; --hc:#E8615C">
+          <div class="hub-name">Language</div>
+          <div class="hub-stat"><span class="n">210</span> instances · firing <span class="n rate">3.4k</span></div>
+        </div>
+        <div class="hub" data-hub="concept" style="--hx:0.24; --hy:0.58; --hc:#6BC5BD">
+          <div class="hub-name">Concept Layer</div>
+          <div class="hub-stat"><span class="n">128</span> instances · firing <span class="n rate">2.1k</span></div>
+        </div>
+        <div class="hub" data-hub="feature" style="--hx:0.66; --hy:0.68; --hc:#E8B54C">
+          <div class="hub-name">Feature Layer</div>
+          <div class="hub-stat"><span class="n">96</span> instances · firing <span class="n rate">1.6k</span></div>
+        </div>
+        <div class="hub" data-hub="motor" style="--hx:0.46; --hy:0.85; --hc:#6FCF7A">
+          <div class="hub-name">Motor Cortex</div>
+          <div class="hub-stat"><span class="n">132</span> instances · firing <span class="n rate">2.0k</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="feed" id="feed" aria-live="polite"></div>
+  </section>
+
+  <section class="note">
+    <h2>What this is</h2>
+    <p>Every file a coding agent touches passes through the same rough stages: understand the request, work out what needs to change, generate the code, reason about edge cases, pull in context it remembers, then act on the file. This maps those stages as six firing regions instead of a log scrolling past.</p>
+    <p class="mut">This page is a scripted animation, not a live connection to a real session or a literal diagram of how Claude Code works internally. It exists to show the shape of the process, not the terminal it actually runs in.</p>
+  </section>
+
+  <footer>
+    <a href="/">aykizintelligence.com</a>
+  </footer>
+
+</div>
+<script src="athena.js"></script>
+</body>
+</html>
