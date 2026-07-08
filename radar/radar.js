@@ -2,15 +2,6 @@
   var canvas = document.getElementById('radar');
   var ctx = canvas.getContext('2d');
   var feed = document.getElementById('feed');
-  var statActive = document.getElementById('statActive');
-  var statDone = document.getElementById('statDone');
-
-  var COLOR_WORKING = '#6BC5BD';
-  var COLOR_DONE = '#2F8C84';
-  var COLOR_QUEUED = '#5A6273';
-  var COLOR_GLOW = 'rgba(107, 197, 189, 0.55)';
-  var COLOR_LINE = 'rgba(238, 242, 250, 0.10)';
-  var COLOR_LINE_SOFT = 'rgba(238, 242, 250, 0.05)';
 
   var FILES = [
     'auth/session.ts', 'api/routes.py', 'components/Radar.tsx',
@@ -20,39 +11,70 @@
     'utils/retry.ts', 'db/seed.sql', 'workers/notify.go', 'lib/logger.ts'
   ];
 
-  var MAX_CONCURRENT = 6;
+  var HUBS = [
+    { key: 'reasoning', name: 'Reasoning',     color: '#9B7FE0', x: 0.30, y: 0.22, count: 154, rate: 2.8 },
+    { key: 'memory',    name: 'Memory',        color: '#5B8DEF', x: 0.62, y: 0.18, count: 88,  rate: 1.2 },
+    { key: 'language',  name: 'Language',      color: '#E8615C', x: 0.76, y: 0.42, count: 210, rate: 3.4 },
+    { key: 'concept',   name: 'Concept Layer', color: '#6BC5BD', x: 0.24, y: 0.58, count: 128, rate: 2.1 },
+    { key: 'feature',   name: 'Feature Layer', color: '#E8B54C', x: 0.66, y: 0.68, count: 96,  rate: 1.6 },
+    { key: 'motor',     name: 'Motor Cortex',  color: '#6FCF7A', x: 0.46, y: 0.85, count: 132, rate: 2.0 }
+  ];
+
+  var LEAVES_PER_HUB = 11;
+  var MAX_PULSES = 7;
   var size = canvas.width;
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
-  var cx, cy, maxR;
-  var agents = [];
-  var doneCount = 0;
-  var sweepAngle = 0;
+  var core = { x: 0.5, y: 0.5 };
+  var pulses = [];
   var lastSpawn = 0;
+  var spawnGap = 260;
+  var startedAt = performance.now();
   var labelFont = '"Saira", sans-serif';
+
   document.fonts.load('10px "Geist Pixel Square"').then(function () {
     labelFont = '"Geist Pixel Square", "Saira", sans-serif';
   });
-  var spawnGap = 900;
-  var startedAt = performance.now();
-  var conicSupported = typeof ctx.createConicGradient === 'function';
 
   function resize() {
     var rect = canvas.getBoundingClientRect();
     canvas.width = rect.width * dpr;
-    canvas.height = rect.width * dpr;
+    canvas.height = rect.height * dpr;
     size = canvas.width;
-    cx = size / 2;
-    cy = size / 2;
-    maxR = size * 0.44;
   }
   window.addEventListener('resize', resize);
   resize();
 
-  function pickFile() {
-    var inUse = agents.map(function (a) { return a.file; });
-    var pool = FILES.filter(function (f) { return inUse.indexOf(f) === -1; });
-    if (!pool.length) pool = FILES;
-    return pool[Math.floor(Math.random() * pool.length)];
+  function px(fx, fy) {
+    return { x: fx * size, y: fy * size };
+  }
+
+  HUBS.forEach(function (hub) {
+    hub.leaves = [];
+    for (var i = 0; i < LEAVES_PER_HUB; i++) {
+      var jx = hub.x + (Math.random() - 0.5) * 0.16;
+      var jy = hub.y + (Math.random() - 0.5) * 0.16;
+      var bow = (Math.random() - 0.5) * 0.5;
+      hub.leaves.push({
+        fx: jx, fy: jy, bow: bow,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.4 + Math.random() * 0.5,
+        flashAt: 0
+      });
+    }
+  });
+
+  function curvePoint(a, ctrl, b, t) {
+    var u = 1 - t;
+    return {
+      x: u * u * a.x + 2 * u * t * ctrl.x + t * t * b.x,
+      y: u * u * a.y + 2 * u * t * ctrl.y + t * t * b.y
+    };
+  }
+
+  function controlPoint(a, b, bow) {
+    var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+    var dx = b.x - a.x, dy = b.y - a.y;
+    return { x: mx - dy * bow, y: my + dx * bow };
   }
 
   function fmtTime(ms) {
@@ -62,161 +84,120 @@
     return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
   }
 
-  function pushFeed(kind, label, file) {
+  function pushFeed(hub, file) {
     var el = document.createElement('div');
     el.className = 'line';
-    var kClass = kind === 'spawn' ? 'k-spawn' : 'k-done';
     el.innerHTML = '<span class="t">' + fmtTime(performance.now() - startedAt) + '</span>' +
-      '<span class="' + kClass + '">' + label + '</span> ' + file;
+      '<span class="k" style="color:' + hub.color + '">' + hub.name.toLowerCase() + '</span> → ' + file;
     feed.insertBefore(el, feed.firstChild);
     while (feed.children.length > 8) feed.removeChild(feed.lastChild);
   }
 
-  function spawnAgent() {
-    if (agents.length >= MAX_CONCURRENT) return;
-    var duration = 2200 + Math.random() * 2600;
-    var agent = {
-      file: pickFile(),
-      angle: Math.random() * Math.PI * 2,
-      radius: (0.28 + Math.random() * 0.62) * maxR,
-      state: 'working',
-      spawnedAt: performance.now(),
-      duration: duration,
-      doneAt: 0,
-      flashAt: 0
-    };
-    agents.push(agent);
-    pushFeed('spawn', 'spawn', agent.file);
+  function bumpHub(hub) {
+    hub.count += Math.random() < 0.5 ? 1 : 0;
+    hub.rate = Math.max(0.4, hub.rate + (Math.random() - 0.45) * 0.15);
+    var el = document.querySelector('.hub[data-hub="' + hub.key + '"]');
+    if (!el) return;
+    el.querySelector('.hub-stat .n').textContent = hub.count;
+    el.querySelector('.hub-stat .rate').textContent = hub.rate.toFixed(1) + 'k';
   }
 
-  function updateAgents(now) {
-    for (var i = agents.length - 1; i >= 0; i--) {
-      var a = agents[i];
-      if (a.state === 'working' && now - a.spawnedAt >= a.duration) {
-        a.state = 'done';
-        a.doneAt = now;
-        doneCount++;
-        pushFeed('done', 'done', a.file);
-      }
-      if (a.state === 'done' && now - a.doneAt > 900) {
-        agents.splice(i, 1);
-      }
-    }
-    statActive.textContent = agents.filter(function (a) { return a.state === 'working'; }).length;
-    statDone.textContent = doneCount;
-  }
-
-  function drawGrid() {
-    ctx.strokeStyle = COLOR_LINE;
-    ctx.lineWidth = 1 * dpr;
-    for (var r = 1; r <= 4; r++) {
-      ctx.beginPath();
-      ctx.arc(cx, cy, (maxR * r) / 4, 0, Math.PI * 2);
-      ctx.stroke();
-    }
-    ctx.strokeStyle = COLOR_LINE_SOFT;
-    for (var s = 0; s < 8; s++) {
-      var ang = (s / 8) * Math.PI * 2;
-      ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.lineTo(cx + Math.cos(ang) * maxR, cy + Math.sin(ang) * maxR);
-      ctx.stroke();
-    }
-  }
-
-  function drawSweep() {
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(cx, cy, maxR, 0, Math.PI * 2);
-    ctx.clip();
-    if (conicSupported) {
-      var grad = ctx.createConicGradient(sweepAngle - Math.PI / 2, cx, cy);
-      grad.addColorStop(0, 'rgba(107, 197, 189, 0.28)');
-      grad.addColorStop(0.06, 'rgba(107, 197, 189, 0.10)');
-      grad.addColorStop(0.16, 'rgba(107, 197, 189, 0)');
-      grad.addColorStop(1, 'rgba(107, 197, 189, 0)');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, size, size);
-    }
-    ctx.restore();
-
-    ctx.strokeStyle = COLOR_GLOW;
-    ctx.lineWidth = 1.5 * dpr;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.lineTo(cx + Math.cos(sweepAngle) * maxR, cy + Math.sin(sweepAngle) * maxR);
-    ctx.stroke();
-  }
-
-  function angleDiff(a, b) {
-    var d = Math.abs(a - b) % (Math.PI * 2);
-    return d > Math.PI ? Math.PI * 2 - d : d;
-  }
-
-  function drawAgents(now) {
-    agents.forEach(function (a) {
-      var px = cx + Math.cos(a.angle) * a.radius;
-      var py = cy + Math.sin(a.angle) * a.radius;
-
-      if (angleDiff(sweepAngle, a.angle) < 0.06) a.flashAt = now;
-
-      var pulse = 1 + Math.sin(now / 220) * 0.25;
-      var baseR = 3.5 * dpr;
-      var color = COLOR_WORKING;
-      var alpha = 1;
-
-      if (a.state === 'queued') {
-        color = COLOR_QUEUED;
-        pulse = 1;
-      } else if (a.state === 'done') {
-        color = COLOR_DONE;
-        alpha = Math.max(0, 1 - (now - a.doneAt) / 900);
-        pulse = 1 + alpha * 0.4;
-      }
-
-      var flashBoost = a.flashAt && now - a.flashAt < 250 ? (1 - (now - a.flashAt) / 250) * 2.2 : 0;
-      var r = baseR * (pulse + flashBoost);
-
-      ctx.globalAlpha = alpha;
-      ctx.beginPath();
-      ctx.arc(px, py, r * 2.4, 0, Math.PI * 2);
-      ctx.fillStyle = a.state === 'done' ? 'rgba(47,140,132,0.18)' : 'rgba(107,197,189,0.16)';
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.arc(px, py, r, 0, Math.PI * 2);
-      ctx.fillStyle = color;
-      ctx.fill();
-
-      if (a.state === 'working') {
-        ctx.font = (10 * dpr) + 'px ' + labelFont;
-        ctx.fillStyle = 'rgba(194, 202, 217, ' + (0.85 * alpha) + ')';
-        var label = a.file.split('/').pop();
-        var lx = px + (Math.cos(a.angle) >= 0 ? 10 * dpr : -10 * dpr - ctx.measureText(label).width);
-        ctx.fillText(label, lx, py + 3 * dpr);
-      }
-      ctx.globalAlpha = 1;
+  function spawnPulse(now) {
+    if (pulses.length >= MAX_PULSES) return;
+    var hub = HUBS[Math.floor(Math.random() * HUBS.length)];
+    var leaf = hub.leaves[Math.floor(Math.random() * hub.leaves.length)];
+    pulses.push({
+      hub: hub, leaf: leaf,
+      start: now, duration: 650 + Math.random() * 550
     });
+    bumpHub(hub);
+    pushFeed(hub, FILES[Math.floor(Math.random() * FILES.length)]);
+  }
+
+  function drawHubEdges(hub, now) {
+    var corePx = px(core.x, core.y);
+    ctx.lineWidth = 1 * dpr;
+    hub.leaves.forEach(function (leaf) {
+      var leafPx = px(leaf.fx, leaf.fy);
+      var ctrl = controlPoint(corePx, leafPx, leaf.bow);
+      var breathe = 0.18 + 0.1 * Math.sin(now / 900 * leaf.speed + leaf.phase);
+      ctx.strokeStyle = hexToRgba(hub.color, breathe);
+      ctx.beginPath();
+      ctx.moveTo(corePx.x, corePx.y);
+      ctx.quadraticCurveTo(ctrl.x, ctrl.y, leafPx.x, leafPx.y);
+      ctx.stroke();
+
+      var flashAlpha = leaf.flashAt && now - leaf.flashAt < 400 ? 1 - (now - leaf.flashAt) / 400 : 0;
+      var r = (1.6 + flashAlpha * 2.5) * dpr;
+      ctx.beginPath();
+      ctx.arc(leafPx.x, leafPx.y, r, 0, Math.PI * 2);
+      ctx.fillStyle = hexToRgba(hub.color, 0.5 + flashAlpha * 0.5);
+      ctx.fill();
+    });
+  }
+
+  function hexToRgba(hex, alpha) {
+    var r = parseInt(hex.slice(1, 3), 16);
+    var g = parseInt(hex.slice(3, 5), 16);
+    var b = parseInt(hex.slice(5, 7), 16);
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+  }
+
+  function drawCore(now) {
+    var corePx = px(core.x, core.y);
+    var pulse = 1 + 0.12 * Math.sin(now / 1100);
+    var grad = ctx.createRadialGradient(corePx.x, corePx.y, 0, corePx.x, corePx.y, 60 * dpr * pulse);
+    grad.addColorStop(0, 'rgba(238, 242, 250, 0.22)');
+    grad.addColorStop(1, 'rgba(238, 242, 250, 0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(corePx.x, corePx.y, 60 * dpr * pulse, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(corePx.x, corePx.y, 3 * dpr, 0, Math.PI * 2);
+    ctx.fillStyle = '#EEF2FA';
+    ctx.fill();
+  }
+
+  function drawPulses(now) {
+    var corePx = px(core.x, core.y);
+    for (var i = pulses.length - 1; i >= 0; i--) {
+      var p = pulses[i];
+      var t = (now - p.start) / p.duration;
+      if (t >= 1) {
+        p.leaf.flashAt = now;
+        pulses.splice(i, 1);
+        continue;
+      }
+      var leafPx = px(p.leaf.fx, p.leaf.fy);
+      var ctrl = controlPoint(corePx, leafPx, p.leaf.bow);
+      var pos = curvePoint(corePx, ctrl, leafPx, t);
+      var r = 3 * dpr;
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, r * 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = hexToRgba(p.hub.color, 0.22);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#EEF2FA';
+      ctx.fill();
+    }
   }
 
   function frame(now) {
     ctx.clearRect(0, 0, size, size);
-    sweepAngle += 0.012;
-    drawGrid();
-    drawSweep();
-    drawAgents(now);
-    updateAgents(now);
+    drawCore(now);
+    HUBS.forEach(function (hub) { drawHubEdges(hub, now); });
+    drawPulses(now);
 
     if (now - lastSpawn > spawnGap) {
       lastSpawn = now;
-      spawnGap = 700 + Math.random() * 1000;
-      spawnAgent();
+      spawnGap = 160 + Math.random() * 320;
+      spawnPulse(now);
     }
 
     requestAnimationFrame(frame);
   }
 
-  spawnAgent();
-  spawnAgent();
   requestAnimationFrame(frame);
 })();
