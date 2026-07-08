@@ -129,6 +129,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
     renderer.setSize(w, h, false);
     composer.setSize(w, h);
     bloom.setSize(w, h);
+    coreUniforms.uPixelScale.value = h * renderer.getPixelRatio() * 0.5;
   }
   window.addEventListener('resize', resize);
 
@@ -188,68 +189,76 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
     scene.add(new THREE.Points(geo, mat));
   })();
 
-  // ---------- core blob ----------
+  // ---------- stardust core: 48,000-particle cloud, pulses when Athena is
+  // fed/talking to instead of sitting as one solid blown-out sphere ----------
+  var CORE_PARTICLES = 24000;
+  var corePulseT = 0;
+  function pulseCore() { corePulseT = 1; }
+
   var coreUniforms = {
     uTime: { value: 0 },
+    uPulse: { value: 0 },
+    uPixelScale: { value: 400 },
     uColorA: { value: new THREE.Color(0x5f92e8) },
     uColorB: { value: new THREE.Color(0xffffff) }
   };
+  var corePos = new Float32Array(CORE_PARTICLES * 3);
+  var coreRand = new Float32Array(CORE_PARTICLES);
+  for (var i = 0; i < CORE_PARTICLES; i++) {
+    var theta = Math.random() * Math.PI * 2;
+    var phi = Math.acos(2 * Math.random() - 1);
+    var r = CORE_R * Math.cbrt(Math.random()) * (0.88 + Math.random() * 0.24);
+    corePos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+    corePos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+    corePos[i * 3 + 2] = r * Math.cos(phi);
+    coreRand[i] = Math.random();
+  }
+  var coreGeo = new THREE.BufferGeometry();
+  coreGeo.setAttribute('position', new THREE.BufferAttribute(corePos, 3));
+  coreGeo.setAttribute('aRand', new THREE.BufferAttribute(coreRand, 1));
   var coreMat = new THREE.ShaderMaterial({
     uniforms: coreUniforms,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
     vertexShader: [
       'uniform float uTime;',
-      'varying vec3 vNormal;',
-      'varying float vDisp;',
+      'uniform float uPulse;',
+      'uniform float uPixelScale;',
+      'attribute float aRand;',
+      'varying float vRand;',
+      'varying float vPulse;',
       'float hash(vec3 p){ return fract(sin(dot(p, vec3(41.3,289.1,127.1)))*43758.5453); }',
-      'float vnoise(vec3 p){',
-      '  vec3 i = floor(p); vec3 f = fract(p); f = f*f*(3.0-2.0*f);',
-      '  float n000=hash(i+vec3(0,0,0)); float n100=hash(i+vec3(1,0,0));',
-      '  float n010=hash(i+vec3(0,1,0)); float n110=hash(i+vec3(1,1,0));',
-      '  float n001=hash(i+vec3(0,0,1)); float n101=hash(i+vec3(1,0,1));',
-      '  float n011=hash(i+vec3(0,1,1)); float n111=hash(i+vec3(1,1,1));',
-      '  return mix(mix(mix(n000,n100,f.x),mix(n010,n110,f.x),f.y),',
-      '             mix(mix(n001,n101,f.x),mix(n011,n111,f.x),f.y), f.z);',
-      '}',
       'void main(){',
-      '  vNormal = normalize(normalMatrix * normal);',
-      '  float n = vnoise(position * 1.7 + uTime * 0.10) - 0.5;',
-      '  float disp = n * 0.34;',
-      '  vDisp = n;',
-      '  vec3 newPos = position + normal * disp;',
-      '  gl_Position = projectionMatrix * modelViewMatrix * vec4(newPos, 1.0);',
+      '  vRand = aRand;',
+      '  vPulse = uPulse;',
+      '  float len = max(length(position), 0.0001);',
+      '  vec3 dir = position / len;',
+      '  float n = hash(position * 4.0 + floor(uTime * 6.0)) - 0.5;',
+      '  vec3 p = position + dir * (n * 0.05 + uPulse * (0.15 + aRand * 0.55));',
+      '  vec4 mvPosition = modelViewMatrix * vec4(p, 1.0);',
+      '  float size = (0.026 + aRand * 0.04) * (1.0 + uPulse * 1.3);',
+      '  gl_PointSize = size * (uPixelScale / -mvPosition.z);',
+      '  gl_Position = projectionMatrix * mvPosition;',
       '}'
     ].join('\n'),
     fragmentShader: [
       'uniform vec3 uColorA;',
       'uniform vec3 uColorB;',
-      'varying vec3 vNormal;',
-      'varying float vDisp;',
+      'varying float vRand;',
+      'varying float vPulse;',
       'void main(){',
-      '  float fres = pow(1.0 - abs(vNormal.z), 2.2);',
-      '  vec3 col = mix(uColorA, uColorB, clamp(vDisp * 1.4 + 0.30, 0.0, 1.0));',
-      '  col += fres * 0.32;',
-      '  gl_FragColor = vec4(col, 1.0);',
+      '  vec2 c = gl_PointCoord - 0.5;',
+      '  float d = length(c);',
+      '  if (d > 0.5) discard;',
+      '  float alpha = smoothstep(0.5, 0.0, d);',
+      '  vec3 col = mix(uColorA, uColorB, clamp(pow(vRand, 2.0) * 1.3 + vPulse * 0.6, 0.0, 1.0));',
+      '  gl_FragColor = vec4(col, alpha * (0.13 + vPulse * 0.6));',
       '}'
     ].join('\n')
   });
-  var coreMesh = new THREE.Mesh(new THREE.IcosahedronGeometry(CORE_R, 5), coreMat);
+  var coreMesh = new THREE.Points(coreGeo, coreMat);
   scene.add(coreMesh);
-
-  var haloMat = new THREE.SpriteMaterial({
-    map: (function () {
-      var c = document.createElement('canvas'); c.width = c.height = 128;
-      var x = c.getContext('2d');
-      var g = x.createRadialGradient(64, 64, 0, 64, 64, 64);
-      g.addColorStop(0, 'rgba(150,190,255,0.5)');
-      g.addColorStop(1, 'rgba(150,190,255,0)');
-      x.fillStyle = g; x.fillRect(0, 0, 128, 128);
-      return new THREE.CanvasTexture(c);
-    })(),
-    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
-  });
-  var halo = new THREE.Sprite(haloMat);
-  halo.scale.set(CORE_R * 2.6, CORE_R * 2.6, 1);
-  scene.add(halo);
 
   // ---------- per-hub geometry: mesh network + spine strands + particle cloud + hitbox ----------
   var SPINE_PER_HUB = 6;
@@ -411,6 +420,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 
   function feedBrain(text) {
     var hub = matchHub(text);
+    pulseCore();
     spawnPulse(hub, true);
     bumpHub(hub, true);
     burst(hub);
@@ -497,6 +507,8 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
   // ---------- render loop ----------
   function animate(now) {
     coreUniforms.uTime.value = now / 1000;
+    corePulseT = Math.max(0, corePulseT - 0.015);
+    coreUniforms.uPulse.value = corePulseT;
 
     HUBS.forEach(function (hub) {
       hub.strands.forEach(function (s) {
