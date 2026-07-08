@@ -28,6 +28,10 @@
   var doneCount = 0;
   var sweepAngle = 0;
   var lastSpawn = 0;
+  var labelFont = '"Saira", sans-serif';
+  document.fonts.load('10px "Geist Pixel Square"').then(function () {
+    labelFont = '"Geist Pixel Square", "Saira", sans-serif';
+  });
   var spawnGap = 900;
   var startedAt = performance.now();
   var conicSupported = typeof ctx.createConicGradient === 'function';
@@ -185,7 +189,7 @@
       ctx.fill();
 
       if (a.state === 'working') {
-        ctx.font = (10 * dpr) + 'px "JetBrains Mono", monospace';
+        ctx.font = (10 * dpr) + 'px ' + labelFont;
         ctx.fillStyle = 'rgba(194, 202, 217, ' + (0.85 * alpha) + ')';
         var label = a.file.split('/').pop();
         var lx = px + (Math.cos(a.angle) >= 0 ? 10 * dpr : -10 * dpr - ctx.measureText(label).width);

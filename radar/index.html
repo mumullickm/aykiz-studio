@@ -38,9 +38,16 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@400;500;600;700&display=swap" />
 
 <style>
+  @font-face{
+    font-family: 'Geist Pixel Square';
+    src: url('fonts/GeistPixel-Square.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
   :root{
     --space:      #04060D;
     --space-2:    #080B15;
@@ -54,9 +61,9 @@
     --teal-glow:  rgba(107, 197, 189, 0.55);
     --line:        rgba(238, 242, 250, 0.08);
     --line-strong: rgba(238, 242, 250, 0.18);
-    --f-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-    --f-body:    'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
-    --f-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+    --f-display: 'Geist Pixel Square', 'Saira', monospace;
+    --f-body:    'Saira', -apple-system, BlinkMacSystemFont, sans-serif;
+    --f-mono:    'Geist Pixel Square', 'Saira', monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -78,13 +85,13 @@
   .nav .back:hover{color:var(--moon)}
 
   header.hero{padding:48px 0 44px;border-bottom:1px solid var(--line)}
-  .eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal)}
+  .eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--teal)}
   h1{font-family:var(--f-display);font-weight:600;font-size:clamp(34px,7vw,58px);line-height:1.04;margin:18px 0 6px;letter-spacing:-.02em}
   .lede{margin-top:20px;max-width:56ch;color:var(--moon-soft);font-size:16px}
 
   section{padding:48px 0;border-bottom:1px solid var(--line)}
   section:last-of-type{border-bottom:none}
-  h2{font-family:var(--f-mono);font-weight:500;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--moon-mute);margin-bottom:28px}
+  h2{font-family:var(--f-mono);font-weight:500;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--moon-mute);margin-bottom:28px}
 
   .radar-shell{
     position:relative; display:flex; justify-content:center;
@@ -97,10 +104,10 @@
     font-family:var(--f-mono);
   }
   .radar-stats .stat{display:flex; flex-direction:column; gap:2px}
-  .radar-stats .n{font-size:22px; color:var(--moon); font-weight:500}
-  .radar-stats .l{font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--moon-mute)}
+  .radar-stats .n{font-size:24px; color:var(--moon); font-weight:500}
+  .radar-stats .l{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--moon-mute)}
 
-  .legend{display:flex; gap:22px; justify-content:center; margin-top:22px; font-family:var(--f-mono); font-size:11px; letter-spacing:.08em; color:var(--moon-mute)}
+  .legend{display:flex; gap:22px; justify-content:center; margin-top:22px; font-family:var(--f-mono); font-size:13px; letter-spacing:.06em; color:var(--moon-mute)}
   .legend span{display:inline-flex; align-items:center; gap:8px}
   .dot{width:8px; height:8px; border-radius:50%; display:inline-block}
   .dot.queued{background:var(--moon-faint)}
@@ -110,7 +117,7 @@
   .feed{
     margin-top:24px; border:1px solid var(--line); border-radius:14px;
     background: var(--space-2); padding:16px 20px; height:190px; overflow:hidden;
-    font-family:var(--f-mono); font-size:12.5px; color:var(--moon-soft);
+    font-family:var(--f-mono); font-size:14px; color:var(--moon-soft);
     display:flex; flex-direction:column-reverse; gap:8px;
   }
   .feed .line{opacity:0; animation:feedIn .4s ease forwards; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
