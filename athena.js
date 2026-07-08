@@ -224,9 +224,10 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
     return new THREE.CanvasTexture(c);
   })();
 
-  // ---------- per-hub geometry: strands + particle cloud + hitbox ----------
-  var STRANDS_PER_HUB = 5;
-  var PARTICLES_PER_HUB = 28;
+  // ---------- per-hub geometry: mesh network + spine strands + particle cloud + hitbox ----------
+  var SPINE_PER_HUB = 3;
+  var NODES_PER_HUB = 34;
+  var NEIGHBORS_PER_NODE = 3;
 
   HUBS.forEach(function (hub) {
     var css = colorCss(hub.color);
@@ -237,44 +238,80 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
     var originDir = hub.anchor.clone().normalize();
     hub.origin = originDir.clone().multiplyScalar(CORE_R);
 
+    // scattered "thought nodes" for this region, LOCAL to the hub anchor (so the
+    // whole cluster can scale in place on burst instead of flying outward).
+    var nodes = [];
+    for (var n = 0; n < NODES_PER_HUB; n++) {
+      nodes.push(new THREE.Vector3(
+        (Math.random() - 0.5) * 1.35,
+        (Math.random() - 0.5) * 1.35,
+        (Math.random() - 0.5) * 1.35
+      ));
+    }
+    hub.nodes = nodes;
+
+    // dense nearest-neighbor mesh: each node wires to its closest few siblings,
+    // this is what actually reads as a "mind" web instead of clean spokes.
+    var edgeSeen = {};
+    var meshPositions = [];
+    nodes.forEach(function (p, i) {
+      var ranked = nodes
+        .map(function (q, j) { return { j: j, d: p.distanceToSquared(q) }; })
+        .filter(function (o) { return o.j !== i; })
+        .sort(function (a, b) { return a.d - b.d; })
+        .slice(0, NEIGHBORS_PER_NODE);
+      ranked.forEach(function (o) {
+        var key = Math.min(i, o.j) + '_' + Math.max(i, o.j);
+        if (edgeSeen[key]) return;
+        edgeSeen[key] = true;
+        var q = nodes[o.j];
+        meshPositions.push(p.x, p.y, p.z, q.x, q.y, q.z);
+      });
+    });
+    var meshGeo = new THREE.BufferGeometry();
+    meshGeo.setAttribute('position', new THREE.Float32BufferAttribute(meshPositions, 3));
+    var meshMat = new THREE.LineBasicMaterial({ color: hub.color, transparent: true, opacity: 0.24 });
+    var meshLines = new THREE.LineSegments(meshGeo, meshMat);
+    meshLines.position.copy(hub.anchor);
+    scene.add(meshLines);
+    hub.meshLines = meshLines;
+    hub.meshMat = meshMat;
+    hub.meshPhase = Math.random() * Math.PI * 2;
+    hub.meshSpeed = 0.35 + Math.random() * 0.4;
+
+    // a few longer curved "spine" strands reaching back toward the core
     hub.strands = [];
     var strandGroup = new THREE.Group();
-    for (var i = 0; i < STRANDS_PER_HUB; i++) {
-      var target = hub.anchor.clone().add(
-        new THREE.Vector3((Math.random() - 0.5) * 0.7, (Math.random() - 0.5) * 0.7, (Math.random() - 0.5) * 0.7)
-      );
+    for (var i = 0; i < SPINE_PER_HUB; i++) {
+      var target = hub.anchor.clone().add(nodes[Math.floor(Math.random() * nodes.length)]);
       var mid = hub.origin.clone().lerp(target, 0.5).add(
         new THREE.Vector3((Math.random() - 0.5) * 1.1, (Math.random() - 0.5) * 1.1, (Math.random() - 0.5) * 1.1)
       );
       var curve = new THREE.QuadraticBezierCurve3(hub.origin, mid, target);
       var pts = curve.getPoints(24);
       var geo = new THREE.BufferGeometry().setFromPoints(pts);
-      var mat = new THREE.LineBasicMaterial({ color: hub.color, transparent: true, opacity: 0.22 });
+      var mat = new THREE.LineBasicMaterial({ color: hub.color, transparent: true, opacity: 0.3 });
       var line = new THREE.Line(geo, mat);
       strandGroup.add(line);
       hub.strands.push({ curve: curve, mat: mat, phase: Math.random() * Math.PI * 2, speed: 0.5 + Math.random() * 0.6 });
     }
     scene.add(strandGroup);
 
-    var pPos = new Float32Array(PARTICLES_PER_HUB * 3);
-    for (var j = 0; j < PARTICLES_PER_HUB; j++) {
-      var p = hub.anchor.clone().add(
-        new THREE.Vector3((Math.random() - 0.5) * 1.0, (Math.random() - 0.5) * 1.0, (Math.random() - 0.5) * 1.0)
-      );
-      pPos[j * 3] = p.x; pPos[j * 3 + 1] = p.y; pPos[j * 3 + 2] = p.z;
-    }
+    var pPos = new Float32Array(NODES_PER_HUB * 3);
+    nodes.forEach(function (p, j) { pPos[j * 3] = p.x; pPos[j * 3 + 1] = p.y; pPos[j * 3 + 2] = p.z; });
     var pGeo = new THREE.BufferGeometry();
     pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
     var pMat = new THREE.PointsMaterial({
-      color: hub.color, size: 0.11, map: dotTexture, transparent: true,
-      opacity: 0.85, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true
+      color: hub.color, size: 0.1, map: dotTexture, transparent: true,
+      opacity: 0.9, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true
     });
     var points = new THREE.Points(pGeo, pMat);
+    points.position.copy(hub.anchor);
     scene.add(points);
     hub.points = points;
     hub.burstT = 0;
 
-    var hitGeo = new THREE.SphereGeometry(0.75, 12, 12);
+    var hitGeo = new THREE.SphereGeometry(0.95, 12, 12);
     var hitMat = new THREE.MeshBasicMaterial({ visible: false });
     var hitMesh = new THREE.Mesh(hitGeo, hitMat);
     hitMesh.position.copy(hub.anchor);
@@ -436,13 +473,19 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 
     HUBS.forEach(function (hub) {
       hub.strands.forEach(function (s) {
-        s.mat.opacity = 0.14 + 0.1 * Math.sin(now / 900 * s.speed + s.phase);
+        s.mat.opacity = 0.2 + 0.12 * Math.sin(now / 900 * s.speed + s.phase);
       });
+      hub.meshMat.opacity = 0.16 + 0.12 * Math.sin(now / 1000 * hub.meshSpeed + hub.meshPhase);
       if (hub.burstT > 0) {
         hub.burstT = Math.max(0, hub.burstT - 0.02);
         var s = 1 + hub.burstT * 0.9;
         hub.points.scale.setScalar(s);
-        hub.points.material.opacity = 0.85 + hub.burstT * 0.15;
+        hub.points.material.opacity = 0.9 + hub.burstT * 0.1;
+        hub.meshLines.scale.setScalar(s);
+        hub.meshMat.opacity = Math.min(0.85, hub.meshMat.opacity + hub.burstT * 0.5);
+      } else {
+        hub.points.scale.setScalar(1);
+        hub.meshLines.scale.setScalar(1);
       }
     });
 
