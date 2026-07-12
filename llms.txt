@@ -25,3 +25,4 @@ Key facts:
 ## More
 
 - [Selected work](https://aykizintelligence.com/work/): mobile products, websites, brand systems, and marketing campaigns.
+- [Athena](https://aykizintelligence.com/athena/): a lab piece, not an app. A 3D neural map of a coding agent thinking: a glowing brain-shaped core you can drag, zoom, and click through, nine regions firing as it moves from reading a task to writing the change.
