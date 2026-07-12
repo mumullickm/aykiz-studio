@@ -11,7 +11,7 @@ Key facts:
 
 ## Apps
 
-- [Wasilah](https://wasilah.site/): a free Islamic companion app for Muslims in Bangladesh and Bengali-speaking Muslims worldwide. Prayer times, Adhan, Qibla, Quran, Hadith, duas, and a Zakat calculator in BDT. Live on the App Store and Google Play.
+- [Wasilah](https://wasilah.site/): a free Islamic companion app for Muslims in Bangladesh and Bengali-speaking Muslims worldwide. Prayer times, Adhan, Qibla, Quran, Hadith, duas, and a Zakat calculator in BDT. The latest version adds Wasilah Deen Intelligence: ask about salah, fasting, duas, the Quran, or daily practice and get answers with references, with personal-ruling questions pointed to a qualified scholar; three questions a day, free for everyone. Live on the App Store and Google Play.
 - [Drafy](https://aykizintelligence.com/drafy/): a free static QR code generator with no paywall and no tracking. Eight QR types. Live on the [App Store](https://apps.apple.com/app/drafy-qr-code-generator/id6777504506) since June 2026 and also works as a web app. A Google Play release is in closed testing.
 - [Crisp](https://aykizintelligence.com/crisp/): a free in-browser PDF toolkit. Merge, split, sign, crop, compress, stamp, and convert photos to PDF. Files are processed on-device and never uploaded.
 - [Verbatim](https://aykizintelligence.com/verbatim/): free private speech-to-text transcription that runs entirely in the browser with on-device Whisper. No uploads, no accounts.
