@@ -18,6 +18,10 @@ Key facts:
 - [Misbah](https://aykizintelligence.com/misbah/): "Light in the Dark", a calm one-touch 2D game where oil is sight. No ads, no tracking, fully offline. Live on [Google Play](https://play.google.com/store/apps/details?id=com.mumullickm.misbah) since June 2026 and on the [App Store](https://apps.apple.com/app/id6781614427) since July 2026, and playable on the web. Web prototype at https://islamic-games-rho.vercel.app.
 - [Hirra](https://aykizintelligence.com/hirra/): an AI-first cat health app for the Gulf and wider MENA, live on the [App Store](https://apps.apple.com/us/app/hirra-cat-health-tracker/id6782975522). A private health record with low-friction daily logging and a rules-based early-warning engine that flags weight loss and thirst drift early, routing owners to a vet without ever diagnosing. The core is free; an optional Hirra Plus subscription adds AI vet triage, a weekly health digest, and a vet-ready PDF. Arabic-first and English. By Aykiz Intelligence.
 
+## Services
+
+- [Cadence](https://aykizintelligence.com/cadence/): a done-for-you short-form content service for brands, run by Aykiz Intelligence. The studio produces and schedules videos and static posts on a client's brand so their social account stays consistent. Cadence Monthly is 12 short videos and 12 static posts a month; the first month runs on a plan the client approves. This is a paid service, separate from the studio's free apps.
+
 ## People
 
 - [Miraz Mullick, founder](https://aykizintelligence.com/founder/): growth and brand marketing technologist who builds and ships the products he markets. Profiles: [LinkedIn](https://www.linkedin.com/in/mumullickm/), [GitHub](https://github.com/mumullickm), [Behance](https://www.behance.net/mumullickm).
