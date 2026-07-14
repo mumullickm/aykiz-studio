@@ -165,7 +165,33 @@ header.nav {
   opacity: .9; transition: opacity .3s var(--ease), color .3s var(--ease);
 }
 .nav .links a:hover { opacity: 1; color: var(--moon); }
-@media (max-width: 720px) { .nav .links a:not([href="#contact"]) { display: none; } }
+@media (max-width: 720px) { .nav .links a:not([href="#contact"]):not(.nav-cta) { display: none; } }
+
+/* Cadence CTA — glowing sweep button (top right) */
+.nav .links { align-items: center; }
+.nav .links a.nav-cta {
+  position: relative; display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--f-body); font-size: 13px; font-weight: 600;
+  letter-spacing: 0.01em; text-transform: none;
+  color: var(--space); background: var(--teal);
+  padding: 9px 18px; border-radius: 999px; opacity: 1;
+  overflow: hidden; isolation: isolate;
+  box-shadow: 0 0 0 1px rgba(107,197,189,0.5), 0 0 18px var(--teal-glow);
+  animation: cta-pulse 3.4s var(--ease) infinite;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+.nav .links a.nav-cta .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--space); opacity: .85; }
+.nav .links a.nav-cta::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(115deg, transparent 25%, rgba(255,255,255,0.55) 50%, transparent 75%);
+  transform: translateX(-130%);
+  animation: cta-sweep 3.4s var(--ease) infinite;
+}
+.nav .links a.nav-cta:hover { color: var(--space); opacity: 1; transform: translateY(-1px); box-shadow: 0 0 0 1px rgba(107,197,189,0.75), 0 0 28px var(--teal-glow); }
+@keyframes cta-sweep { 0% { transform: translateX(-130%); } 55% { transform: translateX(130%); } 100% { transform: translateX(130%); } }
+@keyframes cta-pulse { 0%, 100% { box-shadow: 0 0 0 1px rgba(107,197,189,0.5), 0 0 14px var(--teal-glow); } 50% { box-shadow: 0 0 0 1px rgba(107,197,189,0.75), 0 0 30px var(--teal-glow); } }
+@media (prefers-reduced-motion: reduce) { .nav .links a.nav-cta { animation: none; } .nav .links a.nav-cta::after { display: none; } }
+@media (max-width: 720px) { .nav .links a.nav-cta { font-size: 12px; padding: 8px 14px; } }
 
 /* ───────────────────────── Hero ───────────────────────── */
 .hero {
