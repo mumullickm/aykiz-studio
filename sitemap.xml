@@ -103,7 +103,7 @@
   </url>
   <url>
     <loc>https://aykizintelligence.com/hirra/</loc>
-    <lastmod>2026-06-20</lastmod>
+    <lastmod>2026-07-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -128,5 +128,77 @@
       <image:loc>https://aykizintelligence.com/cadence/assets/og.png</image:loc>
       <image:title>Cadence - done-for-you short-form content for brands</image:title>
     </image:image>
+  </url>
+  <url>
+    <loc>https://aykizintelligence.com/hirra/guide/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aykizintelligence.com/hirra/guide/is-chocolate-safe-for-cats/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aykizintelligence.com/hirra/guide/is-onion-and-garlic-safe-for-cats/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aykizintelligence.com/hirra/guide/is-grapes-and-raisins-safe-for-cats/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aykizintelligence.com/hirra/guide/is-milk-and-dairy-safe-for-cats/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aykizintelligence.com/hirra/guide/is-tuna-safe-for-cats/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aykizintelligence.com/hirra/guide/is-xylitol-and-human-food-safe-for-cats/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aykizintelligence.com/hirra/guide/safe-human-foods-for-cats/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aykizintelligence.com/hirra/guide/why-is-my-cat-drinking-so-much-water/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aykizintelligence.com/hirra/guide/cat-not-eating-what-to-do/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aykizintelligence.com/hirra/guide/cat-losing-weight-but-still-eating/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aykizintelligence.com/hirra/guide/cat-breathing-fast-what-to-do/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>
