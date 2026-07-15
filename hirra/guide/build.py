@@ -418,6 +418,258 @@ ARTICLES = [
   ],
   "related": ["cat-not-eating-what-to-do", "why-is-my-cat-drinking-so-much-water", "cat-losing-weight-but-still-eating"],
  },
+ {
+  "slug": "are-lilies-poisonous-to-cats",
+  "cat": "Household safety",
+  "verdict": "danger",
+  "verdict_label": "Deadly, a true emergency",
+  "title": "Are Lilies Poisonous to Cats? Yes, and It Is an Emergency",
+  "h1": "Are lilies poisonous to cats?",
+  "desc": "True lilies can cause fatal kidney failure in cats, even from pollen or vase water. Learn which lilies are deadly and what to do immediately.",
+  "keywords": "are lilies poisonous to cats, lily toxic cats, cat ate lily, lily poisoning cat, are lilies safe for cats",
+  "tldr": "Yes, and it is one of the most dangerous plant poisonings there is. True lilies (Lilium and Hemerocallis) can cause fatal kidney failure in cats. Every part is toxic, including the pollen and even the vase water. If your cat has touched a lily, call an emergency vet immediately. Minutes matter.",
+  "sections": [
+   ("Why lilies are a life-threatening emergency for cats",
+    "<p>True lilies are in a different class from most toxic plants. A cat that bites a leaf or petal, licks pollen off its fur, or drinks water from the vase can develop <strong>acute kidney failure</strong> within one to three days. Untreated, it is often fatal. There is no part of the plant that is safe.</p>"
+    "<p>The most dangerous are <strong>Lilium</strong> species (Easter, Asiatic, Tiger, Stargazer, Oriental) and <strong>Hemerocallis</strong> (daylilies). Because cats groom, even brushing past pollen is a real exposure.</p>"),
+   ("Plants that carry the lily name but differ",
+    "<p>Some plants called lilies are not true lilies and cause milder signs (mouth irritation) rather than kidney failure, for example peace lily, calla lily, and lily of the valley (which has its own heart risk). Do not rely on the name. If you are unsure which plant it is, treat it as an emergency and let the vet decide.</p>"),
+   ("Signs of lily poisoning",
+    "<ul>"
+    "<li>Vomiting and drooling early on</li>"
+    "<li>Lethargy and hiding</li>"
+    "<li>Loss of appetite</li>"
+    "<li>Increased then decreased urination as the kidneys fail</li>"
+    "<li>Later, no urine at all</li>"
+    "</ul>"
+    "<p>Signs can look like they improve after the first day, which is a false calm while the kidneys are being damaged.</p>"),
+   ("What to do right now",
+    "<ol>"
+    "<li><strong>Call an emergency vet immediately.</strong> Do not wait for signs. Treatment started within the first hours has by far the best outcome.</li>"
+    "<li>Bring the plant or a photo so the vet can confirm the species.</li>"
+    "<li>Remove all lilies from any home with a cat. Do not keep them as cut flowers either.</li>"
+    "</ol>"),
+  ],
+  "faqs": [
+   ("Can pollen alone poison a cat?", "Yes. A cat can get a toxic dose simply by brushing against the flower and grooming the pollen from its fur. This is why lilies and cats cannot safely share a home."),
+   ("My cat drank the flower water. Is that dangerous?", "Yes, the vase water from true lilies is toxic. Call an emergency vet right away."),
+   ("Which lilies are safe for cats?", "No true lily is safe. Some look-alikes named lily are less dangerous, but because misidentification is easy and true lilies are deadly, the safe rule is to keep all lilies out of a cat's home."),
+  ],
+  "related": ["are-essential-oils-safe-for-cats", "why-is-my-cat-drinking-so-much-water", "is-xylitol-and-human-food-safe-for-cats"],
+ },
+ {
+  "slug": "are-essential-oils-safe-for-cats",
+  "cat": "Household safety",
+  "verdict": "danger",
+  "verdict_label": "Toxic, use extreme caution",
+  "title": "Are Essential Oils and Diffusers Safe for Cats?",
+  "h1": "Are essential oils and diffusers safe for cats?",
+  "desc": "Many essential oils are toxic to cats, and diffusers can affect them too. Learn which oils are dangerous and how to keep your cat safe.",
+  "keywords": "are essential oils safe for cats, essential oil diffuser cats, tea tree oil cats, essential oils toxic cats, are diffusers safe for cats",
+  "tldr": "Most concentrated essential oils are toxic to cats, and some, like tea tree, are dangerous even in small amounts. Cats lack the liver enzymes to process them. Diffusers release oil into the air a cat then grooms off its fur. The safest approach is to keep concentrated oils and active diffusers away from cats entirely.",
+  "sections": [
+   ("Why cats are uniquely vulnerable to essential oils",
+    "<p>Cats are missing certain liver enzymes (glucuronyl transferases) that other animals use to break down the compounds in essential oils, so the oils build up and can cause harm at doses that would not affect a person or a dog. Exposure happens three ways: licking or eating oil, absorbing it through the skin, and inhaling it from a diffuser and then grooming the residue off the coat.</p>"),
+   ("Oils that are especially dangerous",
+    "<ul>"
+    "<li><strong>Tea tree (melaleuca)</strong> oil, dangerous even diluted</li>"
+    "<li>Peppermint, wintergreen, cinnamon, clove</li>"
+    "<li>Citrus oils (d-limonene), pine, and eucalyptus</li>"
+    "<li>Ylang ylang, pennyroyal, and sweet birch</li>"
+    "</ul>"
+    "<p>Signs of trouble include drooling, vomiting, wobbliness, tremors, low body temperature, difficulty breathing, or skin redness where oil touched.</p>"),
+   ("Diffusers: the hidden route",
+    "<p>Passive reed diffusers release less, but active nebulising or heated diffusers put fine oil droplets into the air that settle on a cat's fur and are then swallowed during grooming. If you use a diffuser, keep it in a room the cat cannot enter, run it briefly with good ventilation, and stop if the cat coughs, drools, or acts unwell.</p>"),
+   ("What to do if your cat is exposed",
+    "<ol>"
+    "<li>Move the cat to fresh air. If oil is on the coat or skin, call a vet before washing so you do the right thing.</li>"
+    "<li>Do not make the cat vomit.</li>"
+    "<li>Call a vet or emergency clinic, especially after tea tree oil or any signs above. Bring the product so they can see the ingredients.</li>"
+    "</ol>"),
+  ],
+  "faqs": [
+   ("Is a diffuser safe if the cat is in another room?", "Lower risk, but droplets travel and settle. Use active diffusers only where the cat cannot go, keep sessions short, and ventilate. Stop at once if the cat seems unwell."),
+   ("Are any essential oils safe for cats?", "Because cats process oils so poorly, there is no essential oil that is reliably safe to apply to or diffuse around a cat. Keep concentrated oils away and ask a vet before using anything scented near a cat."),
+   ("What about scented candles or plug-ins?", "Use them sparingly and with ventilation. Watch the cat for coughing or drooling, and stop if you see it. Never apply any scented product to a cat."),
+  ],
+  "related": ["are-lilies-poisonous-to-cats", "is-xylitol-and-human-food-safe-for-cats", "cat-breathing-fast-what-to-do"],
+ },
+ {
+  "slug": "cat-peeing-outside-litter-box",
+  "cat": "Symptoms",
+  "verdict": "caution",
+  "verdict_label": "Can signal an emergency",
+  "title": "Why Is My Cat Peeing Outside the Litter Box?",
+  "h1": "Why is my cat peeing outside the litter box?",
+  "desc": "A cat urinating outside the box can mean a medical problem, not bad behaviour. Learn the causes, and the one sign that is a life-threatening emergency.",
+  "keywords": "cat peeing outside litter box, cat not using litter box, cat urinating everywhere, cat straining to pee, cat litter box problems",
+  "tldr": "It is usually a medical or stress signal, not spite. Causes range from urinary infections and crystals to kidney disease, diabetes, arthritis, or litter-box aversion. One pattern is a true emergency: a cat, especially a male, straining and producing little or no urine may have a blocked bladder, which is fatal within a day or two. That needs an emergency vet now.",
+  "sections": [
+   ("The emergency to rule out first",
+    "<p>If your cat is going in and out of the box, crouching and straining, crying, and passing only drops or nothing, treat it as an <strong>emergency</strong>. A blocked bladder (urethral obstruction) is most common in male cats and can cause kidney failure and death within 24 to 48 hours. Go to an emergency vet immediately. Do not wait to see if it passes.</p>"),
+   ("Medical causes when there is no blockage",
+    "<ul>"
+    "<li>Urinary tract inflammation or infection (frequent, painful, small pees)</li>"
+    "<li>Bladder crystals or stones</li>"
+    "<li>Kidney disease or diabetes (larger volumes, more often, more thirst)</li>"
+    "<li>Arthritis pain making a high-sided box hard to enter, common in older cats</li>"
+    "</ul>"
+    "<p>Because so many causes are medical, a vet check comes before assuming it is behaviour.</p>"),
+   ("Litter-box and stress causes",
+    "<ul>"
+    "<li>A dirty box, or too few boxes (the rule of thumb is one per cat plus one)</li>"
+    "<li>A new litter, scented litter, a covered box, or a box moved to a busy spot</li>"
+    "<li>Stress from a new pet, person, move, or routine change</li>"
+    "<li>Territorial marking (small amounts on vertical surfaces)</li>"
+    "</ul>"),
+   ("What to do",
+    "<ol>"
+    "<li>If there is any straining with little urine, go to an emergency vet now.</li>"
+    "<li>Otherwise, book a vet visit to rule out a urinary or metabolic cause first.</li>"
+    "<li>Meanwhile, keep boxes clean, add a box, and try a large uncovered box with unscented litter.</li>"
+    "</ol>"),
+  ],
+  "faqs": [
+   ("Is my cat doing this out of spite?", "No. Cats do not urinate outside the box for revenge. It is almost always a medical issue, pain, or stress, so start with a vet check."),
+   ("My male cat is straining and nothing comes out. What do I do?", "Treat it as a life-threatening emergency and go to an emergency vet immediately. A blocked bladder can be fatal within a day."),
+   ("How many litter boxes should I have?", "One per cat plus one extra, in quiet, easy-to-reach spots, kept clean. Too few or dirty boxes is a common cause of accidents."),
+  ],
+  "related": ["why-is-my-cat-drinking-so-much-water", "cat-not-eating-what-to-do", "cat-vomiting-causes"],
+ },
+ {
+  "slug": "cat-vomiting-causes",
+  "cat": "Symptoms",
+  "verdict": "caution",
+  "verdict_label": "Depends how often",
+  "title": "Why Is My Cat Vomiting? When to Worry",
+  "h1": "Why is my cat vomiting?",
+  "desc": "Occasional vomiting can be minor, but frequent or repeated vomiting in a cat needs a vet. Learn the causes and the warning signs.",
+  "keywords": "why is my cat vomiting, cat throwing up, cat vomiting causes, cat sick, cat vomiting when to worry",
+  "tldr": "An occasional hairball or a single vomit in an otherwise bright cat is often minor. But frequent vomiting (more than about once a week), repeated vomiting in a day, or vomiting with lethargy, not eating, or blood is not normal and needs a vet. Cats hide illness, so persistent vomiting is a signal worth acting on.",
+  "sections": [
+   ("What is normal and what is not",
+    "<p>The myth that cats just vomit sometimes causes real problems to be missed. An occasional hairball is common, but regular vomiting is not something to accept. If your cat vomits more than about once a week, or several times in a day, that is a pattern to investigate.</p>"),
+   ("Common causes",
+    "<ul>"
+    "<li>Hairballs, or eating too fast</li>"
+    "<li>A sudden diet change or a food sensitivity</li>"
+    "<li>Eating something it should not have, including toxins (see the food-safety guides)</li>"
+    "<li>Intestinal parasites</li>"
+    "<li>Chronic disease: kidney disease, hyperthyroidism, inflammatory bowel disease, or diabetes</li>"
+    "</ul>"),
+   ("When vomiting is urgent",
+    "<ul>"
+    "<li>Repeated vomiting over a few hours, or unable to keep water down</li>"
+    "<li>Vomiting with lethargy, hiding, or not eating</li>"
+    "<li>Blood in the vomit, or it looks like coffee grounds</li>"
+    "<li>A suspected toxin, string, or foreign object</li>"
+    "<li>Retching with a swollen or painful belly</li>"
+    "</ul>"
+    "<p>Any of these means call a vet promptly. Vomiting plus not eating is especially concerning in cats because of the fatty-liver risk.</p>"),
+  ],
+  "faqs": [
+   ("Is it normal for cats to vomit hairballs?", "An occasional hairball can be normal, but frequent hairballs or vomiting more than about once a week is not, and deserves a vet check, sometimes it is a sign of an underlying gut or skin issue."),
+   ("My cat vomited once but seems fine. Should I worry?", "A single vomit in a bright, eating, playing cat is often minor. Watch for more vomiting, lethargy, or loss of appetite, and call a vet if any appear."),
+  ],
+  "related": ["cat-not-eating-what-to-do", "cat-peeing-outside-litter-box", "is-milk-and-dairy-safe-for-cats"],
+ },
+ {
+  "slug": "cat-vaccination-schedule",
+  "cat": "Care basics",
+  "verdict": "info",
+  "verdict_label": "Good to know",
+  "title": "Cat Vaccination Schedule: A Simple Guide for Owners",
+  "h1": "What vaccinations does my cat need?",
+  "desc": "A plain-language overview of core cat vaccines, when kittens and adults need them, and why they matter. Always confirm the schedule with your vet.",
+  "keywords": "cat vaccination schedule, kitten vaccines, cat vaccines, when to vaccinate cat, feline vaccine schedule",
+  "tldr": "Kittens need a series of core vaccines starting around 6 to 8 weeks, boostered every few weeks until about 16 weeks, then a booster at a year. Adult cats need periodic boosters, usually every 1 to 3 years depending on the vaccine and your vet. The core vaccines protect against panleukopenia, feline herpesvirus, calicivirus, and rabies.",
+  "sections": [
+   ("The core vaccines",
+    "<ul>"
+    "<li><strong>FVRCP</strong>, a combined vaccine against feline viral rhinotracheitis (herpesvirus), calicivirus, and panleukopenia, three serious, common diseases.</li>"
+    "<li><strong>Rabies</strong>, required by law in many places and important wherever rabies exists.</li>"
+    "<li><strong>FeLV</strong> (feline leukaemia) is recommended for kittens and for cats that go outdoors or live with FeLV-positive cats.</li>"
+    "</ul>"),
+   ("A typical schedule",
+    "<ul>"
+    "<li><strong>Kittens:</strong> FVRCP starting at about 6 to 8 weeks, repeated every 3 to 4 weeks until about 16 weeks. Rabies usually once at around 12 to 16 weeks.</li>"
+    "<li><strong>One year:</strong> a booster of the kitten vaccines.</li>"
+    "<li><strong>Adults:</strong> boosters every 1 to 3 years depending on the vaccine, local law, and lifestyle.</li>"
+    "</ul>"
+    "<p>Your vet tailors this to your cat's age, health, and whether it goes outside. Indoor-only cats still need core protection.</p>"),
+   ("Why it matters even for indoor cats",
+    "<p>The diseases these vaccines prevent are widespread, and some, like panleukopenia, are often fatal. Viruses can enter on shoes and clothing, so indoor cats are not fully safe without core vaccines. Keeping a simple record of dates and due boosters helps you and your vet stay on track.</p>"),
+  ],
+  "faqs": [
+   ("Do indoor cats need vaccines?", "Yes. Core vaccines are recommended for all cats because the diseases are common and can enter the home on clothing and shoes. Your vet may adjust non-core vaccines for an indoor lifestyle."),
+   ("How often do adult cats need boosters?", "Usually every 1 to 3 years depending on the specific vaccine, your local laws, and your cat's lifestyle. Your vet will set the right interval."),
+   ("How do I keep track of vaccine dates?", "Note each vaccine and its due date. Hirra stores your cat's profile and sends vaccination reminders so a booster is less likely to slip."),
+  ],
+  "related": ["how-often-should-a-cat-see-a-vet", "what-to-feed-a-kitten", "cat-vomiting-causes"],
+ },
+ {
+  "slug": "how-often-should-a-cat-see-a-vet",
+  "cat": "Care basics",
+  "verdict": "info",
+  "verdict_label": "Good to know",
+  "title": "How Often Should a Cat See the Vet?",
+  "h1": "How often should a cat see the vet?",
+  "desc": "How often healthy kittens, adult, and senior cats need check-ups, and why cats hide illness so well that regular visits matter.",
+  "keywords": "how often should a cat see the vet, cat check up frequency, senior cat vet visits, cat wellness exam, when to take cat to vet",
+  "tldr": "As a general guide: kittens need several visits in the first months, healthy adult cats benefit from a check-up once a year, and senior cats (about 10 and older) do best with a visit every 6 months. Cats hide illness so well that a yearly exam and simple tracking at home are the main ways problems get caught early.",
+  "sections": [
+   ("A rough schedule by life stage",
+    "<ul>"
+    "<li><strong>Kittens:</strong> a series of visits from about 8 to 16 weeks for vaccines, deworming, and a neuter discussion.</li>"
+    "<li><strong>Adult cats (1 to 9 years):</strong> a wellness exam once a year, even if they seem perfectly healthy.</li>"
+    "<li><strong>Senior cats (about 10 and up):</strong> a check-up every 6 months, often with periodic blood and urine tests, because kidney, thyroid, and diabetic disease become common.</li>"
+    "</ul>"),
+   ("Why yearly visits matter more for cats",
+    "<p>Cats are masters at masking illness, an instinct from their wild ancestry. By the time an owner sees obvious signs, a disease is often advanced. A yearly exam lets a vet feel for changes, weigh the cat accurately, and catch drift you cannot see. For older cats, twice-yearly visits roughly match how fast things can change at that age.</p>"),
+   ("Between visits, tracking is the other half",
+    "<p>Most of a cat's life happens between appointments. Watching weight, appetite, thirst, litter habits, and energy at home turns slow drift into something you and your vet can act on early. That is exactly what a simple daily record, or an app like Hirra, is for.</p>"),
+  ],
+  "faqs": [
+   ("My cat seems healthy. Does it still need a yearly vet visit?", "Yes. Cats hide illness, so a yearly exam is the main chance to catch problems early, before signs are obvious. It is prevention, not just treatment."),
+   ("How often should a senior cat see the vet?", "Cats around 10 and older generally do best with a check-up every 6 months, since age-related diseases can develop quickly at that stage."),
+  ],
+  "related": ["cat-vaccination-schedule", "why-is-my-cat-drinking-so-much-water", "cat-losing-weight-but-still-eating"],
+ },
+ {
+  "slug": "what-to-feed-a-kitten",
+  "cat": "Care basics",
+  "verdict": "info",
+  "verdict_label": "Good to know",
+  "title": "What to Feed a Kitten: A Simple Starter Guide",
+  "h1": "What should I feed a kitten?",
+  "desc": "What kittens need to eat, how often, and the common feeding mistakes to avoid in the first year. Confirm specifics with your vet.",
+  "keywords": "what to feed a kitten, kitten food, how often to feed a kitten, kitten feeding schedule, best food for kittens",
+  "tldr": "Feed a complete food labelled for kittens or for all life stages, because kittens need more protein, calories, and specific nutrients than adult cats. Feed small meals several times a day, always provide fresh water, and avoid cow's milk. Your vet can confirm amounts for your kitten's age and weight.",
+  "sections": [
+   ("What a kitten needs",
+    "<p>Kittens grow fast and need a diet made for it: higher protein and calories, plus the right calcium, taurine, and fatty acids. Choose a food clearly labelled <strong>for kittens</strong> or <strong>for all life stages</strong>, not adult-only food. Both wet and dry kitten foods can work; wet food adds helpful moisture.</p>"),
+   ("How often to feed",
+    "<ul>"
+    "<li><strong>Under 6 months:</strong> small meals 3 to 4 times a day.</li>"
+    "<li><strong>6 to 12 months:</strong> gradually reduce to 2 to 3 meals a day.</li>"
+    "<li>Fresh water always available.</li>"
+    "</ul>"
+    "<p>Follow the amounts on the food for your kitten's weight and age, and let your vet fine-tune it. Most kittens move to adult food around 12 months.</p>"),
+   ("Common mistakes to avoid",
+    "<ul>"
+    "<li><strong>Cow's milk,</strong> which causes diarrhoea in most cats (see the milk guide).</li>"
+    "<li>Adult cat food, which is not calorie-dense enough for growth.</li>"
+    "<li>A tuna or human-food habit that unbalances the diet.</li>"
+    "<li>Free-feeding without watching weight, which can start a lifelong obesity problem.</li>"
+    "</ul>"),
+  ],
+  "faqs": [
+   ("Can kittens eat adult cat food?", "Not as their main diet. Kittens need the extra protein and calories in kitten or all-life-stages food. They usually switch to adult food at about 12 months."),
+   ("Can I give my kitten milk?", "No. Most cats, including kittens past weaning, cannot digest cow's milk and it causes diarrhoea. Kittens need their mother's milk or a kitten milk replacer, then proper kitten food and water."),
+   ("How much should I feed my kitten?", "Follow the label for your kitten's age and weight, split into several small meals a day, and let your vet adjust. Watch body condition rather than just the bowl."),
+  ],
+  "related": ["cat-vaccination-schedule", "is-milk-and-dairy-safe-for-cats", "safe-human-foods-for-cats"],
+ },
 ]
 
 # ------------------------------------------------------------------ template
@@ -484,7 +736,7 @@ footer a{color:var(--mist)}
 .cardlink{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:0 0 12px;color:var(--cream)}
 .cardlink:hover{border-color:var(--teal);text-decoration:none;transform:translateY(-1px)}
 .cardlink .dot{width:10px;height:10px;border-radius:50%;margin-top:8px;flex:none}
-.d-danger{background:var(--rose)}.d-caution{background:var(--amber)}.d-safe{background:var(--emerald)}
+.d-danger{background:var(--rose)}.d-caution{background:var(--amber)}.d-safe{background:var(--emerald)}.d-info{background:var(--teal)}
 .cardlink .t{display:block;font-family:'Nunito',sans-serif;font-weight:700;font-size:18px;color:#fff}
 .cardlink .s{display:block;font-size:14px;color:var(--mist);margin-top:3px}
 .cardlink>span:last-child{flex:1;min-width:0}
@@ -584,7 +836,7 @@ def article_jsonld(a):
 
 def render_article(a):
     canon = SITE + BASE + a["slug"] + "/"
-    vcls = {"danger": "v-danger", "caution": "v-caution", "safe": "v-safe"}[a["verdict"]]
+    vcls = {"danger": "v-danger", "caution": "v-caution", "safe": "v-safe", "info": "v-info"}[a["verdict"]]
     body = []
     body.append('<div class="wrap">')
     body.append('<div class="crumb"><a href="/hirra/">Hirra</a> &rsaquo; <a href="/hirra/guide/">Cat care guide</a> &rsaquo; %s</div>' % a["cat"])
@@ -647,7 +899,7 @@ def render_hub():
     groups = {}
     for a in ARTICLES:
         groups.setdefault(a["cat"], []).append(a)
-    order = ["Food safety", "Symptoms"]
+    order = ["Food safety", "Household safety", "Symptoms", "Care basics"]
     body = ['<div class="wrap">']
     body.append('<div class="hero">')
     body.append('<p class="kicker">Hirra cat care guide</p>')
@@ -662,7 +914,7 @@ def render_hub():
             continue
         body.append('<div class="group"><h2>%s</h2>' % g)
         for a in groups[g]:
-            dcls = {"danger": "d-danger", "caution": "d-caution", "safe": "d-safe"}[a["verdict"]]
+            dcls = {"danger": "d-danger", "caution": "d-caution", "safe": "d-safe", "info": "d-info"}[a["verdict"]]
             body.append(
                 '<a class="cardlink" href="/hirra/guide/%s/"><span class="dot %s"></span>'
                 '<span><span class="t">%s</span><span class="s">%s</span></span></a>'
@@ -677,14 +929,27 @@ def render_hub():
         + APPSTORE_BADGE + "</div>")
     body.append("</div>")
 
+    items = ",".join(
+        '{"@type":"ListItem","position":%d,"url":"%s%s%s/","name":"%s"}'
+        % (i + 1, SITE, BASE, a["slug"], esc(a["h1"])) for i, a in enumerate(ARTICLES)
+    )
     jsonld = (
-        '<script type="application/ld+json">\n'
-        '{"@context":"https://schema.org","@type":"CollectionPage",'
-        '"name":"Hirra cat care guide","url":"%s",'
-        '"about":"Cat health, food safety, and symptom guidance",'
-        '"publisher":{"@type":"Organization","name":"Aykiz Intelligence","url":"https://aykizintelligence.com/"}}\n'
-        "</script>"
-    ) % canon
+        '<script type="application/ld+json">\n{'
+        '"@context":"https://schema.org","@graph":['
+        '{"@type":"Organization","@id":"https://aykizintelligence.com/#org","name":"Aykiz Intelligence",'
+        '"url":"https://aykizintelligence.com/","sameAs":["https://apps.apple.com/us/app/hirra-cat-health-tracker/id6782975522"]},'
+        '{"@type":"WebSite","@id":"https://aykizintelligence.com/#website","url":"https://aykizintelligence.com/",'
+        '"name":"Aykiz Intelligence","publisher":{"@id":"https://aykizintelligence.com/#org"}},'
+        '{"@type":"MobileApplication","@id":"https://aykizintelligence.com/hirra/#app","name":"Hirra: Cat Health Tracker",'
+        '"applicationCategory":"HealthApplication","operatingSystem":"iOS 17","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},'
+        '"installUrl":"%s","url":"https://aykizintelligence.com/hirra/"},'
+        '{"@type":"CollectionPage","@id":"%s#page","name":"Hirra cat care guide","url":"%s",'
+        '"about":"Cat health, food safety, and symptom guidance for cat owners",'
+        '"isPartOf":{"@id":"https://aykizintelligence.com/#website"},'
+        '"publisher":{"@id":"https://aykizintelligence.com/#org"},'
+        '"mainEntity":{"@type":"ItemList","itemListElement":[%s]}}'
+        ']}\n</script>'
+    ) % (APPSTORE, canon, canon, items)
     head = render(
         HEAD,
         TITLE="Cat Care Guide: Food Safety and Symptoms | Hirra",

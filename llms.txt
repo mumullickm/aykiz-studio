@@ -20,7 +20,7 @@ Key facts:
 
 ## Guides
 
-- [Hirra cat care guide](https://aykizintelligence.com/hirra/guide/): free, plain-language answers to the questions cat owners search most, from the makers of the Hirra cat health app. Food safety (is chocolate, onion and garlic, grapes and raisins, milk, tuna, or xylitol safe for cats, and which human foods are safe) and symptoms (why a cat is drinking so much water, a cat that is not eating, losing weight while still eating, or breathing fast). Every guide is non-diagnostic and routes owners to a vet.
+- [Hirra cat care guide](https://aykizintelligence.com/hirra/guide/): free, plain-language answers to the questions cat owners search most, from the makers of the Hirra cat health app. Covers food safety (is chocolate, onion and garlic, grapes and raisins, milk, tuna, or xylitol safe for cats, and which human foods are safe), household safety (are lilies poisonous to cats, are essential oils and diffusers safe for cats), symptoms (why a cat is drinking so much water, a cat that is not eating, losing weight while still eating, breathing fast, vomiting, or peeing outside the litter box), and care basics (cat vaccination schedule, how often a cat should see the vet, what to feed a kitten). Every guide is non-diagnostic and routes owners to a licensed veterinarian.
 
 ## Services
 
