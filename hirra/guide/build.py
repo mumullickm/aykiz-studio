@@ -670,6 +670,138 @@ ARTICLES = [
   ],
   "related": ["cat-vaccination-schedule", "is-milk-and-dairy-safe-for-cats", "safe-human-foods-for-cats"],
  },
+ {
+  "slug": "signs-your-cat-is-sick",
+  "cat": "Symptoms",
+  "verdict": "caution",
+  "verdict_label": "Know the early signs",
+  "title": "Early Signs Your Cat Is Sick: The Checklist Vets Wish Owners Kept",
+  "h1": "Early signs your cat is sick",
+  "desc": "Cats hide illness until it is advanced. Learn the quiet early signs of a sick cat, the patterns that matter most, the emergencies, and how to catch trouble early.",
+  "keywords": "signs your cat is sick, how to tell if my cat is sick, early signs cat illness, is my cat sick, sick cat symptoms, cat health warning signs",
+  "tldr": "Cats evolved to hide illness, so the earliest signs are quiet: small changes in appetite, water, litter, weight, energy, and breathing. A single change on its own is rarely an emergency, but a slow drift, or two changes together, is worth a vet's eyes. The most reliable way to catch a problem early is to know your cat's normal and notice when it shifts.",
+  "sections": [
+   ("Why cats hide being sick",
+    "<p>A cat in the wild that looks weak becomes a target, so cats are built to mask pain and illness for as long as they can. That instinct does not switch off at home. By the time a cat visibly looks unwell, a problem like kidney disease, an overactive thyroid, or diabetes is often well established.</p>"
+    "<p>This is not a reason to worry constantly. It is a reason to watch the quiet signals, because they change first, while there is still plenty of time to act.</p>"),
+   ("The six signals that change first",
+    "<p>Almost every early problem shows up as a shift in one of these everyday habits. None of them requires a vet on its own, but a clear change from your cat's usual is worth noting.</p>"
+    "<ul>"
+    "<li><strong>Appetite.</strong> Eating noticeably less, or suddenly much more. A cat not eating at all for a day is more urgent than owners expect.</li>"
+    "<li><strong>Water.</strong> Drinking more than usual is one of the earliest signs of kidney disease and diabetes. It is easy to miss without paying attention to the bowl.</li>"
+    "<li><strong>Litter box.</strong> More or less urine, straining, blood, or going outside the box. A male cat straining with little or no urine is an emergency (see below).</li>"
+    "<li><strong>Weight.</strong> Slow weight loss is very hard to spot living with a cat every day. A monthly weigh-in catches what your eyes cannot.</li>"
+    "<li><strong>Energy and grooming.</strong> Hiding more, playing less, or a coat that looks unkempt because a cat feeling unwell stops grooming.</li>"
+    "<li><strong>Breathing.</strong> Fast or laboured breathing at rest, or open-mouth breathing, is always serious in a cat.</li>"
+    "</ul>"),
+   ("The patterns that matter more than any single sign",
+    "<p>The strongest early warnings are two quiet changes that line up, because together they point somewhere specific:</p>"
+    "<ul>"
+    "<li><strong>Losing weight but eating well</strong>, often with more thirst, is a classic thyroid or diabetes pattern in middle-aged and older cats.</li>"
+    "<li><strong>Drinking more and urinating more</strong> points toward the kidneys or diabetes.</li>"
+    "<li><strong>Eating less over several days in an overweight cat</strong> is dangerous, because cats that stop eating can develop a serious liver problem quickly.</li>"
+    "</ul>"
+    "<p>Any single sign might be nothing. A pattern, or a sign that keeps drifting the same way over days and weeks, is the signal to book a vet.</p>"),
+   ("Red flags that are an emergency",
+    "<p>Some signs mean now, not tomorrow. Contact a vet or emergency clinic straight away if you see:</p>"
+    "<ul>"
+    "<li>A male cat straining in the litter box with little or no urine</li>"
+    "<li>Fast, laboured, or open-mouth breathing at rest</li>"
+    "<li>Collapse, extreme weakness, or unresponsiveness</li>"
+    "<li>Not eating anything for two days or more</li>"
+    "<li>Repeated vomiting, a swollen or painful belly, or suspected poisoning</li>"
+    "<li>Pale, blue, or yellow gums</li>"
+    "</ul>"),
+   ("How to catch it early: know your cat's normal",
+    "<p>You cannot notice a change if you do not know the baseline. The owners who catch problems early are simply the ones tracking the ordinary numbers, so a drift stands out.</p>"
+    "<p>A quick daily note of appetite, water, litter, and energy, plus a monthly weigh-in, is enough. This is exactly what <strong>Hirra</strong> is built to do: a five-second daily check-in learns your cat's normal, and an on-device early-warning engine flags the quiet drift and the connected patterns above, then points you to a vet. It never names a disease, it just helps you notice sooner.</p>"),
+  ],
+  "faqs": [
+   ("How can I tell if my cat is sick or just sleepy?", "A healthy cat sleeps a lot, but still eats normally, greets you, plays, and grooms. Be concerned when the rest comes with a change in appetite, water, litter, or weight, when your cat hides away from people it usually seeks out, or when the low energy lasts more than a day or two."),
+   ("How often should I check my cat's health at home?", "A few seconds a day on appetite, water, litter, and energy, plus a weigh-in about once a month, catches most early problems. Tracking beats memory, because slow changes are invisible day to day and only show up as a trend."),
+   ("What are the most common early signs owners miss?", "The two quiet ones: slow weight loss, which is invisible day to day without a scale, and drinking a little more water, which is an early sign of kidney disease and diabetes. Both are easy to catch once you are tracking them."),
+  ],
+  "related": ["cat-losing-weight-but-still-eating", "why-is-my-cat-drinking-so-much-water", "cat-not-eating-what-to-do"],
+ },
+ {
+  "slug": "early-signs-of-kidney-disease-in-cats",
+  "cat": "Symptoms",
+  "verdict": "caution",
+  "verdict_label": "Catch it early",
+  "title": "Early Signs of Kidney Disease in Cats (and What to Track at Home)",
+  "h1": "Early signs of kidney disease in cats",
+  "desc": "Kidney disease is one of the most common serious illnesses in older cats. Learn the early signs, why they are easy to miss, and what to track at home to catch it sooner.",
+  "keywords": "early signs of kidney disease in cats, cat kidney disease symptoms, ckd cat, cat drinking more water kidney, kidney failure cat signs",
+  "tldr": "Kidney disease is common in older cats and develops slowly. The earliest signs are drinking and urinating more, then gradual weight loss and a reduced appetite. Cats hide it well, so it is often advanced before it looks obvious. Tracking water, weight, and appetite at home, plus routine senior blood tests, catches it early, when diet and care make the biggest difference.",
+  "sections": [
+   ("Why kidney disease is so easy to miss",
+    "<p>Chronic kidney disease is one of the most common serious conditions in cats over seven, and it comes on gradually over months or years. The kidneys lose function quietly, and cats compensate so well that owners often notice nothing until a lot of function is already gone.</p>"
+    "<p>That is the frustrating part and the hopeful part at once: it is easy to miss, but it is also very catchable if you know the early signals and track them.</p>"),
+   ("The earliest signs, in the order they usually appear",
+    "<ul>"
+    "<li><strong>Drinking more water.</strong> Often the very first sign. The kidneys can no longer concentrate urine, so the cat loses more water and drinks more to keep up.</li>"
+    "<li><strong>Urinating more.</strong> Bigger or more frequent clumps in the litter box, a natural partner to the extra drinking.</li>"
+    "<li><strong>Gradual weight loss.</strong> Slow enough to be invisible day to day, which is why a monthly weigh-in matters.</li>"
+    "<li><strong>Reduced or picky appetite.</strong> Eating less, or going off a favourite food.</li>"
+    "<li><strong>A duller coat and lower energy</strong> as the disease progresses.</li>"
+    "</ul>"
+    "<p>The drinking-more and urinating-more pair is the classic early combination. On its own each is easy to dismiss, which is exactly why noticing both together is so useful.</p>"),
+   ("What to do if you see these signs",
+    "<ol>"
+    "<li><strong>Book a vet visit.</strong> A simple blood and urine test can confirm kidney values, and often catches the disease long before a cat looks unwell.</li>"
+    "<li><strong>Bring your notes.</strong> How much the water and weight have changed, and over how long, helps the vet enormously.</li>"
+    "<li><strong>Ask about diet.</strong> A kidney-support diet is one of the most effective tools, and starting early makes a real difference.</li>"
+    "</ol>"),
+   ("Why tracking at home changes the outcome",
+    "<p>Kidney disease rewards early detection more than almost any other feline illness, and its earliest signs are exactly the ones a home log captures well: water, weight, and appetite. Owners who track these notice the drift months before it would be obvious.</p>"
+    "<p><strong>Hirra</strong> is built for this. A five-second daily check-in and a monthly weigh-in let its on-device early-warning engine flag the rising-thirst and falling-weight pattern and point you to a vet. It never diagnoses kidney disease, that is your vet's job with a blood test, but it helps you get there sooner.</p>"),
+  ],
+  "faqs": [
+   ("At what age should I start watching for kidney disease?", "Risk rises from about seven years, and many vets recommend routine senior blood work once or twice a year from then. Tracking water and weight at home is worth doing at any age, since it costs nothing and catches other problems too."),
+   ("Is a cat drinking more water always kidney disease?", "No. Increased thirst can also point to diabetes or an overactive thyroid, among other things. It is a signal to see a vet for a simple test, not a diagnosis on its own."),
+   ("Can kidney disease in cats be cured?", "Chronic kidney disease cannot be reversed, but it can be managed well for a long time, especially when caught early with diet and care. That is why noticing the first signs matters so much."),
+  ],
+  "related": ["why-is-my-cat-drinking-so-much-water", "cat-losing-weight-but-still-eating", "signs-your-cat-is-sick"],
+ },
+ {
+  "slug": "how-to-count-cat-breathing-rate",
+  "cat": "Symptoms",
+  "verdict": "caution",
+  "verdict_label": "A useful home check",
+  "title": "How to Count Your Cat's Resting Breathing Rate (a Home Heart Check)",
+  "h1": "How to count your cat's resting breathing rate",
+  "desc": "A cat's resting breathing rate is a simple home check for heart and lung trouble. Learn how to count it correctly, what is normal, and when a high rate is an emergency.",
+  "keywords": "cat breathing rate, normal cat breathing rate, count cat breaths per minute, cat resting respiratory rate, cat breathing fast asleep",
+  "tldr": "Count how many times your cat's chest rises and falls in 30 seconds while it is asleep or fully resting, then double it for breaths per minute. Under 30 is normal. Consistently above 30 to 40 at rest, or any laboured or open-mouth breathing, means call a vet. It is one of the simplest and most useful home checks there is.",
+  "sections": [
+   ("Why the resting breathing rate matters",
+    "<p>The number of breaths a cat takes per minute while resting is one of the few heart and lung signals an owner can measure at home, and vets often ask owners to track it for cats with heart or airway concerns. A resting rate that climbs over time can be an early sign of fluid around the lungs, before a cat looks distressed.</p>"),
+   ("How to count it correctly",
+    "<ol>"
+    "<li>Wait until your cat is <strong>asleep or fully settled and not purring</strong>. Purring, activity, heat, and stress all push the rate up and make the count meaningless.</li>"
+    "<li>Watch the chest. One breath is one full rise and fall together.</li>"
+    "<li>Count the breaths for <strong>30 seconds</strong>, then multiply by two for the per-minute rate.</li>"
+    "<li>Do it a few times on different days to learn your cat's normal resting number.</li>"
+    "</ol>"),
+   ("What is normal, and what is not",
+    "<ul>"
+    "<li><strong>Under 30 breaths per minute at rest</strong> is normal for most cats, often in the low twenties.</li>"
+    "<li><strong>Consistently 30 to 40 at rest</strong> is worth a vet conversation, especially if it is rising.</li>"
+    "<li><strong>Over 40 at rest</strong>, or any laboured, open-mouth, or belly-heaving breathing, needs a vet now.</li>"
+    "</ul>"
+    "<p>One slightly high reading on a warm or stressful day is usually nothing. A rate that is repeatedly high at true rest is the signal that matters.</p>"),
+   ("When fast breathing is an emergency",
+    "<p>Open-mouth breathing or panting in a cat that is not hot or just-exercised, gasping, blue or grey gums, or breathing with obvious belly effort are emergencies. Do not delay, and keep the cat as calm and cool as possible on the way to care.</p>"),
+   ("Tracking it over time",
+    "<p>A single number tells you little; the trend tells you a lot. <strong>Hirra Plus</strong> includes a guided 30-second breathing-rate counter that does the timing and the math, and logs each reading so you and your vet can see whether the resting rate is stable or creeping up. The free app also flags fast-breathing keywords straight to emergency guidance.</p>"),
+  ],
+  "faqs": [
+   ("Should I count breaths when my cat is awake?", "No. Count only when your cat is asleep or fully resting and not purring. An awake, active, warm, or purring cat breathes faster, so the number would not reflect the true resting rate."),
+   ("My cat breathes fast while sleeping. Is that normal?", "Brief fast or irregular breathing during dreaming sleep can be normal. What matters is the steady resting rate. If it is repeatedly above 30 to 40 at rest, or looks laboured, see a vet."),
+   ("How often should I check it?", "For a healthy cat, occasionally, to know its normal. For a cat with a known heart or breathing condition, follow your vet's advice, which is often once or twice a day."),
+  ],
+  "related": ["cat-breathing-fast-what-to-do", "signs-your-cat-is-sick", "how-often-should-a-cat-see-a-vet"],
+ },
 ]
 
 # ------------------------------------------------------------------ template
