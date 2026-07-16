@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cadence - Done-for-you short-form content for brands | Aykiz Intelligence</title>
-  <meta name="description" content="Cadence is a done-for-you short-form content service by Aykiz Intelligence. We produce and schedule your videos and posts, on your brand, so your account never goes quiet. First month runs on a plan you approve." />
+  <meta name="description" content="Cadence is a done-for-you short-form content service by Aykiz Intelligence. We produce and schedule your videos and posts, on your brand, so your account never goes quiet. Live proof accounts you can check today. First month runs on a plan you approve." />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://aykizintelligence.com/cadence/" />
   <link rel="icon" href="/favicon.ico" />
@@ -42,7 +42,10 @@
         "description": "A done-for-you short-form content service. We produce and schedule videos and static posts on your brand, so your account stays consistent. First month runs on a plan you approve.",
         "areaServed": ["AE", "SA", "QA", "BD", "Worldwide"],
         "provider": { "@id": "https://aykizintelligence.com/#organization" },
-        "offers": { "@type": "Offer", "price": "600", "priceCurrency": "USD", "description": "Cadence Monthly: 12 short videos and 12 static posts per month, produced and scheduled." }
+        "offers": [
+          { "@type": "Offer", "name": "Cadence Monthly", "price": "600", "priceCurrency": "USD", "url": "https://aykizintelligence.com/cadence/", "availability": "https://schema.org/InStock", "description": "Cadence Monthly: 12 short videos and 12 static posts per month, produced and scheduled. First month runs on a plan you approve." },
+          { "@type": "Offer", "name": "Cadence Monthly, founding rate", "price": "450", "priceCurrency": "USD", "url": "https://aykizintelligence.com/cadence/", "availability": "https://schema.org/LimitedAvailability", "description": "Founding rate: 450 USD per month, locked for six months, for the first brands to come on board, in exchange for a testimonial." }
+        ]
       },
       {
         "@type": "BreadcrumbList",
@@ -85,7 +88,8 @@
     .cta{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--cream);font-weight:600;font-size:15px;padding:14px 22px;border-radius:999px;text-decoration:none;transition:transform .15s ease,background .15s ease}
     .cta:hover{transform:translateY(-1px);background:var(--ink-2)}
     .cta .dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}
-    .hero .under{margin-top:18px;font-size:13px;color:var(--ink-mute)}
+    .under{margin-top:18px;font-size:13px;color:var(--ink-mute)}
+    .under a{color:var(--ink-soft)}
     .prose{font-size:clamp(16px,2vw,18px);color:var(--ink-soft);max-width:52ch}
     .prose strong{color:var(--ink);font-weight:600}
     .pkg{list-style:none;margin:0;padding:0}
@@ -95,6 +99,8 @@
     .pkg .v b{font-weight:600;color:var(--ink)}
     .pkg .v span{display:block;color:var(--ink-mute);font-size:14px;margin-top:3px}
     .proof-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+    .hero .proof-links{margin-top:30px}
+    .proof-note{font-family:var(--f-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-mute);margin:0 0 -14px}
     .chip{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line-strong);border-radius:999px;padding:10px 16px;text-decoration:none;font-size:15px;font-weight:500;transition:border-color .15s ease,background .15s ease}
     .chip:hover{border-color:var(--teal-deep);background:var(--cream-2)}
     .chip .mk{width:6px;height:6px;border-radius:50%;background:var(--teal)}
@@ -130,8 +136,14 @@
         <p class="eyebrow">A content engine by Aykiz Intelligence</p>
         <h1>We keep your brand posting.</h1>
         <p class="lede">Consistent, on-brand short video and posts, produced and scheduled for you. So your account never goes quiet again.</p>
-        <a class="cta" href="mailto:hello@aykizintelligence.com?subject=Cadence%20for%20our%20brand"><span class="dot"></span> Start a conversation</a>
+        <a class="cta" href="mailto:hello@aykizintelligence.com?subject=Cadence%20for%20our%20brand&body=Hi%20Miraz%2C%0D%0A%0D%0AOur%20brand%3A%20%0D%0AWhere%20we%20post%3A%20%0D%0A%0D%0APlease%20send%20what%20our%20first%20month%20would%20look%20like."><span class="dot"></span> Start a conversation</a>
         <p class="under">First month runs on a plan you approve. If it does not match that plan, you do not pay.</p>
+        <p class="proof-note" style="margin-top:34px">See the work running today</p>
+        <div class="proof-links">
+          <a class="chip" href="https://instagram.com/hirra.cat" target="_blank" rel="noopener"><span class="mk"></span>@hirra.cat</a>
+          <a class="chip" href="https://instagram.com/wasilah.site" target="_blank" rel="noopener"><span class="mk"></span>@wasilah.site</a>
+          <a class="chip" href="https://instagram.com/sunraevbd" target="_blank" rel="noopener"><span class="mk"></span>@sunraevbd</a>
+        </div>
       </div>
     </section>
 
@@ -171,19 +183,21 @@
       <div class="wrap">
         <p class="eyebrow">Price</p>
         <div class="price">$600<span class="per"> / month</span></div>
+        <p class="prose" style="margin-top:14px"><strong>The first month is risk-free.</strong> It runs on a plan you approve before anything is made. If the delivered work does not match that plan, you do not pay.</p>
         <div class="founding">
           <p class="label">Founding rate</p>
           <p><b>$450 / month, locked for six months</b>, for the first brands to come on board. In exchange for a testimonial once you see the work.</p>
-          <p>First month runs on a plan you approve. If it does not match that plan, you do not pay.</p>
         </div>
+        <a class="cta" style="margin-top:30px" href="mailto:hello@aykizintelligence.com?subject=Cadence%20for%20our%20brand&body=Hi%20Miraz%2C%0D%0A%0D%0AOur%20brand%3A%20%0D%0AWhere%20we%20post%3A%20%0D%0A%0D%0APlease%20send%20what%20our%20first%20month%20would%20look%20like."><span class="dot"></span> Start a conversation</a>
       </div>
     </section>
 
     <section>
       <div class="wrap">
         <p class="eyebrow">Start</p>
-        <p class="prose" style="margin-bottom:28px">Tell me your brand and where it posts. I will send back exactly what your first month would look like.</p>
-        <a class="cta" href="mailto:hello@aykizintelligence.com?subject=Cadence%20for%20our%20brand"><span class="dot"></span> Start a conversation</a>
+        <p class="prose" style="margin-bottom:28px">Tell me your brand and where it posts. I will send back exactly what your first month would look like. One email, no call needed to start.</p>
+        <a class="cta" href="mailto:hello@aykizintelligence.com?subject=Cadence%20for%20our%20brand&body=Hi%20Miraz%2C%0D%0A%0D%0AOur%20brand%3A%20%0D%0AWhere%20we%20post%3A%20%0D%0A%0D%0APlease%20send%20what%20our%20first%20month%20would%20look%20like."><span class="dot"></span> Start a conversation</a>
+        <p class="under">Or write to <a href="mailto:hello@aykizintelligence.com">hello@aykizintelligence.com</a> directly.</p>
       </div>
     </section>
   </main>
