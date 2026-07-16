@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Verbatim - Transcribe audio and video, privately</title>
-<meta name="description" content="Verbatim transcribes audio and video into clean, timestamped text. It runs entirely in your browser. Nothing is ever uploaded. Free, private, no length limits." />
+<title>Free Private Audio and Video Transcription, No Upload | Verbatim</title>
+<meta name="description" content="Transcribe audio and video to text free in your browser. Whisper runs on your device, so nothing is uploaded. Timestamps, SRT and VTT export, no length limits, no account." />
 <link rel="canonical" href="https://aykizintelligence.com/verbatim/" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 <meta name="author" content="Aykiz Intelligence" />
@@ -76,6 +76,7 @@
       "@type": "FAQPage",
       "mainEntity": [
         { "@type": "Question", "name": "Is it really private?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Verbatim has no backend to receive your files. The model and your audio live in your browser tab. You can confirm it yourself: open your network tools, transcribe a file, and watch that nothing is sent." } },
+        { "@type": "Question", "name": "Does it work offline?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, once the model has downloaded. Whisper is cached in your browser, so transcription itself needs no connection after the first load. You do need a connection to open the page and to fetch the model the first time." } },
         { "@type": "Question", "name": "How large a file can I transcribe?", "acceptedAnswer": { "@type": "Answer", "text": "There is no hard limit. Length is bounded only by your own device memory. Very long files take longer because the work happens on your hardware, not a data center." } },
         { "@type": "Question", "name": "Which formats can I export?", "acceptedAnswer": { "@type": "Answer", "text": "Plain text (.txt), SubRip subtitles (.srt), and WebVTT (.vtt). You can also copy the transcript straight to your clipboard, with or without timestamps." } },
         { "@type": "Question", "name": "How accurate is it?", "acceptedAnswer": { "@type": "Answer", "text": "It uses OpenAI's Whisper models, which are strong across clear speech and many languages. Choose a larger model for better accuracy or a smaller one for speed. The transcript is fully editable, so you stay in control of the final text." } },
@@ -365,6 +366,10 @@
       <div class="faq__item">
         <button class="faq__q" aria-expanded="false"><span>Is it really private?</span><span class="faq__icon" aria-hidden="true"></span></button>
         <div class="faq__a"><div class="faq__a-inner"><b>Yes.</b> Verbatim has no backend to receive your files. The model and your audio live in your browser tab. You can confirm it yourself: open your network tools, transcribe a file, and watch that nothing is sent.</div></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q" aria-expanded="false"><span>Does it work offline?</span><span class="faq__icon" aria-hidden="true"></span></button>
+        <div class="faq__a"><div class="faq__a-inner"><b>Yes, once the model has downloaded.</b> Whisper is cached in your browser, so transcription itself needs no connection after the first load. You do need a connection to open the page and to fetch the model the first time.</div></div>
       </div>
       <div class="faq__item">
         <button class="faq__q" aria-expanded="false"><span>How large a file can I transcribe?</span><span class="faq__icon" aria-hidden="true"></span></button>
