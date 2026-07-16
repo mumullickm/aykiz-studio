@@ -1,0 +1,28 @@
+{
+  "name": "Misbah: Light in the Dark",
+  "short_name": "Misbah",
+  "description": "A calm Islamic companion. Quran, remembrance, and reflection.",
+  "start_url": "/misbah/",
+  "scope": "/misbah/",
+  "display": "browser",
+  "icons": [
+    {
+      "src": "/misbah/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "prefer_related_applications": true,
+  "related_applications": [
+    {
+      "platform": "play",
+      "id": "com.mumullickm.misbah",
+      "url": "https://play.google.com/store/apps/details?id=com.mumullickm.misbah"
+    },
+    {
+      "platform": "itunes",
+      "id": "6781614427",
+      "url": "https://apps.apple.com/app/id6781614427"
+    }
+  ]
+}
