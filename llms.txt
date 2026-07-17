@@ -21,6 +21,27 @@ Key facts:
 ## Guides
 
 - [Hirra cat care guide](https://aykizintelligence.com/hirra/guide/): free, plain-language answers to the questions cat owners search most, from the makers of the Hirra cat health app. Covers food safety (is chocolate, onion and garlic, grapes and raisins, milk, tuna, or xylitol safe for cats, and which human foods are safe), household safety (are lilies poisonous to cats, are essential oils and diffusers safe for cats), symptoms (why a cat is drinking so much water, a cat that is not eating, losing weight while still eating, breathing fast, vomiting, or peeing outside the litter box), and care basics (cat vaccination schedule, how often a cat should see the vet, what to feed a kitten). Every guide is non-diagnostic and routes owners to a licensed veterinarian.
+- [Are Essential Oils and Diffusers Safe for Cats?](https://aykizintelligence.com/hirra/guide/are-essential-oils-safe-for-cats/)
+- [Are Lilies Poisonous to Cats? Yes, and It Is an Emergency](https://aykizintelligence.com/hirra/guide/are-lilies-poisonous-to-cats/)
+- [Cat Breathing Fast: When It Is an Emergency](https://aykizintelligence.com/hirra/guide/cat-breathing-fast-what-to-do/)
+- [Cat Losing Weight but Still Eating: What It Could Mean](https://aykizintelligence.com/hirra/guide/cat-losing-weight-but-still-eating/)
+- [My Cat Is Not Eating: What It Means and What to Do](https://aykizintelligence.com/hirra/guide/cat-not-eating-what-to-do/)
+- [Why Is My Cat Peeing Outside the Litter Box?](https://aykizintelligence.com/hirra/guide/cat-peeing-outside-litter-box/)
+- [Cat Vaccination Schedule: A Simple Guide for Owners](https://aykizintelligence.com/hirra/guide/cat-vaccination-schedule/)
+- [Why Is My Cat Vomiting? When to Worry](https://aykizintelligence.com/hirra/guide/cat-vomiting-causes/)
+- [Early Signs of Kidney Disease in Cats (and What to Track at Home)](https://aykizintelligence.com/hirra/guide/early-signs-of-kidney-disease-in-cats/)
+- [How Often Should a Cat See the Vet?](https://aykizintelligence.com/hirra/guide/how-often-should-a-cat-see-a-vet/)
+- [How to Count Your Cat's Resting Breathing Rate (a Home Heart Check)](https://aykizintelligence.com/hirra/guide/how-to-count-cat-breathing-rate/)
+- [Is Chocolate Safe for Cats? No, and Here Is What to Do](https://aykizintelligence.com/hirra/guide/is-chocolate-safe-for-cats/)
+- [Are Grapes and Raisins Safe for Cats? Treat It as an Emergency](https://aykizintelligence.com/hirra/guide/is-grapes-and-raisins-safe-for-cats/)
+- [Is Milk Safe for Cats? The Truth Behind the Myth](https://aykizintelligence.com/hirra/guide/is-milk-and-dairy-safe-for-cats/)
+- [Are Onions and Garlic Safe for Cats? No, the Hidden Danger](https://aykizintelligence.com/hirra/guide/is-onion-and-garlic-safe-for-cats/)
+- [Is Tuna Safe for Cats? Why It Should Be a Rare Treat](https://aykizintelligence.com/hirra/guide/is-tuna-safe-for-cats/)
+- [Human Foods and Medicines That Are Dangerous for Cats](https://aykizintelligence.com/hirra/guide/is-xylitol-and-human-food-safe-for-cats/)
+- [What Human Foods Are Safe for Cats? A Simple List](https://aykizintelligence.com/hirra/guide/safe-human-foods-for-cats/)
+- [Early Signs Your Cat Is Sick: The Checklist Vets Wish Owners Kept](https://aykizintelligence.com/hirra/guide/signs-your-cat-is-sick/)
+- [What to Feed a Kitten: A Simple Starter Guide](https://aykizintelligence.com/hirra/guide/what-to-feed-a-kitten/)
+- [Why Is My Cat Drinking So Much Water? Common Causes](https://aykizintelligence.com/hirra/guide/why-is-my-cat-drinking-so-much-water/)
 
 ## Services
 
@@ -33,3 +54,5 @@ Key facts:
 ## More
 
 - [Selected work](https://aykizintelligence.com/work/): mobile products, websites, brand systems, and marketing campaigns.
+
+Full guide texts: https://aykizintelligence.com/llms-full.txt

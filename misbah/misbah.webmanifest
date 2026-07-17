@@ -1,7 +1,7 @@
 {
   "name": "Misbah: Light in the Dark",
   "short_name": "Misbah",
-  "description": "A calm Islamic companion. Quran, remembrance, and reflection.",
+  "description": "A calm one-touch game. Carry a small light through the dark; your oil is your sight.",
   "start_url": "/misbah/",
   "scope": "/misbah/",
   "display": "browser",
