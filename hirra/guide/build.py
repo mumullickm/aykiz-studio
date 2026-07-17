@@ -5,6 +5,9 @@
 #   python3 build.py
 # Emits: index.html (hub), <slug>/index.html (each article), and prints
 # sitemap <url> blocks to paste into ../../sitemap.xml.
+# Also renders the Arabic mirror at /hirra/guide/ar/ from AR_ARTICLES (keyed by
+# English slug): ar/index.html (Arabic hub) + ar/<slug>/index.html, with
+# bidirectional en/ar/x-default hreflang on every paired page and both hubs.
 #
 # House rules honoured: no em-dashes, Western digits, non-diagnostic framing
 # (Hirra notices and routes to a vet, never diagnoses), calm brand voice.
@@ -13,14 +16,26 @@ import os
 
 SITE = "https://aykizintelligence.com"
 BASE = "/hirra/guide/"
+AR_BASE = BASE + "ar/"
 APPSTORE = "https://apps.apple.com/us/app/hirra-cat-health-tracker/id6782975522"
 UPDATED = "2026-07-16"
+AR_UPDATED = "2026-07-17"
+
+EN_FONTS = "https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
+AR_FONTS = "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;700&family=Nunito:wght@700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
 
 APPSTORE_BADGE = (
     '<a class="badge" href="' + APPSTORE + '" target="_blank" rel="noopener">'
     '<svg viewBox="0 0 384 512" width="15" height="15" fill="currentColor" aria-hidden="true">'
     '<path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>'
     '</svg> Free on the App Store</a>'
+)
+
+AR_APPSTORE_BADGE = (
+    '<a class="badge" href="' + APPSTORE + '" target="_blank" rel="noopener">'
+    '<svg viewBox="0 0 384 512" width="15" height="15" fill="currentColor" aria-hidden="true">'
+    '<path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>'
+    '</svg> مجانًا على App Store</a>'
 )
 
 # ------------------------------------------------------------------ articles
@@ -804,6 +819,242 @@ ARTICLES = [
  },
 ]
 
+# ------------------------------------------------------- Arabic mirror data
+# AR_ARTICLES is keyed by the English slug. Each entry is a faithful Arabic
+# translation of the English article above: same structure, same health
+# claims, no additions. Voice: MSA with the Hirra feminine address register
+# (the app's canonical Arabic voice), Gulf-appropriate vocabulary.
+# Adding an Arabic twin = add an entry here, re-run.
+
+AR_CATS = {
+    "Food safety": "أمان الأطعمة",
+    "Household safety": "أمان المنزل",
+    "Symptoms": "الأعراض",
+    "Care basics": "أساسيات الرعاية",
+}
+AR_CAT_ORDER = ["أمان الأطعمة", "أمان المنزل", "الأعراض", "أساسيات الرعاية"]
+
+AR_ARTICLES = {
+ "is-chocolate-safe-for-cats": {
+  "verdict_label": "سامة، غير آمنة أبدًا",
+  "title": "هل الشوكولاتة سامة للقطط؟ نعم، وإليكِ ما تفعلينه",
+  "h1": "هل الشوكولاتة سامة للقطط؟",
+  "desc": "الشوكولاتة سامة للقطط. تعرّفي لماذا، وما الكمية الخطرة، وعلامات التسمم التحذيرية، وما تفعلينه بالضبط إذا أكلت قطتكِ شوكولاتة.",
+  "keywords": "هل الشوكولاتة سامة للقطط, هل يمكن للقطط أكل الشوكولاتة, قطتي أكلت شوكولاتة, تسمم الشوكولاتة عند القطط, الثيوبرومين والقطط",
+  "tldr": "نعم، سامة. الشوكولاتة تحتوي على الثيوبرومين والكافيين، وجسم القطة لا يستطيع التخلص منهما. حتى الكمية الصغيرة قد تسبب تسارع ضربات القلب والرعشة والنوبات. إذا أكلت قطتكِ أي شوكولاتة، اتصلي بطبيب بيطري أو عيادة طوارئ الآن.",
+  "sections": [
+   ("لماذا الشوكولاتة سامة للقطط",
+    "<p>تحتوي الشوكولاتة على <strong>الثيوبرومين</strong> والكافيين، وهما منبّهان يتخلص جسم الإنسان منهما بسرعة، لكن القطط لا تستطيع ذلك. فيتراكمان ويفرطان في تنبيه القلب والجهاز العصبي. والقطط أكثر حساسية للثيوبرومين من البشر بكثير، ولأن القطة صغيرة الحجم، لا يلزم إلا القليل.</p>"
+    "<p>الشوكولاتة الداكنة أشد خطرًا. شوكولاتة الخَبز ومسحوق الكاكاو يحملان أعلى نسبة من الثيوبرومين، تليهما الشوكولاتة الداكنة، ثم شوكولاتة الحليب بأقل نسبة، لكن لا شيء منها آمن للقطة.</p>"),
+   ("ما الكمية الخطرة من الشوكولاتة",
+    "<p>لا توجد كمية آمنة. ولأن القطط نادرًا ما تأكل الحلويات من تلقاء نفسها، فإن التسمم غير شائع، لكن حين يحدث قد تكفي لعقة واحدة من شوكولاتة قوية أو قطعة من مخبوزات لظهور العلامات على قطة صغيرة. تعاملي مع أي كمية على أنها سبب للاتصال بالطبيب البيطري، خاصة مع الشوكولاتة الداكنة أو شوكولاتة الخَبز.</p>"),
+   ("علامات تسمم الشوكولاتة عند القطط",
+    "<ul>"
+    "<li>القيء أو الإسهال</li>"
+    "<li>عدم الاستقرار، أو التمشي بقلق، أو حماس غير معتاد</li>"
+    "<li>تسارع ضربات القلب أو عدم انتظامها</li>"
+    "<li>رعشة أو ارتجاف في العضلات</li>"
+    "<li>زيادة العطش والتبول</li>"
+    "<li>نوبات في الحالات الشديدة</li>"
+    "</ul>"
+    "<p>قد تتأخر العلامات عدة ساعات قبل أن تظهر. لا تنتظريها إذا كنتِ تعلمين أن قطتكِ أكلت شوكولاتة.</p>"),
+   ("ماذا تفعلين إذا أكلت قطتكِ شوكولاتة",
+    "<ol>"
+    "<li><strong>اتصلي بطبيب بيطري أو عيادة طوارئ فورًا.</strong> وجهّزي نوع الشوكولاتة والكمية التقريبية لإخبارهم بها.</li>"
+    "<li>لا تحاولي جعل قطتكِ تتقيأ في المنزل إلا إذا طلب الطبيب البيطري ذلك.</li>"
+    "<li>احتفظي بالغلاف أو العبوة ليتمكن الطبيب من تقدير كمية الثيوبرومين.</li>"
+    "<li>راقبي العلامات المذكورة أعلاه في الطريق إلى العيادة.</li>"
+    "</ol>"),
+  ],
+  "faqs": [
+   ("هل يمكن للقطط أكل الشوكولاتة البيضاء؟", "الشوكولاتة البيضاء تحتوي على نسبة ضئيلة جدًا من الثيوبرومين، لكنها تبقى غنية بالدهون والسكر ولا تقدم للقطة أي فائدة. أبقي كل أنواع الشوكولاتة بعيدًا عن القطط."),
+   ("لعقت قطتي قليلًا من الشوكولاتة وتبدو بخير. هل أقلق؟", "قد تستغرق العلامات ساعات لتظهر. اتصلي بالطبيب البيطري وأخبريه بالنوع والكمية ليقرر ما إذا كان عليكِ المراقبة في المنزل أو الحضور."),
+   ("هل الكاكاو ومشروب الشوكولاتة الساخنة خطران أيضًا؟", "نعم. مسحوق الكاكاو من أكثر أشكال الثيوبرومين تركيزًا. ومشروبات الشوكولاتة بالحليب تضيف منتجات الألبان التي لا تهضمها معظم القطط جيدًا."),
+  ],
+  "related": ["are-lilies-poisonous-to-cats", "cat-not-eating-what-to-do", "why-is-my-cat-drinking-so-much-water"],
+ },
+ "why-is-my-cat-drinking-so-much-water": {
+  "verdict_label": "تستحق انتباه الطبيب البيطري",
+  "title": "لماذا تشرب قطتي الكثير من الماء؟ الأسباب الشائعة",
+  "h1": "لماذا تشرب قطتي الكثير من الماء؟",
+  "desc": "القطة التي تشرب أكثر من معتادها بكثير قد تحمل علامة مبكرة على مرض الكلى أو السكري أو مشكلات الغدة الدرقية. تعرّفي على الطبيعي ومتى تراجعين الطبيب البيطري.",
+  "keywords": "لماذا تشرب قطتي الكثير من الماء, قطتي تشرب ماء كثير, زيادة العطش عند القطط, علامات مرض الكلى عند القطط, عطش القطط والسكري",
+  "tldr": "الزيادة الملحوظة والمستمرة في العطش من أبكر علامات مرض الكلى أو السكري أو فرط نشاط الغدة الدرقية عند القطط، خاصة الكبيرة في السن. وغالبًا ما تكون أول ما يلاحظه أصحاب القطط. إذا كانت قطتكِ تشرب أكثر من معدلها الطبيعي بوضوح، فالأمر يستحق فحصًا عند الطبيب البيطري، ويساعد أن تكوني قد سجّلتِ متى بدأ التغيّر.",
+  "sections": [
+   ("ما الذي يُعد شربًا زائدًا",
+    "<p>الإشارة المهمة هي التغيّر عن <em>المعدل الطبيعي لقطتكِ نفسها</em>. القطة التي كانت تشرب قليلًا دائمًا ثم صارت تفرغ الوعاء، أو تحوم حول الصنابير، أو تشرب من أماكن غير معتادة، قد تغيّرت، وهذا التغيّر هو الدليل. القطط التي تأكل طعامًا جافًا تشرب طبيعيًا أكثر من القطط التي تأكل طعامًا رطبًا، لذا قارني كل قطة بنفسها لا بجدول.</p>"),
+   ("الأسباب الثلاثة الشائعة التي ينبغي معرفتها",
+    "<ul>"
+    "<li><strong>مرض الكلى</strong>، شائع جدًا عند القطط الكبيرة في السن. الكلى المتراجعة لا تستطيع تركيز البول، فتشرب القطة وتتبول أكثر لتعويض ذلك.</li>"
+    "<li><strong>السكري</strong>، السكر المرتفع في الدم يتسرب إلى البول ويسحب الماء معه، فيزيد العطش. وغالبًا ما يترافق مع شهية كبيرة رغم فقدان الوزن.</li>"
+    "<li><strong>فرط نشاط الغدة الدرقية</strong>، يسرّع الجسم كله عند القطط الكبيرة في السن، فيرفع العطش والشهية والتململ بينما ينخفض الوزن.</li>"
+    "</ul>"
+    "<p>الحالات الثلاث يمكن التعامل معها عند اكتشافها مبكرًا، والثلاث غالبًا ما تُظهر زيادة العطش قبل أي شيء آخر.</p>"),
+   ("لماذا يغيّر الاكتشاف المبكر النتيجة",
+    "<p>هذه الحالات تتطور بهدوء. وبحلول الوقت الذي تبدو فيه القطة مريضة بوضوح، يكون المرض عادة متقدمًا. ارتفاع العطش نافذة مبكرة نادرة. ملاحظته، وتدوين متى بدأ، وعرضه على الطبيب البيطري قد يعني علاجًا أبكر ونتيجة أفضل. هذا تحديدًا هو الانحراف البطيء الذي يصعب الحكم عليه من الذاكرة، ولهذا يساعد الاحتفاظ بسجل يومي بسيط.</p>"),
+   ("متى تراجعين الطبيب البيطري",
+    "<p>احجزي زيارة للطبيب البيطري إذا استمرت زيادة العطش أكثر من بضعة أيام، أو أبكر إذا ترافقت مع فقدان وزن، أو شهية أكبر أو أقل، أو تبول أكثر، أو قيء، أو خمول. وأحضري معكِ أي ملاحظات عن وقت بدء التغيّر وما لاحظتِه غير ذلك.</p>"),
+  ],
+  "faqs": [
+   ("كم ينبغي أن تشرب القطة من الماء يوميًا؟", "كدليل تقريبي تحتاج القطة إلى نحو 50 مل من الماء لكل كيلوغرام من وزنها يوميًا، من الطعام والشراب معًا، لكن الإشارة المفيدة هي التغيّر عن المعدل الطبيعي لقطتكِ نفسها وليس رقمًا محددًا."),
+   ("هل زيادة العطش خطيرة دائمًا؟", "ليس دائمًا، فالطقس الحار أو الطعام الجاف أو وجبة مالحة قد ترفعها لفترة وجيزة. الزيادة المستمرة، أو المترافقة مع تغيّرات في الوزن أو الشهية، تستحق فحصًا عند الطبيب البيطري."),
+   ("هل يمكنني تتبع شرب قطتي؟", "نعم، وهذا يساعد الطبيب البيطري كثيرًا. تدوين الماء والشهية وصندوق الفضلات والوزن مع الوقت يكشف انحرافًا لا تلاحظينه يومًا بيوم. هِرّة تفعل ذلك في تسجيل يومي لا يستغرق خمس ثوانٍ وترصد الأنماط المهمة."),
+  ],
+  "related": ["cat-not-eating-what-to-do", "early-signs-of-kidney-disease-in-cats", "are-lilies-poisonous-to-cats"],
+ },
+ "cat-not-eating-what-to-do": {
+  "verdict_label": "لا تنتظري",
+  "title": "قطتي لا تأكل: ماذا يعني ذلك وماذا أفعل",
+  "h1": "قطتي لا تأكل، ماذا أفعل؟",
+  "desc": "القطة التي تتوقف عن الأكل قد تمرض بشدة وبسرعة. تعرّفي لماذا يُعد فقدان الشهية عند القطط أمرًا عاجلًا ومتى تتصلين بالطبيب البيطري.",
+  "keywords": "قطتي لا تأكل, فقدان الشهية عند القطط, قطتي ترفض الأكل, قطتي توقفت عن الأكل ماذا أفعل, القطة لا تأكل",
+  "tldr": "القطة التي ترفض الأكل تحتاج إلى اهتمام سريع. فعلى خلاف بعض الحيوانات، قد تصاب القطط بمشكلة خطيرة في الكبد خلال يومين فقط من التوقف عن الأكل، خاصة إذا كانت ذات وزن زائد. إذا أكلت قطتكِ قليلًا جدًا أو لم تأكل شيئًا لمدة 24 ساعة، اتصلي بالطبيب البيطري. وإذا كانت أيضًا خاملة أو تتقيأ أو تختبئ، فاتصلي في أقرب وقت.",
+  "sections": [
+   ("لماذا امتناع القطة عن الأكل أخطر مما يبدو",
+    "<p>عندما تتوقف القطة عن الأكل، يبدأ جسمها بتفكيك الدهون للحصول على الطاقة. وفي القطط، قد يُرهق ذلك الكبد ويسبب حالة خطيرة تسمى <strong>الكبد الدهني</strong>، وقد تتطور خلال يومين فقط، وهي أكثر احتمالًا عند القطط ذات الوزن الزائد. لهذا يُتعامل مع فقدان الشهية عند القطط بإلحاح أكبر من كثير من الحيوانات الأليفة الأخرى.</p>"),
+   ("الأسباب الشائعة لتوقف القطة عن الأكل",
+    "<ul>"
+    "<li>ألم الأسنان أو مشكلات الفم</li>"
+    "<li>الغثيان بسبب مشكلات الكلى أو الكبد أو الجهاز الهضمي</li>"
+    "<li>التوتر أو تغيّر في البيئة أو الطعام أو الروتين</li>"
+    "<li>ألم في أي مكان من الجسم</li>"
+    "<li>مرض خفي تخفيه القطة</li>"
+    "</ul>"),
+   ("متى تتصلين بالطبيب البيطري",
+    "<ul>"
+    "<li><strong>الآن</strong>، إذا ترافق الامتناع عن الأكل مع قيء أو خمول أو اختباء أو صعوبة في التنفس.</li>"
+    "<li><strong>خلال 24 ساعة</strong>، إذا أكلت القطة قليلًا جدًا أو لم تأكل شيئًا ليوم كامل، وأبكر من ذلك للقطط الصغيرة أو المسنّة أو ذات الوزن الزائد.</li>"
+    "</ul>"
+    "<p>لا تحاولي الانتظار حتى يمر الأمر. التبكير دائمًا أسلم من التأخير مع قطة ترفض الأكل.</p>"),
+  ],
+  "faqs": [
+   ("كم تستطيع القطة البقاء دون طعام بأمان؟", "ليس طويلًا. القطة التي تأكل قليلًا جدًا أو لا تأكل شيئًا لنحو 24 ساعة ينبغي أن يفحصها طبيب بيطري، لأن خطر الكبد الدهني يرتفع بسرعة، خاصة عند القطط ذات الوزن الزائد."),
+   ("قطتي تأكل أقل لكنها لا تمتنع تمامًا. هل هذا مقبول؟", "الانخفاض المستمر في الشهية مهم أيضًا، خاصة مع فقدان وزن أو تغيّرات أخرى. تتبعيه واذكريه لطبيبكِ البيطري."),
+  ],
+  "related": ["why-is-my-cat-drinking-so-much-water", "early-signs-of-kidney-disease-in-cats", "is-chocolate-safe-for-cats"],
+ },
+ "are-lilies-poisonous-to-cats": {
+  "verdict_label": "قاتل، طوارئ حقيقية",
+  "title": "هل الزنبق سام للقطط؟ نعم، وهي حالة طوارئ",
+  "h1": "هل الزنبق سام للقطط؟",
+  "desc": "الزنابق الحقيقية قد تسبب فشلًا كلويًا قاتلًا للقطط، حتى من حبوب اللقاح أو ماء المزهرية. تعرّفي على الأنواع القاتلة وما تفعلينه فورًا.",
+  "keywords": "هل الزنبق سام للقطط, زهرة الليليوم سامة للقطط, قطتي أكلت زنبق, تسمم الزنبق عند القطط, هل الزنابق آمنة للقطط",
+  "tldr": "نعم، وهو من أخطر حالات التسمم النباتي على الإطلاق. الزنابق الحقيقية (جنس Lilium وجنس Hemerocallis) قد تسبب فشلًا كلويًا قاتلًا للقطط. كل جزء منها سام، بما في ذلك حبوب اللقاح وحتى ماء المزهرية. إذا لامست قطتكِ زنبقة، اتصلي بطبيب طوارئ بيطري فورًا. الدقائق مهمة.",
+  "sections": [
+   ("لماذا الزنبق حالة طوارئ تهدد حياة القطط",
+    "<p>الزنابق الحقيقية في فئة مختلفة عن معظم النباتات السامة. القطة التي تقضم ورقة أو بتلة، أو تلعق حبوب اللقاح عن فرائها، أو تشرب من ماء المزهرية، قد تصاب <strong>بفشل كلوي حاد</strong> خلال يوم إلى ثلاثة أيام. ومن دون علاج غالبًا ما يكون قاتلًا. لا يوجد جزء آمن من النبتة.</p>"
+    "<p>الأخطر هي أنواع <strong>Lilium</strong> (زنبق عيد الفصح، والآسيوي، والنمري، وستارغيزر، والشرقي) و<strong>Hemerocallis</strong> (زنبق النهار). ولأن القطط تنظف نفسها بلسانها، فإن مجرد الاحتكاك بحبوب اللقاح تعرّض حقيقي.</p>"),
+   ("نباتات تحمل اسم الزنبق لكنها مختلفة",
+    "<p>بعض النباتات المسماة زنبقًا ليست زنابق حقيقية وتسبب علامات أخف (تهيّج الفم) وليس فشلًا كلويًا، مثل زنبق السلام وزنبق الكالا وزنبق الوادي (الذي له خطره الخاص على القلب). لا تعتمدي على الاسم. إذا لم تكوني متأكدة من نوع النبتة، تعاملي معها كحالة طوارئ ودعي الطبيب البيطري يقرر.</p>"),
+   ("علامات تسمم الزنبق",
+    "<ul>"
+    "<li>قيء وسيلان لعاب في البداية</li>"
+    "<li>خمول واختباء</li>"
+    "<li>فقدان الشهية</li>"
+    "<li>زيادة التبول ثم نقصانه مع تراجع الكلى</li>"
+    "<li>لاحقًا، انقطاع البول تمامًا</li>"
+    "</ul>"
+    "<p>قد تبدو العلامات وكأنها تتحسن بعد اليوم الأول، وهو هدوء خادع بينما تتضرر الكلى.</p>"),
+   ("ماذا تفعلين الآن",
+    "<ol>"
+    "<li><strong>اتصلي بطبيب طوارئ بيطري فورًا.</strong> لا تنتظري ظهور العلامات. العلاج الذي يبدأ في الساعات الأولى له أفضل نتيجة بفارق كبير.</li>"
+    "<li>أحضري النبتة أو صورة لها ليتأكد الطبيب من النوع.</li>"
+    "<li>أزيلي كل الزنابق من أي منزل فيه قطة. ولا تحتفظي بها كزهور مقطوفة أيضًا.</li>"
+    "</ol>"),
+  ],
+  "faqs": [
+   ("هل يمكن أن تسمم حبوب اللقاح وحدها القطة؟", "نعم. قد تحصل القطة على جرعة سامة بمجرد الاحتكاك بالزهرة ثم تنظيف حبوب اللقاح من فرائها. لهذا لا يمكن أن يجتمع الزنبق والقطط بأمان في منزل واحد."),
+   ("شربت قطتي من ماء الزهور. هل هذا خطير؟", "نعم، ماء مزهرية الزنابق الحقيقية سام. اتصلي بطبيب طوارئ بيطري فورًا."),
+   ("أي أنواع الزنبق آمنة للقطط؟", "لا زنبق حقيقيًا آمنًا. بعض الأنواع الشبيهة المسماة زنبقًا أقل خطرًا، لكن لأن الخلط في التعرف عليها سهل والزنابق الحقيقية قاتلة، فالقاعدة الآمنة هي إبعاد كل الزنابق عن منزل القطة."),
+  ],
+  "related": ["why-is-my-cat-drinking-so-much-water", "is-chocolate-safe-for-cats", "early-signs-of-kidney-disease-in-cats"],
+ },
+ "early-signs-of-kidney-disease-in-cats": {
+  "verdict_label": "اكتشفيه مبكرًا",
+  "title": "العلامات المبكرة لمرض الكلى عند القطط (وما تتبعينه في المنزل)",
+  "h1": "العلامات المبكرة لمرض الكلى عند القطط",
+  "desc": "مرض الكلى من أكثر الأمراض الخطيرة شيوعًا عند القطط الكبيرة في السن. تعرّفي على العلامات المبكرة، ولماذا يسهل تفويتها، وما تتبعينه في المنزل لاكتشافها أبكر.",
+  "keywords": "العلامات المبكرة لمرض الكلى عند القطط, أعراض مرض الكلى عند القطط, الفشل الكلوي عند القطط, مرض الكلى المزمن عند القطط, قطتي تشرب ماء كثير",
+  "tldr": "مرض الكلى شائع عند القطط الكبيرة في السن ويتطور ببطء. أبكر علاماته الشرب والتبول أكثر، ثم فقدان وزن تدريجي وتراجع في الشهية. القطط تخفيه جيدًا، لذلك غالبًا ما يكون متقدمًا قبل أن يبدو واضحًا. تتبّع الماء والوزن والشهية في المنزل، مع فحوص الدم الدورية للقطط المسنّة، يكتشفه مبكرًا، حين يُحدث الغذاء والرعاية الفرق الأكبر.",
+  "sections": [
+   ("لماذا يسهل تفويت مرض الكلى",
+    "<p>مرض الكلى المزمن من أكثر الحالات الخطيرة شيوعًا عند القطط فوق السابعة، ويأتي تدريجيًا على مدى شهور أو سنوات. تفقد الكلى وظيفتها بهدوء، وتعوّض القطط ذلك ببراعة حتى إن أصحابها غالبًا لا يلاحظون شيئًا إلا بعد فقدان جزء كبير من الوظيفة.</p>"
+    "<p>هذا هو الجانب المحبط والجانب المُطمئن في آن واحد: يسهل تفويته، لكنه أيضًا قابل جدًا للاكتشاف إذا عرفتِ الإشارات المبكرة وتتبعتِها.</p>"),
+   ("أبكر العلامات، بالترتيب الذي تظهر به عادة",
+    "<ul>"
+    "<li><strong>شرب ماء أكثر.</strong> غالبًا أول علامة على الإطلاق. لم تعد الكلى قادرة على تركيز البول، فتفقد القطة ماء أكثر وتشرب أكثر لتعويضه.</li>"
+    "<li><strong>تبول أكثر.</strong> كتل أكبر أو أكثر تكرارًا في صندوق الفضلات، وهو رفيق طبيعي للشرب الزائد.</li>"
+    "<li><strong>فقدان وزن تدريجي.</strong> بطيء إلى درجة أنه غير مرئي يومًا بيوم، ولهذا يهم الوزن الشهري.</li>"
+    "<li><strong>شهية أقل أو انتقائية.</strong> تأكل أقل، أو تعرض عن طعام مفضل.</li>"
+    "<li><strong>فراء أبهت وطاقة أقل</strong> مع تقدم المرض.</li>"
+    "</ul>"
+    "<p>ثنائية الشرب الأكثر والتبول الأكثر هي التركيبة المبكرة الكلاسيكية. كل منهما وحده يسهل تجاهله، ولهذا تحديدًا تكون ملاحظتهما معًا مفيدة جدًا.</p>"),
+   ("ماذا تفعلين إذا رأيتِ هذه العلامات",
+    "<ol>"
+    "<li><strong>احجزي زيارة للطبيب البيطري.</strong> فحص بسيط للدم والبول يمكنه التأكد من مؤشرات الكلى، وغالبًا ما يكتشف المرض قبل أن تبدو القطة مريضة بوقت طويل.</li>"
+    "<li><strong>أحضري ملاحظاتكِ.</strong> مقدار تغيّر الماء والوزن، وعلى مدى كم من الوقت، يساعد الطبيب كثيرًا.</li>"
+    "<li><strong>اسألي عن الغذاء.</strong> الغذاء الداعم للكلى من أكثر الأدوات فعالية، والبدء المبكر يُحدث فرقًا حقيقيًا.</li>"
+    "</ol>"),
+   ("لماذا يغيّر التتبع المنزلي النتيجة",
+    "<p>مرض الكلى يكافئ الاكتشاف المبكر أكثر من أي مرض قطط آخر تقريبًا، وأبكر علاماته هي بالضبط ما يلتقطه سجل منزلي جيدًا: الماء والوزن والشهية. أصحاب القطط الذين يتتبعون هذه الأمور يلاحظون الانحراف قبل شهور من أن يصبح واضحًا.</p>"
+    "<p><strong>هِرّة</strong> مبنية لهذا. تسجيل يومي لا يستغرق خمس ثوانٍ ووزن شهري يتيحان لمحرك الإنذار المبكر على الجهاز رصد نمط العطش المتزايد والوزن المتناقص وتوجيهكِ إلى الطبيب البيطري. هي لا تشخّص مرض الكلى أبدًا، فذلك عمل طبيبكِ البيطري بفحص دم، لكنها تساعدكِ على الوصول إليه أبكر.</p>"),
+  ],
+  "faqs": [
+   ("في أي عمر أبدأ الانتباه لمرض الكلى؟", "يرتفع الخطر من نحو سبع سنوات، وينصح كثير من الأطباء البيطريين بفحوص دم دورية للقطط المسنّة مرة أو مرتين في السنة من ذلك العمر. وتتبع الماء والوزن في المنزل يستحق العناء في أي عمر، فهو لا يكلف شيئًا ويكتشف مشكلات أخرى أيضًا."),
+   ("هل شرب القطة ماء أكثر يعني دائمًا مرض الكلى؟", "لا. زيادة العطش قد تشير أيضًا إلى السكري أو فرط نشاط الغدة الدرقية، من بين أمور أخرى. إنها إشارة لمراجعة الطبيب البيطري لإجراء فحص بسيط، وليست تشخيصًا بذاتها."),
+   ("هل يمكن شفاء مرض الكلى عند القطط؟", "مرض الكلى المزمن لا يمكن عكسه، لكنه يمكن التعامل معه جيدًا لفترة طويلة، خاصة عند اكتشافه مبكرًا مع الغذاء والرعاية. ولهذا تهم ملاحظة العلامات الأولى إلى هذا الحد."),
+  ],
+  "related": ["why-is-my-cat-drinking-so-much-water", "cat-not-eating-what-to-do", "are-lilies-poisonous-to-cats"],
+ },
+}
+
+# Arabic UI strings (nav, chrome, CTA, disclaimer, footer). One place to edit.
+AR_UI = {
+ "guide_name": "دليل العناية بالقطط",
+ "brand": "هِرّة",
+ "crumb_app": "هِرّة",
+ "reviewed": "روجع بتاريخ %s &middot; لا يغني عن الاستشارة البيطرية",
+ "short_answer": "الإجابة المختصرة",
+ "disclaimer": (
+  '<div class="disc"><strong>عند الشك، اتصلي بالطبيب البيطري.</strong> هذا الدليل معلومات '
+  "عامة، وليس تشخيصًا، ولا يغني عن الفحص. إذا كانت قطتكِ في حالة ضيق، تواصلي مع طبيب "
+  "بيطري أو أقرب عيادة طوارئ فورًا.</div>"
+ ),
+ "cta": (
+  '<div class="cta"><h3>لاحظي التغيّرات الهادئة مبكرًا</h3>'
+  "<p>هِرّة تطبيق مجاني وخاص لصحة القطط. تسجيل يومي لا يستغرق خمس ثوانٍ يتعلّم النمط الطبيعي "
+  "لقطتكِ ويرصد الانحراف في الوزن والعطش والشهية وصندوق الفضلات الذي يفوت أصحاب القطط، "
+  "وفاحص «هل هذا آمن؟» المجاني يبحث عن الأطعمة في ثوانٍ. هِرّة لا تشخّص أبدًا. هي تساعدكِ "
+  "على الملاحظة، وتوجّهكِ إلى الطبيب البيطري أبكر.</p>"
+  + AR_APPSTORE_BADGE +
+  '<div style="margin-top:12px;font-size:13px;color:var(--mist)">مجانًا على App Store &middot; آيفون &middot; دون حساب</div></div>'
+ ),
+ "faq_heading": "أسئلة شائعة",
+ "related_heading": "أدلة ذات صلة",
+ "footer": (
+  '<footer><div class="wrap">\n'
+  '<div>رعاية، لا إنذار. &nbsp;&middot;&nbsp; <a href="https://aykizintelligence.com/">Aykiz Intelligence</a></div>\n'
+  '<div><a href="/hirra/">تطبيق هِرّة</a> &nbsp;&middot;&nbsp; <a href="/hirra/guide/ar/">دليل العناية بالقطط</a> '
+  '&nbsp;&middot;&nbsp; <a href="/hirra/guide/">الدليل بالإنجليزية</a> &nbsp;&middot;&nbsp; '
+  '<a href="/hirra/privacy/">الخصوصية</a></div>\n'
+  "</div></footer>\n</body>\n</html>"
+ ),
+}
+
+# RTL overrides appended to the shared CSS on Arabic pages. Font stack mirrors
+# the /hirra/ page's RTL mode ('IBM Plex Sans Arabic').
+AR_CSS = """
+body{font-family:'IBM Plex Sans Arabic','Nunito Sans',sans-serif}
+h1,h2,h3{font-family:'IBM Plex Sans Arabic',sans-serif;font-weight:700;letter-spacing:0}
+h1{line-height:1.3}
+nav.top .brand{font-family:'IBM Plex Sans Arabic',sans-serif;letter-spacing:.04em}
+.badge,.verdict,.faq summary,.cardlink .t,.cta h3{font-family:'IBM Plex Sans Arabic',sans-serif}
+.kicker,.tldr .lab{font-family:'IBM Plex Sans Arabic',sans-serif;letter-spacing:.05em}
+ul,ol{padding-left:0;padding-right:22px}
+.tldr{border-left:1px solid var(--line);border-right:4px solid var(--teal)}
+.faq summary::before{margin-right:0;margin-left:10px}
+"""
+
 # ------------------------------------------------------------------ template
 
 CSS = """
@@ -876,7 +1127,7 @@ footer a{color:var(--mist)}
 """
 
 HEAD = """<!doctype html>
-<html lang="en" dir="ltr">
+<html lang="{LANG}" dir="{DIR}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -884,7 +1135,7 @@ HEAD = """<!doctype html>
 <title>{TITLE}</title>
 <meta name="description" content="{DESC}">
 <link rel="canonical" href="{CANON}">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+{HREFLANG}<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="author" content="Aykiz Intelligence">
 <meta name="keywords" content="{KEYWORDS}">
 <meta name="theme-color" content="#06181C">
@@ -904,13 +1155,13 @@ HEAD = """<!doctype html>
 <meta name="twitter:image" content="https://aykizintelligence.com/hirra/assets/og-hirra.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="{FONTLINK}" rel="stylesheet">
 <style>{CSS}</style>
 {JSONLD}
 </head>
 <body>
 <nav class="top"><div class="wrap">
-<a class="brand" href="/hirra/"><img src="/hirra/assets/icon-1024.png" alt="Hirra app icon" width="28" height="28"> HIRRA</a>
+<a class="brand" href="/hirra/"><img src="/hirra/assets/icon-1024.png" alt="{BRANDALT}" width="28" height="28"> {BRAND}</a>
 {BADGE}
 </div></nav>
 """
@@ -939,6 +1190,23 @@ def by_slug(slug):
         if a["slug"] == slug:
             return a
     return None
+
+
+def hreflang(slug=None):
+    # Emits the en/ar/x-default trio for pages that exist in both languages:
+    # the two hubs (slug=None) and any article with an entry in AR_ARTICLES.
+    # English articles without an Arabic twin get no hreflang at all.
+    if slug is None:
+        en, ar = SITE + BASE, SITE + AR_BASE
+    elif slug in AR_ARTICLES:
+        en, ar = SITE + BASE + slug + "/", SITE + AR_BASE + slug + "/"
+    else:
+        return ""
+    return (
+        '<link rel="alternate" hreflang="en" href="%s">\n'
+        '<link rel="alternate" hreflang="ar" href="%s">\n'
+        '<link rel="alternate" hreflang="x-default" href="%s">\n'
+    ) % (en, ar, en)
 
 
 def article_jsonld(a):
@@ -1014,6 +1282,12 @@ def render_article(a):
 
     head = render(
         HEAD,
+        LANG="en",
+        DIR="ltr",
+        FONTLINK=EN_FONTS,
+        BRAND="HIRRA",
+        BRANDALT="Hirra app icon",
+        HREFLANG=hreflang(a["slug"]),
         TITLE=esc(a["title"] + " | Hirra"),
         DESC=esc(a["desc"]),
         CANON=canon,
@@ -1085,6 +1359,12 @@ def render_hub():
     ) % (APPSTORE, canon, canon, items)
     head = render(
         HEAD,
+        LANG="en",
+        DIR="ltr",
+        FONTLINK=EN_FONTS,
+        BRAND="HIRRA",
+        BRANDALT="Hirra app icon",
+        HREFLANG=hreflang(None),
         TITLE="Cat Care Guide: Food Safety and Symptoms | Hirra",
         DESC="Plain-language answers on what foods are safe for cats and what common symptoms mean, from the makers of Hirra, a private cat-health app.",
         CANON=canon,
@@ -1096,6 +1376,169 @@ def render_hub():
         BADGE=APPSTORE_BADGE,
     )
     return head + "\n".join(body) + FOOTER
+
+
+# ------------------------------------------------------- Arabic rendering
+
+
+def ar_article_jsonld(slug, ar):
+    canon = SITE + AR_BASE + slug + "/"
+    faq = ",".join(
+        '{"@type":"Question","name":"%s","acceptedAnswer":{"@type":"Answer","text":"%s"}}'
+        % (esc(q), esc(ans)) for q, ans in ar["faqs"]
+    )
+    return (
+        '<script type="application/ld+json">\n{'
+        '"@context":"https://schema.org","@graph":['
+        '{"@type":"Article","@id":"%s#article","headline":"%s","description":"%s",'
+        '"inLanguage":"ar","datePublished":"%s","dateModified":"%s",'
+        '"author":{"@type":"Organization","name":"Aykiz Intelligence","url":"https://aykizintelligence.com/"},'
+        '"publisher":{"@type":"Organization","name":"Aykiz Intelligence","url":"https://aykizintelligence.com/"},'
+        '"mainEntityOfPage":"%s","image":"https://aykizintelligence.com/hirra/assets/og-hirra.png"},'
+        '{"@type":"FAQPage","inLanguage":"ar","mainEntity":[%s]},'
+        '{"@type":"BreadcrumbList","itemListElement":['
+        '{"@type":"ListItem","position":1,"name":"%s","item":"%s/hirra/"},'
+        '{"@type":"ListItem","position":2,"name":"%s","item":"%s"},'
+        '{"@type":"ListItem","position":3,"name":"%s","item":"%s"}]}'
+        ']}\n</script>'
+    ) % (
+        canon, esc(ar["h1"]), esc(ar["desc"]), AR_UPDATED, AR_UPDATED, canon, faq,
+        AR_UI["crumb_app"], SITE, AR_UI["guide_name"], SITE + AR_BASE, esc(ar["h1"]), canon,
+    )
+
+
+def render_article_ar(slug):
+    en = by_slug(slug)
+    ar = AR_ARTICLES[slug]
+    canon = SITE + AR_BASE + slug + "/"
+    cat = AR_CATS[en["cat"]]
+    vcls = {"danger": "v-danger", "caution": "v-caution", "safe": "v-safe", "info": "v-info"}[en["verdict"]]
+    body = []
+    body.append('<div class="wrap">')
+    body.append(
+        '<div class="crumb"><a href="/hirra/">%s</a> &rsaquo; <a href="/hirra/guide/ar/">%s</a> &rsaquo; %s</div>'
+        % (AR_UI["crumb_app"], AR_UI["guide_name"], cat)
+    )
+    body.append('<p class="kicker">%s</p>' % cat)
+    body.append("<h1>%s</h1>" % ar["h1"])
+    body.append('<p class="updated">%s</p>' % (AR_UI["reviewed"] % AR_UPDATED))
+    body.append('<span class="verdict %s">%s</span>' % (vcls, ar["verdict_label"]))
+    body.append('<div class="tldr"><p class="lab">%s</p><p>%s</p></div>' % (AR_UI["short_answer"], ar["tldr"]))
+    for h2, html in ar["sections"]:
+        body.append("<h2>%s</h2>" % h2)
+        body.append(html)
+    body.append(AR_UI["disclaimer"])
+    body.append(AR_UI["cta"])
+    body.append('<div class="faq"><h2>%s</h2>' % AR_UI["faq_heading"])
+    for q, ans in ar["faqs"]:
+        body.append("<details><summary>%s</summary><p>%s</p></details>" % (q, ans))
+    body.append("</div>")
+    rel = [s for s in ar.get("related", []) if s in AR_ARTICLES]
+    if rel:
+        body.append('<div class="rel"><h2>%s</h2>' % AR_UI["related_heading"])
+        for s in rel:
+            r_en, r_ar = by_slug(s), AR_ARTICLES[s]
+            body.append('<a href="/hirra/guide/ar/%s/">%s<span>%s</span></a>' % (s, r_ar["h1"], AR_CATS[r_en["cat"]]))
+        body.append("</div>")
+    body.append("</div>")
+
+    head = render(
+        HEAD,
+        LANG="ar",
+        DIR="rtl",
+        FONTLINK=AR_FONTS,
+        BRAND=AR_UI["brand"],
+        BRANDALT="أيقونة تطبيق هِرّة",
+        HREFLANG=hreflang(slug),
+        TITLE=esc(ar["title"] + " | هِرّة"),
+        DESC=esc(ar["desc"]),
+        CANON=canon,
+        KEYWORDS=esc(ar["keywords"]),
+        OGTYPE="article",
+        OGTITLE=esc(ar["h1"]),
+        CSS=CSS + AR_CSS,
+        JSONLD=ar_article_jsonld(slug, ar),
+        BADGE=AR_APPSTORE_BADGE,
+    )
+    return head + "\n".join(body) + AR_UI["footer"]
+
+
+def render_hub_ar():
+    canon = SITE + AR_BASE
+    ordered = [a["slug"] for a in ARTICLES if a["slug"] in AR_ARTICLES]
+    groups = {}
+    for s in ordered:
+        groups.setdefault(AR_CATS[by_slug(s)["cat"]], []).append(s)
+    body = ['<div class="wrap">']
+    body.append('<div class="hero">')
+    body.append('<p class="kicker">دليل هِرّة للعناية بالقطط</p>')
+    body.append("<h1>صحة القطط وأمان الأطعمة، بلغة واضحة</h1>")
+    body.append(
+        '<p class="lead">إجابات هادئة وواضحة عن الأسئلة التي يبحث عنها أصحاب القطط فعلًا: هل هذا '
+        "الطعام آمن، وماذا يعني هذا العَرَض. كُتبت لمساعدتكِ على الملاحظة مبكرًا ومعرفة متى "
+        "تتصلين بالطبيب البيطري.</p>")
+    body.append(
+        '<p class="lead">خمسة أدلة متاحة بالعربية حتى الآن، و<a href="/hirra/guide/">الدليل الكامل '
+        'متاح بالإنجليزية</a>. تعرّفي أيضًا على <a href="/hirra/">تطبيق هِرّة</a>.</p>')
+    body.append("</div>")
+    for g in AR_CAT_ORDER:
+        if g not in groups:
+            continue
+        body.append('<div class="group"><h2>%s</h2>' % g)
+        for s in groups[g]:
+            en, ar = by_slug(s), AR_ARTICLES[s]
+            dcls = {"danger": "d-danger", "caution": "d-caution", "safe": "d-safe", "info": "d-info"}[en["verdict"]]
+            body.append(
+                '<a class="cardlink" href="/hirra/guide/ar/%s/"><span class="dot %s"></span>'
+                '<span><span class="t">%s</span><span class="s">%s</span></span></a>'
+                % (s, dcls, ar["h1"], ar["tldr"][:110].rsplit(" ", 1)[0] + "...")
+            )
+        body.append("</div>")
+    body.append(
+        '<div class="cta"><h3>احصلي على هِرّة مجانًا</h3>'
+        "<p>تطبيق خاص لصحة القطط يتعلّم النمط الطبيعي لقطتكِ ويرصد العلامات المبكرة الهادئة. "
+        "تسجيل يومي وفاحص أطعمة مجانيان، دون حساب.</p>"
+        + AR_APPSTORE_BADGE + "</div>")
+    body.append("</div>")
+
+    items = ",".join(
+        '{"@type":"ListItem","position":%d,"url":"%s%s%s/","name":"%s"}'
+        % (i + 1, SITE, AR_BASE, s, esc(AR_ARTICLES[s]["h1"])) for i, s in enumerate(ordered)
+    )
+    jsonld = (
+        '<script type="application/ld+json">\n{'
+        '"@context":"https://schema.org","@graph":['
+        '{"@type":"Organization","@id":"https://aykizintelligence.com/#organization","name":"Aykiz Intelligence",'
+        '"url":"https://aykizintelligence.com/","sameAs":["https://apps.apple.com/us/app/hirra-cat-health-tracker/id6782975522"]},'
+        '{"@type":"WebSite","@id":"https://aykizintelligence.com/#website","url":"https://aykizintelligence.com/",'
+        '"name":"Aykiz Intelligence","publisher":{"@id":"https://aykizintelligence.com/#organization"}},'
+        '{"@type":"CollectionPage","@id":"%s#page","name":"%s","url":"%s","inLanguage":"ar",'
+        '"about":"صحة القطط وأمان الأطعمة وإرشادات الأعراض لأصحاب القطط",'
+        '"isPartOf":{"@id":"https://aykizintelligence.com/#website"},'
+        '"publisher":{"@id":"https://aykizintelligence.com/#organization"},'
+        '"translationOfWork":{"@id":"%s#page"},'
+        '"mainEntity":{"@type":"ItemList","itemListElement":[%s]}}'
+        ']}\n</script>'
+    ) % (canon, AR_UI["guide_name"], canon, SITE + BASE, items)
+    head = render(
+        HEAD,
+        LANG="ar",
+        DIR="rtl",
+        FONTLINK=AR_FONTS,
+        BRAND=AR_UI["brand"],
+        BRANDALT="أيقونة تطبيق هِرّة",
+        HREFLANG=hreflang(None),
+        TITLE="دليل العناية بالقطط: أمان الأطعمة والأعراض | هِرّة",
+        DESC="إجابات واضحة بالعربية عن أمان الأطعمة للقطط ومعنى الأعراض الشائعة، من صُنّاع هِرّة، تطبيق خاص لصحة القطط.",
+        CANON=canon,
+        KEYWORDS="دليل العناية بالقطط, صحة القطط, أمان الأطعمة للقطط, أعراض القطط, هل هو آمن للقطط",
+        OGTYPE="website",
+        OGTITLE="دليل العناية بالقطط من هِرّة",
+        CSS=CSS + AR_CSS,
+        JSONLD=jsonld,
+        BADGE=AR_APPSTORE_BADGE,
+    )
+    return head + "\n".join(body) + AR_UI["footer"]
 
 
 def main():
@@ -1111,6 +1554,21 @@ def main():
         with open(os.path.join(d, "index.html"), "w") as f:
             f.write(render_article(a))
         print("wrote %s/index.html" % a["slug"])
+    # Arabic hub
+    ar_dir = os.path.join(here, "ar")
+    os.makedirs(ar_dir, exist_ok=True)
+    with open(os.path.join(ar_dir, "index.html"), "w") as f:
+        f.write(render_hub_ar())
+    print("wrote ar/index.html (Arabic hub)")
+    # Arabic articles
+    for a in ARTICLES:
+        if a["slug"] not in AR_ARTICLES:
+            continue
+        d = os.path.join(ar_dir, a["slug"])
+        os.makedirs(d, exist_ok=True)
+        with open(os.path.join(d, "index.html"), "w") as f:
+            f.write(render_article_ar(a["slug"]))
+        print("wrote ar/%s/index.html" % a["slug"])
     # sitemap fragment
     print("\n--- paste into ../../sitemap.xml ---")
     print("""  <url>
@@ -1126,6 +1584,21 @@ def main():
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>""" % (SITE, BASE, a["slug"], UPDATED))
+    print("""  <url>
+    <loc>%s%s</loc>
+    <lastmod>%s</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>""" % (SITE, AR_BASE, AR_UPDATED))
+    for a in ARTICLES:
+        if a["slug"] not in AR_ARTICLES:
+            continue
+        print("""  <url>
+    <loc>%s%s%s/</loc>
+    <lastmod>%s</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>""" % (SITE, AR_BASE, a["slug"], AR_UPDATED))
 
 
 if __name__ == "__main__":
