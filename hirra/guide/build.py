@@ -1008,16 +1008,92 @@ AR_ARTICLES = {
  },
 }
 
+# ---------------------------------------------------------------------------
+# Veterinary sources. Every URL below was verified live before being added.
+# Cited on the highest-risk articles: food toxicity, breathing changes,
+# weight loss, and any article that names a specific disease.
+CORNELL = "https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/"
+SOURCES = {
+ "cornell_poisons": (CORNELL + "poisons", "Cornell Feline Health Center: Poisons"),
+ "cornell_ckd": (CORNELL + "chronic-kidney-disease", "Cornell Feline Health Center: Chronic Kidney Disease"),
+ "cornell_hyper": (CORNELL + "hyperthyroidism-cats", "Cornell Feline Health Center: Hyperthyroidism in Cats"),
+ "cornell_diab": (CORNELL + "feline-diabetes", "Cornell Feline Health Center: Feline Diabetes"),
+ "cornell_hl": (CORNELL + "hepatic-lipidosis", "Cornell Feline Health Center: Hepatic Lipidosis"),
+ "cornell_flutd": (CORNELL + "feline-lower-urinary-tract-disease", "Cornell Feline Health Center: Feline Lower Urinary Tract Disease"),
+ "cornell_vomit": (CORNELL + "vomiting", "Cornell Feline Health Center: Vomiting"),
+ "icc_poisons": ("https://icatcare.org/articles/cats-and-poisons", "International Cat Care: Cats and Poisons"),
+ "icc_lily": ("https://icatcare.org/articles/lily-poisoning-in-cats", "International Cat Care: Lily Poisoning in Cats"),
+ "icc_plants": ("https://icatcare.org/articles/poisonous-plants", "International Cat Care: Poisonous Plants"),
+ "icc_asthma": ("https://icatcare.org/articles/asthma-and-chronic-bronchitis-in-cats", "International Cat Care: Asthma and Chronic Bronchitis in Cats"),
+ "msd_choc": ("https://www.msdvetmanual.com/toxicology/food-hazards/chocolate-toxicosis-in-animals", "MSD Veterinary Manual: Chocolate Toxicosis in Animals"),
+ "msd_allium": ("https://www.msdvetmanual.com/toxicology/food-hazards/garlic-and-onion-allium-spp-toxicosis-in-animals", "MSD Veterinary Manual: Garlic and Onion (Allium spp) Toxicosis in Animals"),
+ "msd_grape": ("https://www.msdvetmanual.com/toxicology/food-hazards/grape-raisin-and-tamarind-vitis-spp-tamarindus-spp-toxicosis-in-dogs", "MSD Veterinary Manual: Grape, Raisin, and Tamarind Toxicosis"),
+ "msd_xyl": ("https://www.msdvetmanual.com/toxicology/food-hazards/xylitol-toxicosis-in-dogs", "MSD Veterinary Manual: Xylitol Toxicosis"),
+ "msd_lung": ("https://www.msdvetmanual.com/cat-owners/lung-and-airway-disorders-of-cats/introduction-to-lung-and-airway-disorders-of-cats", "MSD Veterinary Manual: Lung and Airway Disorders of Cats"),
+ "msd_foodhaz": ("https://www.msdvetmanual.com/special-pet-topics/poisoning/food-hazards", "MSD Veterinary Manual: Food Hazards in Pets"),
+ "aaha_life": ("https://www.aaha.org/resources/2021-aaha-aafp-feline-life-stage-guidelines/", "AAHA/AAFP Feline Life Stage Guidelines (2021)"),
+}
+
+ARTICLE_SOURCES = {
+ "is-chocolate-safe-for-cats": ["msd_choc", "cornell_poisons", "icc_poisons"],
+ "are-lilies-poisonous-to-cats": ["icc_lily", "cornell_poisons", "icc_plants"],
+ "is-grapes-and-raisins-safe-for-cats": ["msd_grape", "cornell_poisons", "msd_foodhaz"],
+ "is-onion-and-garlic-safe-for-cats": ["msd_allium", "cornell_poisons", "msd_foodhaz"],
+ "is-xylitol-and-human-food-safe-for-cats": ["msd_xyl", "msd_foodhaz", "cornell_poisons"],
+ "are-essential-oils-safe-for-cats": ["cornell_poisons", "icc_poisons"],
+ "cat-breathing-fast-what-to-do": ["msd_lung", "icc_asthma"],
+ "how-to-count-cat-breathing-rate": ["msd_lung", "icc_asthma"],
+ "cat-losing-weight-but-still-eating": ["cornell_hyper", "cornell_diab", "cornell_ckd"],
+ "cat-not-eating-what-to-do": ["cornell_hl", "aaha_life"],
+ "cat-peeing-outside-litter-box": ["cornell_flutd", "cornell_ckd"],
+ "cat-vomiting-causes": ["cornell_vomit", "cornell_hyper", "cornell_ckd"],
+ "early-signs-of-kidney-disease-in-cats": ["cornell_ckd", "aaha_life"],
+ "signs-your-cat-is-sick": ["cornell_ckd", "cornell_diab", "aaha_life"],
+ "why-is-my-cat-drinking-so-much-water": ["cornell_ckd", "cornell_diab", "cornell_hyper"],
+}
+
+
+def sources_block(slug):
+    keys = ARTICLE_SOURCES.get(slug)
+    if not keys:
+        return None
+    lis = "\n".join(
+        '<li><a href="%s" target="_blank" rel="noopener">%s</a></li>' % SOURCES[k]
+        for k in keys
+    )
+    return (
+        '<div class="srcs"><h2>Sources</h2>\n'
+        "<p>This guide draws on the following veterinary references:</p>\n"
+        "<ul>\n%s\n</ul></div>" % lis
+    )
+
+
+def sources_block_ar(slug):
+    keys = ARTICLE_SOURCES.get(slug)
+    if not keys:
+        return None
+    lis = "\n".join(
+        '<li><a href="%s" target="_blank" rel="noopener">%s</a></li>' % SOURCES[k]
+        for k in keys
+    )
+    return (
+        '<div class="srcs"><h2>المصادر</h2>\n'
+        "<p>يستند هذا الدليل إلى المراجع البيطرية التالية (الروابط بالإنجليزية):</p>\n"
+        '<ul dir="ltr" style="text-align:left">\n%s\n</ul></div>' % lis
+    )
+
+
 # Arabic UI strings (nav, chrome, CTA, disclaimer, footer). One place to edit.
 AR_UI = {
  "guide_name": "دليل العناية بالقطط",
  "brand": "هِرّة",
  "crumb_app": "هِرّة",
- "reviewed": "روجع بتاريخ %s &middot; لا يغني عن الاستشارة البيطرية",
+ "reviewed": "حُدّث بتاريخ %s &middot; لا يغني عن الرعاية البيطرية المتخصصة",
  "short_answer": "الإجابة المختصرة",
  "disclaimer": (
   '<div class="disc"><strong>عند الشك، اتصلي بالطبيب البيطري.</strong> هذا الدليل معلومات '
-  "عامة، وليس تشخيصًا، ولا يغني عن الفحص. إذا كانت قطتكِ في حالة ضيق، تواصلي مع طبيب "
+  "عامة لأصحاب القطط، وليس استشارة بيطرية، ولا يغني عن الرعاية البيطرية المتخصصة ولا عن "
+  "الفحص أو التشخيص أو العلاج. إذا كانت قطتكِ في حالة ضيق، تواصلي مع طبيب "
   "بيطري أو أقرب عيادة طوارئ فورًا.</div>"
  ),
  "cta": (
@@ -1243,7 +1319,7 @@ def render_article(a):
     body.append('<div class="crumb"><a href="/hirra/">Hirra</a> &rsaquo; <a href="/hirra/guide/">Cat care guide</a> &rsaquo; %s</div>' % a["cat"])
     body.append('<p class="kicker">%s</p>' % a["cat"])
     body.append("<h1>%s</h1>" % a["h1"])
-    body.append('<p class="updated">Reviewed %s &middot; Not a substitute for veterinary advice</p>' % UPDATED)
+    body.append('<p class="updated">Updated %s &middot; Not a substitute for professional veterinary care</p>' % UPDATED)
     body.append('<span class="verdict %s">%s</span>' % (vcls, a["verdict_label"]))
     body.append('<div class="tldr"><p class="lab">Short answer</p><p>%s</p></div>' % a["tldr"])
     for h2, html in a["sections"]:
@@ -1252,7 +1328,8 @@ def render_article(a):
     # emergency-aware disclaimer
     body.append(
         '<div class="disc"><strong>When in doubt, call a vet.</strong> This guide is general '
-        "information, not a diagnosis, and cannot replace an examination. If your cat is in "
+        "information for cat owners. It is not veterinary advice, and it is not a substitute "
+        "for professional veterinary care, diagnosis, or treatment. If your cat is in "
         "distress, contact a veterinarian or your nearest emergency clinic straight away.</div>"
     )
     # CTA
@@ -1270,6 +1347,10 @@ def render_article(a):
     for q, ans in a["faqs"]:
         body.append("<details><summary>%s</summary><p>%s</p></details>" % (q, ans))
     body.append("</div>")
+    # sources (high-risk articles only)
+    srcs = sources_block(a["slug"])
+    if srcs:
+        body.append(srcs)
     # related
     rel = [by_slug(s) for s in a.get("related", [])]
     rel = [r for r in rel if r]
@@ -1331,9 +1412,15 @@ def render_hub():
     # CTA
     body.append(
         '<div class="cta"><h3>Get Hirra free</h3>'
-        "<p>A private cat-health app that learns your cat's normal and flags the quiet early "
-        "signs. Free daily check-in and food checker, no account.</p>"
+        "<p>A private cat-health app that learns your cat's normal and flags the quiet "
+        "changes early. Free daily check-in and food checker, no account.</p>"
         + APPSTORE_BADGE + "</div>")
+    body.append(
+        '<div class="disc"><strong>A note on these guides.</strong> Everything here is general '
+        "information for cat owners, written to help you notice changes and talk to a "
+        "professional sooner. It is not veterinary advice, and it is not a substitute for "
+        "professional veterinary care, diagnosis, or treatment.</div>"
+    )
     body.append("</div>")
 
     items = ",".join(
@@ -1433,6 +1520,9 @@ def render_article_ar(slug):
     for q, ans in ar["faqs"]:
         body.append("<details><summary>%s</summary><p>%s</p></details>" % (q, ans))
     body.append("</div>")
+    srcs = sources_block_ar(slug)
+    if srcs:
+        body.append(srcs)
     rel = [s for s in ar.get("related", []) if s in AR_ARTICLES]
     if rel:
         body.append('<div class="rel"><h2>%s</h2>' % AR_UI["related_heading"])
@@ -1496,9 +1586,15 @@ def render_hub_ar():
         body.append("</div>")
     body.append(
         '<div class="cta"><h3>احصلي على هِرّة مجانًا</h3>'
-        "<p>تطبيق خاص لصحة القطط يتعلّم النمط الطبيعي لقطتكِ ويرصد العلامات المبكرة الهادئة. "
+        "<p>تطبيق خاص لصحة القطط يتعلّم النمط الطبيعي لقطتكِ ويرصد التغيّرات الهادئة مبكرًا. "
         "تسجيل يومي وفاحص أطعمة مجانيان، دون حساب.</p>"
         + AR_APPSTORE_BADGE + "</div>")
+    body.append(
+        '<div class="disc"><strong>ملاحظة حول هذه الأدلة.</strong> كل ما هنا معلومات عامة '
+        "لأصحاب القطط، كُتبت لتساعدكِ على ملاحظة التغيّرات والتحدّث إلى مختص في وقت أبكر. "
+        "وهي ليست استشارة بيطرية، ولا تغني عن الرعاية البيطرية المتخصصة ولا عن الفحص أو "
+        "التشخيص أو العلاج.</div>"
+    )
     body.append("</div>")
 
     items = ",".join(
