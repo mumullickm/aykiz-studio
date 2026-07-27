@@ -21,6 +21,13 @@ APPSTORE = "https://apps.apple.com/us/app/hirra-cat-health-tracker/id6782975522"
 UPDATED = "2026-07-16"
 AR_UPDATED = "2026-07-17"
 
+# Per-page Open Graph cards, rendered by ../assets/og/build_og.py.
+# Every page gets its own card carrying its headline and verdict, so a shared
+# link shows the answer instead of a generic app banner. Bump OGV after
+# re-rendering the cards to force the social scrapers to refetch.
+OG = SITE + "/hirra/assets/og/"
+OGV = "?v=3"
+
 EN_FONTS = "https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
 AR_FONTS = "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;700&family=Nunito:wght@700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
 
@@ -1199,7 +1206,26 @@ footer a{color:var(--mist)}
 .cardlink .t{display:block;font-family:'Nunito',sans-serif;font-weight:700;font-size:18px;color:#fff}
 .cardlink .s{display:block;font-size:14px;color:var(--mist);margin-top:3px}
 .cardlink>span:last-child{flex:1;min-width:0}
-@media(max-width:560px){body{font-size:17px}}
+.share{margin:34px 0 6px;padding:20px 0 0;border-top:1px solid var(--line)}
+.share-h{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--mist);margin:0 0 12px}
+.share-row{display:flex;flex-wrap:wrap;gap:9px}
+.sbtn{display:inline-flex;align-items:center;gap:8px;font-family:'Nunito',sans-serif;
+ font-weight:700;font-size:14px;line-height:1;padding:10px 15px;border-radius:100px;
+ color:var(--cream);background:var(--card);border:1px solid var(--line);cursor:pointer;
+ text-decoration:none;transition:background .18s,border-color .18s,color .18s,transform .18s}
+.sbtn:hover{background:#123239;border-color:var(--teal);color:#fff;text-decoration:none;transform:translateY(-1px)}
+.sbtn:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.sbtn svg{flex:none}
+/* display:inline-flex would otherwise beat the UA [hidden] rule, leaving the
+   native share button visible on desktops that have no navigator.share */
+.sbtn[hidden]{display:none}
+.sbtn.ok{color:var(--emerald);border-color:var(--emerald)}
+.snative{color:#04222a;background:var(--teal);border-color:var(--teal)}
+.snative:hover{background:#3fc6b8;border-color:#3fc6b8;color:#04222a}
+@media(max-width:560px){body{font-size:17px}
+ .share-row{gap:8px}.sbtn{padding:9px 13px;font-size:13px}}
+@media(prefers-reduced-motion:reduce){.sbtn{transition:none}.sbtn:hover{transform:none}}
 """
 
 HEAD = """<!doctype html>
@@ -1223,12 +1249,16 @@ HEAD = """<!doctype html>
 <meta property="og:url" content="{CANON}">
 <meta property="og:title" content="{OGTITLE}">
 <meta property="og:description" content="{DESC}">
-<meta property="og:image" content="https://aykizintelligence.com/hirra/assets/og-hirra.png?v=2">
+<meta property="og:image" content="{OGIMAGE}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{OGALT}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@aykizintel">
 <meta name="twitter:title" content="{OGTITLE}">
 <meta name="twitter:description" content="{DESC}">
-<meta name="twitter:image" content="https://aykizintelligence.com/hirra/assets/og-hirra.png?v=2">
+<meta name="twitter:image" content="{OGIMAGE}">
+<meta name="twitter:image:alt" content="{OGALT}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="{FONTLINK}" rel="stylesheet">
@@ -1242,6 +1272,11 @@ HEAD = """<!doctype html>
 </div></nav>
 """
 
+def finish(head, body):
+    """Join a page and drop the share script in just before </body>."""
+    return head + "\n".join(body) + FOOTER.replace("</body>", SHARE_JS + "\n</body>")
+
+
 FOOTER = """<footer><div class="wrap">
 <div>Care, not alarm. &nbsp;&middot;&nbsp; <a href="https://aykizintelligence.com/">Aykiz Intelligence</a></div>
 <div><a href="/hirra/">Hirra app</a> &nbsp;&middot;&nbsp; <a href="/hirra/guide/">Cat care guide</a> &nbsp;&middot;&nbsp; <a href="/hirra/privacy/">Privacy</a></div>
@@ -1252,6 +1287,98 @@ FOOTER = """<footer><div class="wrap">
 
 def esc(s):
     return s.replace("&", "&amp;").replace('"', "&quot;")
+
+
+SHARE_LABELS = {
+    "en": ("Share this", "Copy link", "Link copied", "Share"),
+    "ar": ("شاركي هذا", "نسخ الرابط", "تم نسخ الرابط", "مشاركة"),
+}
+
+
+def share_block(url, title, lang="en"):
+    """Share row: native sheet on mobile, copy-link, and the networks cat
+    owners actually pass these links around on. No third-party scripts, no
+    trackers, so it costs nothing in load time or privacy."""
+    heading, copy_label, copied, native = SHARE_LABELS[lang]
+    import urllib.parse as up
+    u, t = up.quote(url, safe=""), up.quote(title, safe="")
+    nets = [
+        ("WhatsApp", "https://wa.me/?text=%s%%20%s" % (t, u),
+         "M19.1 4.9A9.8 9.8 0 0 0 2.9 16.6L2 21.5l5-1.3a9.8 9.8 0 0 0 14.1-8.7 9.7 9.7 0 0 0-2-6.6zM12 19.9a8.1 8.1 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.1 8.1 0 1 1 12 19.9zm4.5-6.1c-.2-.1-1.5-.700-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.6.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.6-1.2a.6.6 0 0 0 0-.6c0-.1-.6-1.4-.8-1.9s-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c2.2.9 2.2.6 2.6.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3z"),
+        ("Facebook", "https://www.facebook.com/sharer/sharer.php?u=%s" % u,
+         "M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"),
+        ("X", "https://twitter.com/intent/tweet?text=%s&url=%s" % (t, u),
+         "M18.2 2.2h3.3l-7.2 8.3 8.5 11.3h-6.7l-5.2-6.9-6 6.9H1.6l7.7-8.9L1.2 2.2H8l4.7 6.3zm-1.2 17.7h1.8L7.1 4H5.1z"),
+        ("Reddit", "https://www.reddit.com/submit?url=%s&title=%s" % (u, t),
+         "M22 12a2 2 0 0 0-3.4-1.4 9.8 9.8 0 0 0-5.1-1.6l.9-4.1 2.9.6a1.7 1.7 0 1 0 .2-1.4l-3.6-.8a.7.7 0 0 0-.8.5l-1.1 5.2a9.8 9.8 0 0 0-5.2 1.6A2 2 0 1 0 4.4 14a4 4 0 0 0 0 .6c0 3.1 3.4 5.6 7.6 5.6s7.6-2.5 7.6-5.6a4 4 0 0 0 0-.6A2 2 0 0 0 22 12zM7.5 13.4a1.4 1.4 0 1 1 1.4 1.4 1.4 1.4 0 0 1-1.4-1.4zm7.9 3.9a5.2 5.2 0 0 1-3.4 1 5.2 5.2 0 0 1-3.4-1 .4.4 0 0 1 .5-.6 4.4 4.4 0 0 0 2.9.8 4.4 4.4 0 0 0 2.9-.8.4.4 0 1 1 .5.6zm-.3-2.5a1.4 1.4 0 1 1 1.4-1.4 1.4 1.4 0 0 1-1.4 1.4z"),
+        ("LinkedIn", "https://www.linkedin.com/sharing/share-offsite/?url=%s" % u,
+         "M20.4 20.4h-3.6v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.1a3.8 3.8 0 0 1 3.4-1.9c3.6 0 4.3 2.4 4.3 5.5zM5.3 7.4a2.1 2.1 0 1 1 2.1-2.1 2.1 2.1 0 0 1-2.1 2.1zM7.1 20.4H3.5V9h3.6zM22.2 0H1.8A1.8 1.8 0 0 0 0 1.8v20.4A1.8 1.8 0 0 0 1.8 24h20.4a1.8 1.8 0 0 0 1.8-1.8V1.8A1.8 1.8 0 0 0 22.2 0z"),
+    ]
+    out = ['<div class="share" data-url="%s" data-title="%s">' % (esc(url), esc(title))]
+    out.append('<p class="share-h">%s</p>' % heading)
+    out.append('<div class="share-row">')
+    out.append(
+        '<button type="button" class="sbtn snative" hidden aria-label="%s">'
+        '<svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true">'
+        '<path d="M18 8a3 3 0 1 0-2.8-4H15a3 3 0 0 0 .2 1.1L8.8 8.7a3 3 0 1 0 0 6.6l6.4 3.6a3 3 0 1 0 .9-1.7l-6.4-3.6a3 3 0 0 0 0-1.2l6.4-3.6A3 3 0 0 0 18 8z"/>'
+        "</svg> %s</button>" % (native, native)
+    )
+    for name, href, path in nets:
+        out.append(
+            '<a class="sbtn" href="%s" target="_blank" rel="noopener nofollow" '
+            'aria-label="%s %s">'
+            '<svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true">'
+            '<path d="%s"/></svg><span>%s</span></a>' % (href, native, name, path, name)
+        )
+    out.append(
+        '<button type="button" class="sbtn scopy" data-copied="%s" aria-label="%s">'
+        '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" '
+        'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+        '<rect x="9" y="9" width="11" height="11" rx="2"/>'
+        '<path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span>%s</span></button>'
+        % (copied, copy_label, copy_label)
+    )
+    out.append("</div></div>")
+    return "".join(out)
+
+
+SHARE_JS = """<script>
+(function(){
+  document.querySelectorAll('.share').forEach(function(box){
+    var url=box.dataset.url,title=box.dataset.title;
+    var nat=box.querySelector('.snative');
+    if(nat&&navigator.share){
+      nat.hidden=false;
+      nat.addEventListener('click',function(){
+        navigator.share({title:title,url:url}).catch(function(){});
+      });
+    }
+    var cp=box.querySelector('.scopy');
+    if(cp){
+      cp.addEventListener('click',function(){
+        var span=cp.querySelector('span'),old=span.textContent;
+        var done=function(){
+          span.textContent=cp.dataset.copied;cp.classList.add('ok');
+          setTimeout(function(){span.textContent=old;cp.classList.remove('ok');},2000);
+        };
+        var legacy=function(){
+          var t=document.createElement('textarea');
+          t.value=url;t.setAttribute('readonly','');t.style.position='absolute';
+          t.style.left='-9999px';document.body.appendChild(t);t.select();
+          var ok=false;try{ok=document.execCommand('copy');}catch(e){}
+          document.body.removeChild(t);
+          if(ok){done();}else{span.textContent=url;}
+        };
+        // writeText can reject on permission or a non-secure context, so the
+        // legacy path has to run on rejection too, not only when it is absent.
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+          navigator.clipboard.writeText(url).then(done).catch(legacy);
+        }else{legacy();}
+      });
+    }
+  });
+})();
+</script>"""
 
 
 def render(tpl, **kw):
@@ -1359,6 +1486,7 @@ def render_article(a):
         for r in rel:
             body.append('<a href="/hirra/guide/%s/">%s<span>%s</span></a>' % (r["slug"], r["h1"], r["cat"]))
         body.append("</div>")
+    body.append(share_block(canon, a["h1"], "en"))
     body.append("</div>")
 
     head = render(
@@ -1375,11 +1503,13 @@ def render_article(a):
         KEYWORDS=esc(a["keywords"]),
         OGTYPE="article",
         OGTITLE=esc(a["h1"]),
+        OGIMAGE=OG + a["slug"] + ".png" + OGV,
+        OGALT=esc(a["h1"] + " " + a["verdict_label"] + ". Hirra cat care guide."),
         CSS=CSS,
         JSONLD=article_jsonld(a),
         BADGE=APPSTORE_BADGE,
     )
-    return head + "\n".join(body) + FOOTER
+    return finish(head, body)
 
 
 def render_hub():
@@ -1421,6 +1551,7 @@ def render_hub():
         "professional sooner. It is not veterinary advice, and it is not a substitute for "
         "professional veterinary care, diagnosis, or treatment.</div>"
     )
+    body.append(share_block(canon, "Hirra cat care guide", "en"))
     body.append("</div>")
 
     items = ",".join(
@@ -1458,11 +1589,13 @@ def render_hub():
         KEYWORDS="cat care guide, cat food safety, cat symptoms, is it safe for cats, cat health",
         OGTYPE="website",
         OGTITLE="Hirra cat care guide",
+        OGIMAGE=OG + "guide.png" + OGV,
+        OGALT="Hirra cat care guide. Cat health and food safety, in plain language.",
         CSS=CSS,
         JSONLD=jsonld,
         BADGE=APPSTORE_BADGE,
     )
-    return head + "\n".join(body) + FOOTER
+    return finish(head, body)
 
 
 # ------------------------------------------------------- Arabic rendering
@@ -1530,6 +1663,7 @@ def render_article_ar(slug):
             r_en, r_ar = by_slug(s), AR_ARTICLES[s]
             body.append('<a href="/hirra/guide/ar/%s/">%s<span>%s</span></a>' % (s, r_ar["h1"], AR_CATS[r_en["cat"]]))
         body.append("</div>")
+    body.append(share_block(canon, ar["h1"], "ar"))
     body.append("</div>")
 
     head = render(
@@ -1546,11 +1680,13 @@ def render_article_ar(slug):
         KEYWORDS=esc(ar["keywords"]),
         OGTYPE="article",
         OGTITLE=esc(ar["h1"]),
+        OGIMAGE=OG + "ar-" + slug + ".png" + OGV,
+        OGALT=esc(ar["h1"] + " " + ar["verdict_label"]),
         CSS=CSS + AR_CSS,
         JSONLD=ar_article_jsonld(slug, ar),
         BADGE=AR_APPSTORE_BADGE,
     )
-    return head + "\n".join(body) + AR_UI["footer"]
+    return head + "\n".join(body) + AR_UI["footer"].replace("</body>", SHARE_JS + "\n</body>")
 
 
 def render_hub_ar():
@@ -1595,6 +1731,7 @@ def render_hub_ar():
         "وهي ليست استشارة بيطرية، ولا تغني عن الرعاية البيطرية المتخصصة ولا عن الفحص أو "
         "التشخيص أو العلاج.</div>"
     )
+    body.append(share_block(canon, "دليل العناية بالقطط من هِرّة", "ar"))
     body.append("</div>")
 
     items = ",".join(
@@ -1630,11 +1767,13 @@ def render_hub_ar():
         KEYWORDS="دليل العناية بالقطط, صحة القطط, أمان الأطعمة للقطط, أعراض القطط, هل هو آمن للقطط",
         OGTYPE="website",
         OGTITLE="دليل العناية بالقطط من هِرّة",
+        OGIMAGE=OG + "guide-ar.png" + OGV,
+        OGALT="دليل العناية بالقطط من هِرّة",
         CSS=CSS + AR_CSS,
         JSONLD=jsonld,
         BADGE=AR_APPSTORE_BADGE,
     )
-    return head + "\n".join(body) + AR_UI["footer"]
+    return head + "\n".join(body) + AR_UI["footer"].replace("</body>", SHARE_JS + "\n</body>")
 
 
 def main():

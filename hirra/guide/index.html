@@ -22,12 +22,16 @@
 <meta property="og:url" content="https://aykizintelligence.com/hirra/guide/">
 <meta property="og:title" content="Hirra cat care guide">
 <meta property="og:description" content="Plain-language answers on what foods are safe for cats and what common symptoms mean, from the makers of Hirra, a private cat-health app.">
-<meta property="og:image" content="https://aykizintelligence.com/hirra/assets/og-hirra.png?v=2">
+<meta property="og:image" content="https://aykizintelligence.com/hirra/assets/og/guide.png?v=3">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Hirra cat care guide. Cat health and food safety, in plain language.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@aykizintel">
 <meta name="twitter:title" content="Hirra cat care guide">
 <meta name="twitter:description" content="Plain-language answers on what foods are safe for cats and what common symptoms mean, from the makers of Hirra, a private cat-health app.">
-<meta name="twitter:image" content="https://aykizintelligence.com/hirra/assets/og-hirra.png?v=2">
+<meta name="twitter:image" content="https://aykizintelligence.com/hirra/assets/og/guide.png?v=3">
+<meta name="twitter:image:alt" content="Hirra cat care guide. Cat health and food safety, in plain language.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -97,7 +101,26 @@ footer a{color:var(--mist)}
 .cardlink .t{display:block;font-family:'Nunito',sans-serif;font-weight:700;font-size:18px;color:#fff}
 .cardlink .s{display:block;font-size:14px;color:var(--mist);margin-top:3px}
 .cardlink>span:last-child{flex:1;min-width:0}
-@media(max-width:560px){body{font-size:17px}}
+.share{margin:34px 0 6px;padding:20px 0 0;border-top:1px solid var(--line)}
+.share-h{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--mist);margin:0 0 12px}
+.share-row{display:flex;flex-wrap:wrap;gap:9px}
+.sbtn{display:inline-flex;align-items:center;gap:8px;font-family:'Nunito',sans-serif;
+ font-weight:700;font-size:14px;line-height:1;padding:10px 15px;border-radius:100px;
+ color:var(--cream);background:var(--card);border:1px solid var(--line);cursor:pointer;
+ text-decoration:none;transition:background .18s,border-color .18s,color .18s,transform .18s}
+.sbtn:hover{background:#123239;border-color:var(--teal);color:#fff;text-decoration:none;transform:translateY(-1px)}
+.sbtn:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.sbtn svg{flex:none}
+/* display:inline-flex would otherwise beat the UA [hidden] rule, leaving the
+   native share button visible on desktops that have no navigator.share */
+.sbtn[hidden]{display:none}
+.sbtn.ok{color:var(--emerald);border-color:var(--emerald)}
+.snative{color:#04222a;background:var(--teal);border-color:var(--teal)}
+.snative:hover{background:#3fc6b8;border-color:#3fc6b8;color:#04222a}
+@media(max-width:560px){body{font-size:17px}
+ .share-row{gap:8px}.sbtn{padding:9px 13px;font-size:13px}}
+@media(prefers-reduced-motion:reduce){.sbtn{transition:none}.sbtn:hover{transform:none}}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://aykizintelligence.com/#organization","name":"Aykiz Intelligence","url":"https://aykizintelligence.com/","sameAs":["https://apps.apple.com/us/app/hirra-cat-health-tracker/id6782975522"]},{"@type":"WebSite","@id":"https://aykizintelligence.com/#website","url":"https://aykizintelligence.com/","name":"Aykiz Intelligence","publisher":{"@id":"https://aykizintelligence.com/#organization"}},{"@type":"MobileApplication","@id":"https://aykizintelligence.com/hirra/#app","name":"Hirra: Cat Health Tracker","applicationCategory":"HealthApplication","operatingSystem":"iOS 17","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"installUrl":"https://apps.apple.com/us/app/hirra-cat-health-tracker/id6782975522","url":"https://aykizintelligence.com/hirra/"},{"@type":"CollectionPage","@id":"https://aykizintelligence.com/hirra/guide/#page","name":"Hirra cat care guide","url":"https://aykizintelligence.com/hirra/guide/","about":"Cat health, food safety, and symptom guidance for cat owners","isPartOf":{"@id":"https://aykizintelligence.com/#website"},"publisher":{"@id":"https://aykizintelligence.com/#organization"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://aykizintelligence.com/hirra/guide/is-chocolate-safe-for-cats/","name":"Is chocolate safe for cats?"},{"@type":"ListItem","position":2,"url":"https://aykizintelligence.com/hirra/guide/is-onion-and-garlic-safe-for-cats/","name":"Are onions and garlic safe for cats?"},{"@type":"ListItem","position":3,"url":"https://aykizintelligence.com/hirra/guide/is-grapes-and-raisins-safe-for-cats/","name":"Are grapes and raisins safe for cats?"},{"@type":"ListItem","position":4,"url":"https://aykizintelligence.com/hirra/guide/is-milk-and-dairy-safe-for-cats/","name":"Is milk safe for cats?"},{"@type":"ListItem","position":5,"url":"https://aykizintelligence.com/hirra/guide/is-tuna-safe-for-cats/","name":"Is tuna safe for cats?"},{"@type":"ListItem","position":6,"url":"https://aykizintelligence.com/hirra/guide/is-xylitol-and-human-food-safe-for-cats/","name":"Human foods and medicines that are dangerous for cats"},{"@type":"ListItem","position":7,"url":"https://aykizintelligence.com/hirra/guide/safe-human-foods-for-cats/","name":"What human foods are safe for cats?"},{"@type":"ListItem","position":8,"url":"https://aykizintelligence.com/hirra/guide/why-is-my-cat-drinking-so-much-water/","name":"Why is my cat drinking so much water?"},{"@type":"ListItem","position":9,"url":"https://aykizintelligence.com/hirra/guide/cat-not-eating-what-to-do/","name":"My cat is not eating. What should I do?"},{"@type":"ListItem","position":10,"url":"https://aykizintelligence.com/hirra/guide/cat-losing-weight-but-still-eating/","name":"My cat is losing weight but still eating. Why?"},{"@type":"ListItem","position":11,"url":"https://aykizintelligence.com/hirra/guide/cat-breathing-fast-what-to-do/","name":"My cat is breathing fast. Is it an emergency?"},{"@type":"ListItem","position":12,"url":"https://aykizintelligence.com/hirra/guide/are-lilies-poisonous-to-cats/","name":"Are lilies poisonous to cats?"},{"@type":"ListItem","position":13,"url":"https://aykizintelligence.com/hirra/guide/are-essential-oils-safe-for-cats/","name":"Are essential oils and diffusers safe for cats?"},{"@type":"ListItem","position":14,"url":"https://aykizintelligence.com/hirra/guide/cat-peeing-outside-litter-box/","name":"Why is my cat peeing outside the litter box?"},{"@type":"ListItem","position":15,"url":"https://aykizintelligence.com/hirra/guide/cat-vomiting-causes/","name":"Why is my cat vomiting?"},{"@type":"ListItem","position":16,"url":"https://aykizintelligence.com/hirra/guide/cat-vaccination-schedule/","name":"What vaccinations does my cat need?"},{"@type":"ListItem","position":17,"url":"https://aykizintelligence.com/hirra/guide/how-often-should-a-cat-see-a-vet/","name":"How often should a cat see the vet?"},{"@type":"ListItem","position":18,"url":"https://aykizintelligence.com/hirra/guide/what-to-feed-a-kitten/","name":"What should I feed a kitten?"},{"@type":"ListItem","position":19,"url":"https://aykizintelligence.com/hirra/guide/signs-your-cat-is-sick/","name":"Early signs your cat is sick"},{"@type":"ListItem","position":20,"url":"https://aykizintelligence.com/hirra/guide/early-signs-of-kidney-disease-in-cats/","name":"Early signs of kidney disease in cats"},{"@type":"ListItem","position":21,"url":"https://aykizintelligence.com/hirra/guide/how-to-count-cat-breathing-rate/","name":"How to count your cat's resting breathing rate"}]}}]}
@@ -145,9 +168,47 @@ footer a{color:var(--mist)}
 </div>
 <div class="cta"><h3>Get Hirra free</h3><p>A private cat-health app that learns your cat's normal and flags the quiet changes early. Free daily check-in and food checker, no account.</p><a class="badge" href="https://apps.apple.com/us/app/hirra-cat-health-tracker/id6782975522" target="_blank" rel="noopener"><svg viewBox="0 0 384 512" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> Free on the App Store</a></div>
 <div class="disc"><strong>A note on these guides.</strong> Everything here is general information for cat owners, written to help you notice changes and talk to a professional sooner. It is not veterinary advice, and it is not a substitute for professional veterinary care, diagnosis, or treatment.</div>
+<div class="share" data-url="https://aykizintelligence.com/hirra/guide/" data-title="Hirra cat care guide"><p class="share-h">Share this</p><div class="share-row"><button type="button" class="sbtn snative" hidden aria-label="Share"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M18 8a3 3 0 1 0-2.8-4H15a3 3 0 0 0 .2 1.1L8.8 8.7a3 3 0 1 0 0 6.6l6.4 3.6a3 3 0 1 0 .9-1.7l-6.4-3.6a3 3 0 0 0 0-1.2l6.4-3.6A3 3 0 0 0 18 8z"/></svg> Share</button><a class="sbtn" href="https://wa.me/?text=Hirra%20cat%20care%20guide%20https%3A%2F%2Faykizintelligence.com%2Fhirra%2Fguide%2F" target="_blank" rel="noopener nofollow" aria-label="Share WhatsApp"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M19.1 4.9A9.8 9.8 0 0 0 2.9 16.6L2 21.5l5-1.3a9.8 9.8 0 0 0 14.1-8.7 9.7 9.7 0 0 0-2-6.6zM12 19.9a8.1 8.1 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.1 8.1 0 1 1 12 19.9zm4.5-6.1c-.2-.1-1.5-.700-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.6.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.6-1.2a.6.6 0 0 0 0-.6c0-.1-.6-1.4-.8-1.9s-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c2.2.9 2.2.6 2.6.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3z"/></svg><span>WhatsApp</span></a><a class="sbtn" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Faykizintelligence.com%2Fhirra%2Fguide%2F" target="_blank" rel="noopener nofollow" aria-label="Share Facebook"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg><span>Facebook</span></a><a class="sbtn" href="https://twitter.com/intent/tweet?text=Hirra%20cat%20care%20guide&url=https%3A%2F%2Faykizintelligence.com%2Fhirra%2Fguide%2F" target="_blank" rel="noopener nofollow" aria-label="Share X"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M18.2 2.2h3.3l-7.2 8.3 8.5 11.3h-6.7l-5.2-6.9-6 6.9H1.6l7.7-8.9L1.2 2.2H8l4.7 6.3zm-1.2 17.7h1.8L7.1 4H5.1z"/></svg><span>X</span></a><a class="sbtn" href="https://www.reddit.com/submit?url=https%3A%2F%2Faykizintelligence.com%2Fhirra%2Fguide%2F&title=Hirra%20cat%20care%20guide" target="_blank" rel="noopener nofollow" aria-label="Share Reddit"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M22 12a2 2 0 0 0-3.4-1.4 9.8 9.8 0 0 0-5.1-1.6l.9-4.1 2.9.6a1.7 1.7 0 1 0 .2-1.4l-3.6-.8a.7.7 0 0 0-.8.5l-1.1 5.2a9.8 9.8 0 0 0-5.2 1.6A2 2 0 1 0 4.4 14a4 4 0 0 0 0 .6c0 3.1 3.4 5.6 7.6 5.6s7.6-2.5 7.6-5.6a4 4 0 0 0 0-.6A2 2 0 0 0 22 12zM7.5 13.4a1.4 1.4 0 1 1 1.4 1.4 1.4 1.4 0 0 1-1.4-1.4zm7.9 3.9a5.2 5.2 0 0 1-3.4 1 5.2 5.2 0 0 1-3.4-1 .4.4 0 0 1 .5-.6 4.4 4.4 0 0 0 2.9.8 4.4 4.4 0 0 0 2.9-.8.4.4 0 1 1 .5.6zm-.3-2.5a1.4 1.4 0 1 1 1.4-1.4 1.4 1.4 0 0 1-1.4 1.4z"/></svg><span>Reddit</span></a><a class="sbtn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Faykizintelligence.com%2Fhirra%2Fguide%2F" target="_blank" rel="noopener nofollow" aria-label="Share LinkedIn"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M20.4 20.4h-3.6v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.1a3.8 3.8 0 0 1 3.4-1.9c3.6 0 4.3 2.4 4.3 5.5zM5.3 7.4a2.1 2.1 0 1 1 2.1-2.1 2.1 2.1 0 0 1-2.1 2.1zM7.1 20.4H3.5V9h3.6zM22.2 0H1.8A1.8 1.8 0 0 0 0 1.8v20.4A1.8 1.8 0 0 0 1.8 24h20.4a1.8 1.8 0 0 0 1.8-1.8V1.8A1.8 1.8 0 0 0 22.2 0z"/></svg><span>LinkedIn</span></a><button type="button" class="sbtn scopy" data-copied="Link copied" aria-label="Copy link"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span>Copy link</span></button></div></div>
 </div><footer><div class="wrap">
 <div>Care, not alarm. &nbsp;&middot;&nbsp; <a href="https://aykizintelligence.com/">Aykiz Intelligence</a></div>
 <div><a href="/hirra/">Hirra app</a> &nbsp;&middot;&nbsp; <a href="/hirra/guide/">Cat care guide</a> &nbsp;&middot;&nbsp; <a href="/hirra/privacy/">Privacy</a></div>
 </div></footer>
+<script>
+(function(){
+  document.querySelectorAll('.share').forEach(function(box){
+    var url=box.dataset.url,title=box.dataset.title;
+    var nat=box.querySelector('.snative');
+    if(nat&&navigator.share){
+      nat.hidden=false;
+      nat.addEventListener('click',function(){
+        navigator.share({title:title,url:url}).catch(function(){});
+      });
+    }
+    var cp=box.querySelector('.scopy');
+    if(cp){
+      cp.addEventListener('click',function(){
+        var span=cp.querySelector('span'),old=span.textContent;
+        var done=function(){
+          span.textContent=cp.dataset.copied;cp.classList.add('ok');
+          setTimeout(function(){span.textContent=old;cp.classList.remove('ok');},2000);
+        };
+        var legacy=function(){
+          var t=document.createElement('textarea');
+          t.value=url;t.setAttribute('readonly','');t.style.position='absolute';
+          t.style.left='-9999px';document.body.appendChild(t);t.select();
+          var ok=false;try{ok=document.execCommand('copy');}catch(e){}
+          document.body.removeChild(t);
+          if(ok){done();}else{span.textContent=url;}
+        };
+        // writeText can reject on permission or a non-secure context, so the
+        // legacy path has to run on rejection too, not only when it is absent.
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+          navigator.clipboard.writeText(url).then(done).catch(legacy);
+        }else{legacy();}
+      });
+    }
+  });
+})();
+</script>
 </body>
 </html>
