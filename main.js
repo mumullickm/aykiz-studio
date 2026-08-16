@@ -14,12 +14,15 @@ gsap?.registerPlugin(ScrollTrigger);
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-/* some browsers fire a synthetic mousemove on load; only arm the cursor on real movement */
-let lastPointer = { x: -1, y: -1 };
+/* Pointer is "armed" only after a genuine move, so nothing reacts to a pointer
+   that is merely resting over the page on load (no parked circle, no carve).
+   A latch, not a per-event check: every listener that asks must get the same
+   answer for the same event, or only the first-registered one ever works. */
+let _armed = false, _seenPointer = false, _px0 = 0, _py0 = 0;
 function pointerArmed(e) {
-  const moved = e.clientX !== lastPointer.x || e.clientY !== lastPointer.y;
-  lastPointer = { x: e.clientX, y: e.clientY };
-  return moved;
+  if (!_seenPointer) { _seenPointer = true; _px0 = e.clientX; _py0 = e.clientY; return false; }
+  if (!_armed && (Math.abs(e.clientX - _px0) > 3 || Math.abs(e.clientY - _py0) > 3)) _armed = true;
+  return _armed;
 }
 
 /* ───────────────────── Black-hole cursor ───────────────────── */
@@ -75,21 +78,6 @@ document.querySelectorAll('a[href^="#"]').forEach((a) => {
     else (target === 0 ? window.scrollTo({ top: 0 }) : target.scrollIntoView());
   });
 });
-
-/* ───────────────────── The meridian: scroll, measured ───────────────────── */
-(function meridian() {
-  const fill = document.getElementById('meridianFill');
-  if (!fill) return;
-  const update = () => {
-    const max = document.documentElement.scrollHeight - innerHeight;
-    const sy = lenis ? lenis.animatedScroll : window.scrollY;
-    fill.style.height = `${Math.min(100, Math.max(0, (sy / Math.max(1, max)) * 100))}%`;
-  };
-  if (lenis) lenis.on('scroll', update);
-  addEventListener('scroll', update, { passive: true });
-  addEventListener('resize', update);
-  update();
-})();
 
 /* ───────────────── Tonight's sky: real moon phase + Dhaka time ─────────────────
    Aykiz means moon girl, so the site checks the actual sky. Lunar age from the
@@ -151,7 +139,7 @@ function moonPathSVG({ illum, waxing }) {
   }
 })();
 
-/* touch devices get told about the corner button, not a keyboard chord */
+/* touch devices get told about the corner button, not a keystroke */
 if (!finePointer) {
   const kbdLine = document.querySelector('.closer-kbd');
   if (kbdLine) kbdLine.innerHTML = 'Or tap <kbd>ask</kbd> in the top corner. Quiet software answers when you ask.';
@@ -782,8 +770,7 @@ function revealHero() {
   tl.to('#heroEyebrow', { opacity: 0.85, y: 0, duration: 0.9 })
     .from('#hero h1', { opacity: 0, y: 40, duration: 1.1 }, '-=0.5')
     .from('#hero .lede', { opacity: 0, y: 24, duration: 0.9 }, '-=0.7')
-    .from('#hero .hero-hud', { opacity: 0, y: 16, duration: 0.8 }, '-=0.6')
-    .from('.hero .scroll-cue', { opacity: 0, duration: 0.8 }, '-=0.4');
+    .from('#hero .hero-hud', { opacity: 0, y: 16, duration: 0.8 }, '-=0.6');
 }
 
 function setupScrollReveals() {

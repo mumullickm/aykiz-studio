@@ -1,30 +1,7 @@
 /* Aykiz Intelligence · studio site
    Aykiz means moon girl. Black universe, moonlight type, stardust, a black-hole cursor.
-   Display voice: Aykiz, the studio's own typeface. Body: Geist. Labels: JetBrains Mono.
-   EB Garamond italic appears only at sacred moments (the tagline, the name).
+   Display voice: Space Grotesk. Body: Geist. Labels: JetBrains Mono.
    Palette: cosmic black ground, white/silver stardust, teal the only accent. */
-
-@font-face {
-  font-family: 'Aykiz';
-  src: url('/assets/fonts/Aykiz-Light.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Aykiz';
-  src: url('/assets/fonts/Aykiz-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Aykiz';
-  src: url('/assets/fonts/Aykiz-SemiBold.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
 
 :root {
   --space:      #04060D;
@@ -42,10 +19,9 @@
   --line:        rgba(238, 242, 250, 0.08);
   --line-strong: rgba(238, 242, 250, 0.18);
 
-  --f-display: 'Aykiz', 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  --f-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
   --f-body:    'Geist', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
   --f-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
-  --f-serif:   'EB Garamond', 'Adobe Garamond Pro', Garamond, 'Times New Roman', serif;
 
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -183,26 +159,6 @@ body.cursor-on .cursor-ring { opacity: 1; }
   width: 100vw; height: 100vh; pointer-events: none;
 }
 
-/* ─────────────────── Meridian: the scroll instrument ───────────────────
-   A quiet vertical rule on the left edge. The teal thread grows as you move
-   through the page; the dot is where you are. An observatory dial, not a bar. */
-.meridian {
-  position: fixed; left: clamp(14px, 2.6vw, 40px); top: 50%; z-index: 40;
-  height: 38vh; width: 1px; transform: translateY(-50%);
-  background: var(--line); pointer-events: none;
-}
-.meridian span {
-  position: absolute; top: 0; left: 0; width: 1px; height: 0%;
-  background: linear-gradient(180deg, rgba(107,197,189,0.0), var(--teal));
-}
-.meridian span::after {
-  content: ""; position: absolute; bottom: -2px; left: 50%;
-  width: 5px; height: 5px; border-radius: 50%;
-  transform: translateX(-50%);
-  background: var(--teal); box-shadow: 0 0 10px var(--teal-glow);
-}
-@media (max-width: 1100px) { .meridian { display: none; } }
-
 /* ───────────────────────── Layout shell ───────────────────────── */
 .content { position: relative; z-index: 2; }
 .wrap { width: min(1240px, 90vw); margin: 0 auto; }
@@ -239,12 +195,6 @@ header.nav {
   transition: color .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
 }
 .nav-ask:hover { color: var(--moon); border-color: rgba(238,242,250,0.34); background: rgba(238,242,250,0.06); }
-.nav-ask kbd {
-  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.04em;
-  color: var(--moon-mute); border: 1px solid var(--line);
-  border-radius: 5px; padding: 2px 5px; text-transform: none;
-}
-@media (max-width: 860px) { .nav-ask kbd { display: none; } }
 
 /* Cadence CTA — calm pill, sheen only on hover. Quiet software doesn't pulse. */
 .nav .links a.nav-cta {
@@ -285,10 +235,7 @@ header.nav {
   font-size: clamp(46px, 9.5vw, 136px); line-height: 0.99;
   letter-spacing: -0.035em; margin: 0;
 }
-.hero h1 em {
-  font-family: var(--f-serif); font-style: italic; font-weight: 500;
-  font-size: 1.06em; letter-spacing: -0.015em; color: var(--teal);
-}
+.hero h1 em { font-style: normal; color: var(--teal); }
 .hero .lede {
   max-width: 520px; margin: 28px auto 0;
   font-size: clamp(15px, 2vw, 18px); line-height: 1.65;
@@ -315,19 +262,6 @@ header.nav {
   font-variant-numeric: tabular-nums;
 }
 .hud-sep { width: 1px; height: 12px; background: var(--line-strong); }
-
-.hero .scroll-cue {
-  position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%);
-  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.3em;
-  text-transform: uppercase; color: var(--moon-mute);
-  display: flex; flex-direction: column; align-items: center; gap: 12px;
-}
-.hero .scroll-cue .line {
-  width: 1px; height: 44px; background: linear-gradient(var(--teal), transparent);
-  animation: cue 2.4s var(--ease) infinite;
-}
-@keyframes cue { 0%{transform:scaleY(0);transform-origin:top} 40%{transform:scaleY(1);transform-origin:top}
-                 60%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
 
 /* Desktop: split hero, alif mark breathes on the left, text reads as a left-aligned
    column on the right, both vertically centred. Mobile keeps the stacked, centred layout.
@@ -368,19 +302,15 @@ section { position: relative; padding: clamp(96px, 16vh, 220px) 0; }
 
 /* Manifesto */
 .manifesto p {
-  font-family: var(--f-display); font-weight: 300;
-  font-size: clamp(26px, 4.4vw, 56px); line-height: 1.14;
+  font-family: var(--f-display); font-weight: 500;
+  font-size: clamp(25px, 4.2vw, 52px); line-height: 1.16;
   letter-spacing: -0.02em; max-width: 20ch; color: var(--moon);
 }
 .manifesto p .mut { color: var(--moon-mute); }
-.manifesto p em { font-style: normal; font-weight: 500; color: var(--teal); }
+.manifesto p em { font-style: normal; color: var(--teal); }
 .manifesto .sig {
   margin-top: 52px; font-family: var(--f-mono); font-size: 12px; font-weight: 400;
   letter-spacing: 0.08em; color: var(--moon-mute); max-width: 52ch; line-height: 1.85;
-}
-.manifesto .sig .serif {
-  font-family: var(--f-serif); font-style: italic; font-weight: 500;
-  font-size: 1.25em; letter-spacing: 0.02em; color: var(--moon-soft);
 }
 
 /* Work: section head */
@@ -492,7 +422,7 @@ section { position: relative; padding: clamp(96px, 16vh, 220px) 0; }
 }
 .stat:first-child { border-left: none; padding-left: 0; }
 .stat-n {
-  display: block; font-family: var(--f-display); font-weight: 300;
+  display: block; font-family: var(--f-display); font-weight: 500;
   font-size: clamp(44px, 6.5vw, 92px); line-height: 1; letter-spacing: -0.03em;
   color: var(--moon); font-variant-numeric: tabular-nums;
 }
@@ -517,14 +447,14 @@ section { position: relative; padding: clamp(96px, 16vh, 220px) 0; }
 }
 .principle:hover::before { opacity: 1; }
 .principle .pn { font-family: var(--f-mono); font-size: 11px; color: var(--teal); letter-spacing: 0.2em; }
-.principle h4 { font-family: var(--f-display); font-weight: 500; font-size: clamp(22px, 2.6vw, 28px); margin: 18px 0 14px; letter-spacing: -0.02em; }
+.principle h4 { font-family: var(--f-display); font-weight: 600; font-size: clamp(22px, 2.6vw, 26px); margin: 18px 0 14px; letter-spacing: -0.02em; }
 .principle p { color: var(--moon-soft); font-size: 14px; line-height: 1.65; max-width: 46ch; }
 
 /* Approach: process + why */
 .process { margin-top: 56px; }
 .process-head { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; }
 .process-head .pn { font-family: var(--f-mono); font-size: 13px; color: var(--teal); }
-.process-head h4 { font-family: var(--f-display); font-weight: 500; font-size: 22px; letter-spacing: -0.02em; }
+.process-head h4 { font-family: var(--f-display); font-weight: 600; font-size: 22px; letter-spacing: -0.02em; }
 .steps { list-style: none; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
 .steps li { background: var(--space); display: flex; gap: 22px; padding: 26px 36px; align-items: baseline; transition: background .4s var(--ease); }
 .steps li:hover { background: var(--space-2); }
@@ -532,9 +462,9 @@ section { position: relative; padding: clamp(96px, 16vh, 220px) 0; }
 .steps li div { color: var(--moon-soft); font-size: 15px; line-height: 1.6; }
 .steps li strong { color: var(--moon); font-weight: 500; }
 .approach-why {
-  margin-top: 64px; max-width: 44ch;
-  font-family: var(--f-display); font-weight: 300;
-  font-size: clamp(21px, 2.9vw, 32px); line-height: 1.38; letter-spacing: -0.01em;
+  margin-top: 64px; max-width: 48ch;
+  font-family: var(--f-display); font-weight: 500;
+  font-size: clamp(20px, 2.8vw, 30px); line-height: 1.38; letter-spacing: -0.01em;
   color: var(--moon);
 }
 @media (max-width: 760px) { .steps li { padding: 22px 22px; gap: 16px; } }
@@ -688,7 +618,7 @@ footer { border-top: 1px solid var(--line); padding: 64px 0 44px; position: rela
 
 /* respect reduced motion: still the ambient scene, keep content readable */
 @media (prefers-reduced-motion: reduce) {
-  .starfield, .cursor-ring::before, .scroll-cue .line, .loader-foot { animation: none !important; }
+  .starfield, .cursor-ring::before, .loader-foot { animation: none !important; }
   .loader-foot { opacity: 1; }
   .reveal { opacity: 1 !important; transform: none !important; }
   html { scroll-behavior: auto; }
