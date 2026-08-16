@@ -14,8 +14,8 @@
 <meta charset="utf-8" />
 <title>Aykiz Intelligence · a small studio for quiet software</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="description" content="A studio of one building quiet, offline-first mobile apps. Aykiz means moon girl. Home to Wasilah, Drafy, Crisp, Misbah, and Hirra. Built solo by Miraz Mullick." />
-<meta name="keywords" content="Aykiz Intelligence, app studio, indie app developer, offline-first apps, Flutter apps, mobile app studio, Wasilah, Drafy, Crisp, Misbah, Hirra, cat health app, quiet software, Miraz Mullick" />
+<meta name="description" content="A studio of one building quiet, offline-first mobile apps. Aykiz means moon girl. Home to Wasilah, Drafy, Crisp, Misbah, Hirra, and Verbatim. Built solo by Miraz Mullick." />
+<meta name="keywords" content="Aykiz Intelligence, app studio, indie app developer, offline-first apps, Flutter apps, mobile app studio, Wasilah, Drafy, Crisp, Misbah, Hirra, Verbatim, cat health app, quiet software, Miraz Mullick" />
 <meta name="author" content="Miraz Mullick" />
 <meta name="theme-color" content="#02030A" />
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-round.png" />
@@ -35,10 +35,13 @@
 <meta name="twitter:image" content="https://aykizintelligence.com/assets/og-card.png" />
 <meta name="twitter:site" content="@aykizintel" />
 
+<link rel="preload" href="/assets/fonts/Aykiz-SemiBold.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/Aykiz-Light.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="assets/mark-white.png" as="image" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@600;700&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=EB+Garamond:ital,wght@1,400;1,500&display=swap" />
 <link rel="stylesheet" href="styles.css" />
 <link rel="canonical" href="https://aykizintelligence.com/" />
 <script type="application/ld+json">
@@ -52,7 +55,7 @@
       "alternateName": "Aykiz",
       "url": "https://aykizintelligence.com/",
       "logo": "https://aykizintelligence.com/assets/logo-512.png",
-      "description": "A studio of one building quiet, offline-first mobile apps. Home to Wasilah, Drafy, Crisp, Misbah, and Hirra.",
+      "description": "A studio of one building quiet, offline-first mobile apps. Home to Wasilah, Drafy, Crisp, Misbah, Hirra, and Verbatim.",
       "founder": {
         "@id": "https://aykizintelligence.com/#miraz"
       },
@@ -230,8 +233,19 @@
   ]
 }
 </script>
+<script type="speculationrules">
+{
+  "prefetch": [{
+    "source": "list",
+    "urls": ["/work/", "/founder/", "/cadence/", "/drafy/", "/crisp/", "/misbah/", "/hirra/", "/verbatim/"],
+    "eagerness": "moderate"
+  }]
+}
+</script>
 </head>
 <body>
+
+<a class="skip" href="#work">Skip to the apps</a>
 
 <!-- deep space -->
 <div class="starfield"></div>
@@ -251,17 +265,23 @@
 <!-- WebGL stardust scene -->
 <canvas id="scene"></canvas>
 
+<!-- scroll meridian -->
+<div class="meridian" aria-hidden="true"><span id="meridianFill"></span></div>
+
 <header class="nav">
   <a href="#top" class="brandmark" data-cursor>
     <span class="bm-word">aykız</span>
     <span class="bm-sub">Intelligence</span>
   </a>
-  <nav class="links">
+  <nav class="links" aria-label="Primary">
     <a href="#work" data-cursor>Apps</a>
     <a href="/work/" data-cursor>Work</a>
     <a href="#approach" data-cursor>Approach</a>
     <a href="/founder/" data-cursor>Founder</a>
     <a href="#contact" data-cursor>Contact</a>
+    <button class="nav-ask" id="askBtn" type="button" data-cursor aria-haspopup="dialog" aria-controls="palette">
+      <span class="ask-word">ask</span><kbd class="ask-k">⌘K</kbd>
+    </button>
     <a href="/cadence/" class="nav-cta" data-cursor><span class="dot"></span>Cadence</a>
   </nav>
 </header>
@@ -273,6 +293,12 @@
     <div class="eyebrow" id="heroEyebrow">Aykiz · moon girl · MMXXVI</div>
     <h1 class="reveal">Quiet software,<br><em>made with care.</em></h1>
     <p class="lede reveal">A studio of one, making small apps that do one thing well. Free, offline, no clutter. Each one answers when you ask and stays out of the way when you don't.</p>
+    <div class="hero-hud reveal" aria-hidden="true">
+      <svg id="moonDisc" class="hud-moon" viewBox="0 0 24 24" width="20" height="20"></svg>
+      <span class="hud-label" id="moonLabel">reading the sky</span>
+      <span class="hud-sep"></span>
+      <span class="hud-label" id="dhakaClock">Dhaka --:--</span>
+    </div>
     <div class="scroll-cue"><span>scroll</span><span class="line"></span></div>
   </section>
 
@@ -284,7 +310,7 @@
         I'm building a <em>small</em> assistant. <span class="mut">Not a platform, not a suite.</span> A quiet tool that answers when you ask, and stays out of the way when you don't.
       </p>
       <p class="sig reveal">
-        Aykiz means moon girl. A small word, almost a whisper. The studio sounds the same way: short sentences, soft verbs, no superlatives. It's named after my daughter, and I mean it that way: warm where it can be, exact where it must be.
+        Aykiz means <em class="serif">moon girl</em>. A small word, almost a whisper. The studio sounds the same way: short sentences, soft verbs, no superlatives. It's named after my daughter, and I mean it that way: warm where it can be, exact where it must be.
       </p>
       <p class="sig reveal" style="margin-top: 18px;">One person. Flutter. Offline, free, built in Dhaka.</p>
     </div>
@@ -295,77 +321,108 @@
     <div class="wrap">
       <div class="eyebrow-row reveal"><span class="num">02</span><span class="label">Selected work</span><span class="rule"></span></div>
       <div class="work-head reveal">
-        <h2>Five small<br>things, made with care.</h2>
+        <h2>Six small<br>things, made with care.</h2>
         <p>Each runs offline and stays out of your way. Open one and see.</p>
       </div>
 
-      <div class="work-grid">
-        <a class="work-card" data-cursor href="https://wasilah.site" target="_blank" rel="noopener" style="--glow:#1F6F5C;">
-          <div class="top"><span class="badge">Live · iOS &amp; Android</span><span class="idx">001</span></div>
-          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
-          <div>
-            <img class="appicon" src="assets/apps/wasilah.png" alt="Wasilah icon" />
-            <h3>Wasilah</h3>
-            <p class="desc">A complete prayer companion: times, qibla, Quran, hadith, and now Deen Intelligence for answered questions with references. Sadaqah jāriyah, never monetised.</p>
-            <div class="meta-row"><span>Flutter</span><span>Prayer</span><span>Offline</span></div>
+      <div class="apps reveal">
+
+        <a class="app-row" data-cursor href="https://wasilah.site" target="_blank" rel="noopener" style="--glow:#2F8C84;">
+          <span class="ar-idx">001</span>
+          <img class="ar-icon" src="assets/apps/wasilah.png" alt="" width="88" height="88" loading="lazy" />
+          <div class="ar-main">
+            <h3 class="ar-name">Wasilah</h3>
+            <p class="ar-desc">A complete prayer companion: times, qibla, Quran, hadith, and Deen Intelligence for answered questions with references. Sadaqah jāriyah, never monetised.</p>
           </div>
+          <div class="ar-side">
+            <span class="ar-badge">Live · iOS &amp; Android</span>
+            <span class="ar-tags">Prayer · Offline · Free</span>
+          </div>
+          <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
         </a>
 
-        <a class="work-card" data-cursor href="/drafy/" style="--glow:#FFB347;">
-          <div class="top"><span class="badge">Live · iOS &amp; Web</span><span class="idx">002</span></div>
-          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
-          <div>
-            <img class="appicon" src="assets/apps/drafy.png" alt="Drafy icon" />
-            <h3>Drafy</h3>
-            <p class="desc">A QR generator that asks for nothing. Eight types, logos, no paywall, no tracking. The free spoiler.</p>
-            <div class="meta-row"><span>Flutter</span><span>Utility</span><span>Free</span></div>
+        <a class="app-row" data-cursor href="/drafy/" style="--glow:#C98B2D;">
+          <span class="ar-idx">002</span>
+          <img class="ar-icon" src="assets/apps/drafy.png" alt="" width="88" height="88" loading="lazy" />
+          <div class="ar-main">
+            <h3 class="ar-name">Drafy</h3>
+            <p class="ar-desc">A QR generator that asks for nothing. Eight types, logos, no paywall, no tracking. The free spoiler.</p>
           </div>
+          <div class="ar-side">
+            <span class="ar-badge">Live · iOS &amp; Web</span>
+            <span class="ar-tags">Utility · Free</span>
+          </div>
+          <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
         </a>
 
-        <a class="work-card" data-cursor href="/crisp/" style="--glow:#3B6EA5;">
-          <div class="top"><span class="badge">Live · Web</span><span class="idx">003</span></div>
-          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
-          <div>
-            <img class="appicon" src="assets/apps/crisp.png" alt="Crisp icon" />
-            <h3>Crisp</h3>
-            <p class="desc">Turn photos into a clean PDF, free, on your device. No account, no upload, no watermark. The scanner app is on the way.</p>
-            <div class="meta-row"><span>Web</span><span>PDF</span><span>Free</span></div>
+        <a class="app-row" data-cursor href="/crisp/" style="--glow:#3B6EA5;">
+          <span class="ar-idx">003</span>
+          <img class="ar-icon" src="assets/apps/crisp.png" alt="" width="88" height="88" loading="lazy" />
+          <div class="ar-main">
+            <h3 class="ar-name">Crisp</h3>
+            <p class="ar-desc">Turn photos into a clean PDF, free, on your device. No account, no upload, no watermark. The scanner app is on the way.</p>
           </div>
+          <div class="ar-side">
+            <span class="ar-badge">Live · Web</span>
+            <span class="ar-tags">PDF · Private</span>
+          </div>
+          <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
         </a>
 
-        <a class="work-card" data-cursor href="/misbah/" style="--glow:#C9A24B;">
-          <div class="top"><span class="badge">Live · iOS &amp; Android</span><span class="idx">004</span></div>
-          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
-          <div>
-            <img class="appicon" src="assets/apps/misbah.png" alt="Misbah icon" />
-            <h3>Misbah</h3>
-            <p class="desc">Light in the dark. A one-touch game where oil is sight. Small, calm, hand-made.</p>
-            <div class="meta-row"><span>Game</span><span>2D</span><span>Calm</span></div>
+        <a class="app-row" data-cursor href="/misbah/" style="--glow:#C9A24B;">
+          <span class="ar-idx">004</span>
+          <img class="ar-icon" src="assets/apps/misbah.png" alt="" width="88" height="88" loading="lazy" />
+          <div class="ar-main">
+            <h3 class="ar-name">Misbah</h3>
+            <p class="ar-desc">Light in the dark. A one-touch game where oil is sight. Small, calm, hand-made.</p>
           </div>
+          <div class="ar-side">
+            <span class="ar-badge">Live · iOS &amp; Android</span>
+            <span class="ar-tags">Game · Calm</span>
+          </div>
+          <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
         </a>
 
-        <a class="work-card" data-cursor href="/hirra/" style="--glow:#2C4A52;">
-          <div class="top"><span class="badge">Live · iOS</span><span class="idx">005</span></div>
-          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
-          <div>
-            <img class="appicon" src="/hirra/assets/icon-1024.png" alt="Hirra icon" />
-            <h3>Hirra</h3>
-            <p class="desc">A private health record for your cat that notices weight and thirst drift before you can. The care core is free; Plus adds AI vet triage.</p>
-            <div class="meta-row"><span>iOS</span><span>Cat health</span><span>Gulf</span></div>
+        <a class="app-row" data-cursor href="/hirra/" style="--glow:#2C4A52;">
+          <span class="ar-idx">005</span>
+          <img class="ar-icon" src="/hirra/assets/icon-1024.png" alt="" width="88" height="88" loading="lazy" />
+          <div class="ar-main">
+            <h3 class="ar-name">Hirra</h3>
+            <p class="ar-desc">A private health record for your cat that notices weight and thirst drift before you can. The care core is free; Plus adds AI vet triage.</p>
           </div>
+          <div class="ar-side">
+            <span class="ar-badge">Live · iOS</span>
+            <span class="ar-tags">Cat health · Gulf</span>
+          </div>
+          <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
         </a>
 
-        <a class="work-card" data-cursor href="/verbatim/" style="--glow:#7C8DB5;">
-          <div class="top"><span class="badge">Live · Web</span><span class="idx">006</span></div>
-          <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
-          <div>
-            <img class="appicon" src="/verbatim/icon-512.png" alt="Verbatim icon" loading="lazy" width="512" height="512" />
-            <h3>Verbatim</h3>
-            <p class="desc">Private transcription in your browser. Whisper runs on your device; audio never leaves it. No account, no upload, free.</p>
-            <div class="meta-row"><span>Web</span><span>Transcription</span><span>Private</span></div>
+        <a class="app-row" data-cursor href="/verbatim/" style="--glow:#7C8DB5;">
+          <span class="ar-idx">006</span>
+          <img class="ar-icon" src="/verbatim/icon-512.png" alt="" width="88" height="88" loading="lazy" />
+          <div class="ar-main">
+            <h3 class="ar-name">Verbatim</h3>
+            <p class="ar-desc">Private transcription in your browser. Whisper runs on your device; audio never leaves it. No account, no upload, free.</p>
           </div>
+          <div class="ar-side">
+            <span class="ar-badge">Live · Web</span>
+            <span class="ar-tags">Transcription · Private</span>
+          </div>
+          <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
         </a>
+
       </div>
+
+      <a class="work-more reveal" data-cursor href="/work/">Everything the studio ships
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+
+      <dl class="stats reveal">
+        <div class="stat"><dt class="stat-l">apps shipped</dt><dd class="stat-n" data-count="6">6</dd></div>
+        <div class="stat"><dt class="stat-l">person, start to ship</dt><dd class="stat-n" data-count="1">1</dd></div>
+        <div class="stat"><dt class="stat-l">ads, ever</dt><dd class="stat-n">0</dd></div>
+        <div class="stat"><dt class="stat-l">works offline</dt><dd class="stat-n">∞</dd></div>
+      </dl>
     </div>
   </section>
 
@@ -422,41 +479,71 @@
   <section class="closer" id="contact">
     <div class="wrap">
       <h2 class="reveal">Start with one.<br><em>Most are free.</em></h2>
-      <p class="lede reveal" style="margin: 24px auto 0;">Five small apps, mostly free and offline. Open the one that fits, and see if it stays out of your way.</p>
+      <p class="lede reveal" style="margin: 24px auto 0;">Six small apps, mostly free and offline. Open the one that fits, and see if it stays out of your way.</p>
       <a class="btn" data-cursor href="#work">See the apps
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
       </a>
       <p class="closer-contact reveal">Questions, or just want to say hello? <a href="mailto:hello@aykizintelligence.com">hello@aykizintelligence.com</a></p>
+      <p class="closer-kbd reveal">Or press <kbd>⌘K</kbd> anywhere. Quiet software answers when you ask.</p>
     </div>
   </section>
 
   <footer>
-    <div class="wrap footer-grid">
-      <a class="brandmark" href="#top">
-        <span class="bm-word">aykız</span>
-        <span class="bm-sub">Intelligence</span>
-      </a>
-      <div class="footer-meta">
-        <div class="footer-social">
-          <a href="https://github.com/mumullickm" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
-          <a href="https://www.linkedin.com/in/mumullickm/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-          <a href="https://x.com/aykizintel" target="_blank" rel="noopener" aria-label="X (formerly Twitter)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-          <a href="https://www.facebook.com/aykizintelligence" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg></a>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-id">
+          <a class="brandmark" href="#top" data-cursor>
+            <span class="bm-word">aykız</span>
+            <span class="bm-sub">Intelligence</span>
+          </a>
+          <p class="footer-tag">A small studio for quiet software.</p>
+          <div class="footer-hud" aria-hidden="true">
+            <svg id="moonDiscFoot" class="hud-moon" viewBox="0 0 24 24" width="16" height="16"></svg>
+            <span class="hud-label" id="moonLabelFoot"></span>
+          </div>
         </div>
-        <div class="footer-links" style="display:flex;gap:14px;flex-wrap:wrap;">
-          <a href="/work/">Work</a>
-          <a href="/founder/">Founder</a>
-          <a href="/cadence/">Cadence</a>
-          <a href="/verbatim/">Verbatim</a>
-          <a href="/hirra/guide/">Cat care guide</a>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <span class="footer-h">Pages</span>
+            <a href="/work/">Work</a>
+            <a href="/founder/">Founder</a>
+            <a href="/cadence/">Cadence</a>
+            <a href="/verbatim/">Verbatim</a>
+            <a href="/hirra/guide/">Cat care guide</a>
+          </div>
+          <div class="footer-col">
+            <span class="footer-h">Elsewhere</span>
+            <a href="https://github.com/mumullickm" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/mumullickm/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://x.com/aykizintel" target="_blank" rel="noopener">X</a>
+            <a href="https://www.facebook.com/aykizintelligence" target="_blank" rel="noopener">Facebook</a>
+          </div>
+          <div class="footer-col footer-colophon">
+            <span class="footer-h">Colophon</span>
+            <p>Set in <a href="https://github.com/mumullickm/aykiz-font" target="_blank" rel="noopener">Aykiz</a>, the studio's own typeface. The sky is rendered live; the moon above is tonight's, computed for Dhaka.</p>
+            <a href="mailto:hello@aykizintelligence.com">hello@aykizintelligence.com</a>
+            <span class="footer-fine">Aykiz Intelligence · Dhaka · MMXXVI</span>
+          </div>
         </div>
-        <div><a href="mailto:hello@aykizintelligence.com">hello@aykizintelligence.com</a></div>
-        <div>Aykiz Intelligence · MMXXVI</div>
       </div>
     </div>
   </footer>
 
 </main>
+
+<!-- Command palette: the studio thesis as an interface -->
+<div class="palette" id="palette" hidden>
+  <div class="palette-backdrop" data-close></div>
+  <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Ask the studio">
+    <div class="palette-head">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="paletteInput" type="text" placeholder="Where to?" aria-label="Search pages and apps" autocomplete="off" autocapitalize="off" spellcheck="false" />
+      <kbd>esc</kbd>
+    </div>
+    <ul id="paletteList" role="listbox" aria-label="Results"></ul>
+    <div class="palette-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="palette-brand">aykız</span></div>
+  </div>
+</div>
 
 <script type="importmap">
 {

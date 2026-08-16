@@ -1,3 +1,7 @@
+/* Aykiz Intelligence · the living layer
+   One continuous shot: stardust gathers into the mark, the real moon hangs in the
+   corner, and the whole page answers when you ask (⌘K). Quiet, measured, alive. */
+
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
@@ -8,40 +12,39 @@ const ScrollTrigger = window.ScrollTrigger;
 gsap?.registerPlugin(ScrollTrigger);
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-/* Pointer is "armed" only after a genuine move, so nothing reacts to a pointer
-   that is merely resting over the page on load (no parked circle, no carve). */
-let _armed = false, _seenPointer = false, _px0 = 0, _py0 = 0;
+/* some browsers fire a synthetic mousemove on load; only arm the cursor on real movement */
+let lastPointer = { x: -1, y: -1 };
 function pointerArmed(e) {
-  if (!_seenPointer) { _seenPointer = true; _px0 = e.clientX; _py0 = e.clientY; return false; }
-  if (!_armed && (Math.abs(e.clientX - _px0) > 3 || Math.abs(e.clientY - _py0) > 3)) _armed = true;
-  return _armed;
+  const moved = e.clientX !== lastPointer.x || e.clientY !== lastPointer.y;
+  lastPointer = { x: e.clientX, y: e.clientY };
+  return moved;
 }
 
-/* ───────────────────────── Custom cursor ───────────────────────── */
+/* ───────────────────── Black-hole cursor ───────────────────── */
 (function cursor() {
   const ring = document.querySelector('.cursor-ring');
   if (!ring) return;
-  let mx = -9999, my = -9999, rx = -9999, ry = -9999;
+  let x = -100, y = -100, tx = -100, ty = -100;
   addEventListener('mousemove', (e) => {
     if (!pointerArmed(e)) return;
-    mx = e.clientX; my = e.clientY;
+    tx = e.clientX; ty = e.clientY;
     document.body.classList.add('cursor-on');
   });
   addEventListener('mouseleave', () => document.body.classList.remove('cursor-on'));
-  // touch: the black hole follows the finger and fades on release
+
   const onTouch = (e) => {
     const t = e.touches[0]; if (!t) return;
-    if (mx < -9000) { rx = t.clientX; ry = t.clientY; } // snap on first contact, no streak
-    mx = t.clientX; my = t.clientY;
+    tx = t.clientX; ty = t.clientY;
     document.body.classList.add('cursor-on');
   };
   addEventListener('touchstart', onTouch, { passive: true });
   addEventListener('touchmove', onTouch, { passive: true });
   addEventListener('touchend', () => document.body.classList.remove('cursor-on'), { passive: true });
   const tick = () => {
-    rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
-    ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+    x += (tx - x) * 0.22; y += (ty - y) * 0.22;
+    ring.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
     requestAnimationFrame(tick);
   };
   tick();
@@ -51,50 +54,292 @@ function pointerArmed(e) {
   });
 })();
 
-/* ───────────────────────── Smooth scroll ───────────────────────── */
+/* ───────────────────── Smooth scroll ───────────────────── */
 let lenis = null;
 if (window.Lenis && !reduceMotion) {
-  lenis = new window.Lenis({ lerp: 0.09, smoothWheel: true, wheelMultiplier: 1 });
+  lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 0.95 });
   lenis.on('scroll', () => ScrollTrigger?.update());
-  gsap.ticker.add((t) => lenis.raf(t * 1000));
-  gsap.ticker.lagSmoothing(0);
+  gsap?.ticker.add((t) => lenis.raf(t * 1000));
+  gsap?.ticker.lagSmoothing(0);
 }
 
-/* ───────────────────────── Scene ───────────────────────── */
-// 48k grains on desktop for a denser mark; phones and low-memory devices stay
-// at 24k so the curl-noise vertex work never costs them frames.
+/* internal anchors glide instead of jumping */
+document.querySelectorAll('a[href^="#"]').forEach((a) => {
+  a.addEventListener('click', (e) => {
+    const id = a.getAttribute('href');
+    const target = id === '#top' ? 0 : document.querySelector(id);
+    if (target === null) return;
+    e.preventDefault();
+    history.pushState(null, '', id === '#top' ? ' ' : id);
+    if (lenis) lenis.scrollTo(target, { duration: 1.4 });
+    else (target === 0 ? window.scrollTo({ top: 0 }) : target.scrollIntoView());
+  });
+});
+
+/* ───────────────────── The meridian: scroll, measured ───────────────────── */
+(function meridian() {
+  const fill = document.getElementById('meridianFill');
+  if (!fill) return;
+  const update = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const sy = lenis ? lenis.animatedScroll : window.scrollY;
+    fill.style.height = `${Math.min(100, Math.max(0, (sy / Math.max(1, max)) * 100))}%`;
+  };
+  if (lenis) lenis.on('scroll', update);
+  addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', update);
+  update();
+})();
+
+/* ───────────────── Tonight's sky: real moon phase + Dhaka time ─────────────────
+   Aykiz means moon girl, so the site checks the actual sky. Lunar age from the
+   2000-01-06 18:14 UTC new moon over the mean synodic month; the disc is drawn
+   with a true terminator (waxing lights the right limb, as seen from Dhaka). */
+const SYNODIC = 29.53058867;
+function moonPhase(date = new Date()) {
+  const epoch = Date.UTC(2000, 0, 6, 18, 14);
+  let age = ((date.getTime() - epoch) / 86400000) % SYNODIC;
+  if (age < 0) age += SYNODIC;
+  const illum = (1 - Math.cos((age / SYNODIC) * Math.PI * 2)) / 2;
+  const waxing = age < SYNODIC / 2;
+  const name =
+    age < 1.0 ? 'new moon' :
+    age < 6.38 ? 'waxing crescent' :
+    age < 8.38 ? 'first quarter' :
+    age < 13.76 ? 'waxing gibbous' :
+    age < 15.77 ? 'full moon' :
+    age < 21.15 ? 'waning gibbous' :
+    age < 23.15 ? 'last quarter' :
+    age < 28.53 ? 'waning crescent' : 'new moon';
+  return { age, illum, waxing, name };
+}
+
+function moonPathSVG({ illum, waxing }) {
+  const C = 12, R = 9;
+  const outline = `<circle cx="${C}" cy="${C}" r="${R}" fill="none" stroke="rgba(238,242,250,0.25)" stroke-width="1"/>`;
+  if (illum < 0.02) return outline;
+  if (illum > 0.98) return `${outline}<circle cx="${C}" cy="${C}" r="${R}" fill="#EEF2FA"/>`;
+  const rt = R * Math.abs(1 - 2 * illum);              // terminator semi-axis
+  const outerSweep = waxing ? 1 : 0;                    // lit limb: right when waxing
+  /* terminator, bottom → top: a crescent bows toward the lit limb (right of the
+     disc = counterclockwise = sweep 0), a gibbous bows away from it */
+  const termSweep = (illum < 0.5) === waxing ? 0 : 1;
+  const d = `M ${C} ${C - R} A ${R} ${R} 0 0 ${outerSweep} ${C} ${C + R} A ${rt.toFixed(3)} ${R} 0 0 ${termSweep} ${C} ${C - R} Z`;
+  return `${outline}<path d="${d}" fill="#EEF2FA"/>`;
+}
+
+(function sky() {
+  const phase = moonPhase();
+  const pct = Math.round(phase.illum * 100);
+  const svg = moonPathSVG(phase);
+  const label = `${phase.name} · ${pct}%`;
+  const disc = document.getElementById('moonDisc');
+  const discFoot = document.getElementById('moonDiscFoot');
+  const lab = document.getElementById('moonLabel');
+  const labFoot = document.getElementById('moonLabelFoot');
+  if (disc) disc.innerHTML = svg;
+  if (discFoot) discFoot.innerHTML = svg;
+  if (lab) lab.textContent = label;
+  if (labFoot) labFoot.textContent = `tonight over dhaka · ${label}`;
+
+  const clockEl = document.getElementById('dhakaClock');
+  if (clockEl) {
+    const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Dhaka', hour: '2-digit', minute: '2-digit', hour12: false });
+    const tickClock = () => { clockEl.textContent = `Dhaka ${fmt.format(new Date())}`; };
+    tickClock();
+    setInterval(tickClock, 20000);
+  }
+})();
+
+/* touch devices get told about the corner button, not a keyboard chord */
+if (!finePointer) {
+  const kbdLine = document.querySelector('.closer-kbd');
+  if (kbdLine) kbdLine.innerHTML = 'Or tap <kbd>ask</kbd> in the top corner. Quiet software answers when you ask.';
+}
+
+/* ───────────────── ⌘K · ask, and it answers ───────────────── */
+(function palette() {
+  const root = document.getElementById('palette');
+  const input = document.getElementById('paletteInput');
+  const list = document.getElementById('paletteList');
+  const askBtn = document.getElementById('askBtn');
+  if (!root || !input || !list) return;
+
+  const svgArrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>';
+  const svgHash = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 4 7 20M17 4l-2 16M4 9h16M4 15h16"/></svg>';
+  const svgMail = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>';
+  const svgCopy = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a1 1 0 0 1 1-1h10"/></svg>';
+  const svgType = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 6V4h14v2M12 4v16m-3 0h6"/></svg>';
+
+  const ITEMS = [
+    { group: 'Apps', label: 'Wasilah', hint: 'prayer', href: 'https://wasilah.site', ext: true, icon: 'assets/apps/wasilah.png', kw: 'prayer qibla quran hadith salah islam deen' },
+    { group: 'Apps', label: 'Drafy', hint: 'qr codes', href: '/drafy/', icon: 'assets/apps/drafy.png', kw: 'qr code generator free' },
+    { group: 'Apps', label: 'Crisp', hint: 'pdf', href: '/crisp/', icon: 'assets/apps/crisp.png', kw: 'pdf merge split sign compress photos scanner' },
+    { group: 'Apps', label: 'Misbah', hint: 'game', href: '/misbah/', icon: 'assets/apps/misbah.png', kw: 'game light dark oil lamp' },
+    { group: 'Apps', label: 'Hirra', hint: 'cat health', href: '/hirra/', icon: '/hirra/assets/icon-1024.png', kw: 'cat health vet pet weight' },
+    { group: 'Apps', label: 'Verbatim', hint: 'transcribe', href: '/verbatim/', icon: '/verbatim/icon-512.png', kw: 'transcription whisper speech to text private' },
+    { group: 'Pages', label: 'Selected work', hint: 'section', href: '#work', svg: svgHash, kw: 'apps portfolio' },
+    { group: 'Pages', label: 'Approach', hint: 'section', href: '#approach', svg: svgHash, kw: 'how i work principles process' },
+    { group: 'Pages', label: 'Everything shipped', hint: 'page', href: '/work/', svg: svgArrow, kw: 'work all projects' },
+    { group: 'Pages', label: 'Founder', hint: 'page', href: '/founder/', svg: svgArrow, kw: 'miraz mullick about' },
+    { group: 'Pages', label: 'Cadence', hint: 'page', href: '/cadence/', svg: svgArrow, kw: 'agency service' },
+    { group: 'Pages', label: 'Cat care guide', hint: 'page', href: '/hirra/guide/', svg: svgArrow, kw: 'hirra cats guide' },
+    { group: 'Reach out', label: 'Email the studio', hint: 'mail', href: 'mailto:hello@aykizintelligence.com', svg: svgMail, kw: 'contact hello email' },
+    { group: 'Reach out', label: 'Copy email address', hint: '⌘C', action: 'copy', svg: svgCopy, kw: 'contact clipboard' },
+    { group: 'Reach out', label: 'GitHub', hint: 'external', href: 'https://github.com/mumullickm', ext: true, svg: svgArrow, kw: 'code open source' },
+    { group: 'Reach out', label: 'LinkedIn', hint: 'external', href: 'https://www.linkedin.com/in/mumullickm/', ext: true, svg: svgArrow, kw: 'profile' },
+    { group: 'Reach out', label: 'X', hint: 'external', href: 'https://x.com/aykizintel', ext: true, svg: svgArrow, kw: 'twitter' },
+    { group: 'Reach out', label: 'The Aykiz typeface', hint: 'external', href: 'https://github.com/mumullickm/aykiz-font', ext: true, svg: svgType, kw: 'font montserrat type family' },
+  ];
+
+  let open = false, sel = 0, shown = [];
+  let lastFocus = null;
+
+  const score = (item, q) => {
+    const l = item.label.toLowerCase();
+    if (l.startsWith(q)) return 0;
+    if (l.includes(q)) return 1;
+    if ((item.kw || '').includes(q)) return 2;
+    if ((item.group || '').toLowerCase().includes(q)) return 3;
+    return -1;
+  };
+
+  function render() {
+    const q = input.value.trim().toLowerCase();
+    shown = !q ? [...ITEMS]
+      : ITEMS.map((it) => ({ it, s: score(it, q) })).filter((r) => r.s >= 0)
+          .sort((a, b) => a.s - b.s).map((r) => r.it);
+    sel = Math.min(sel, Math.max(0, shown.length - 1));
+    if (!shown.length) {
+      list.innerHTML = '<li class="pl-empty">nothing here · try “pdf”, “cat”, “prayer”</li>';
+      return;
+    }
+    let html = '', lastGroup = null;
+    shown.forEach((it, i) => {
+      if (!q && it.group !== lastGroup) {
+        html += `<li class="pl-group" role="presentation">${it.group}</li>`;
+        lastGroup = it.group;
+      }
+      const icon = it.icon ? `<img src="${it.icon}" alt="" loading="lazy" />` : (it.svg || svgArrow);
+      html += `<li class="pl-item${i === sel ? ' sel' : ''}" role="option" aria-selected="${i === sel}" data-i="${i}">
+        <span class="pl-icon">${icon}</span><span class="pl-label">${it.label}</span><span class="pl-hint">${it.hint || ''}</span></li>`;
+    });
+    list.innerHTML = html;
+    list.querySelector('.pl-item.sel')?.scrollIntoView({ block: 'nearest' });
+  }
+
+  function openPalette() {
+    if (open) return;
+    open = true;
+    lastFocus = document.activeElement;
+    root.hidden = false;
+    requestAnimationFrame(() => root.classList.add('open'));
+    input.value = ''; sel = 0; render();
+    input.focus();
+    lenis?.stop();
+    document.documentElement.style.overflow = 'hidden';
+  }
+  function closePalette() {
+    if (!open) return;
+    open = false;
+    root.classList.remove('open');
+    setTimeout(() => { root.hidden = true; }, reduceMotion ? 0 : 260);
+    lenis?.start();
+    document.documentElement.style.overflow = '';
+    if (lastFocus?.focus) lastFocus.focus({ preventScroll: true });
+  }
+  function activate(i) {
+    const it = shown[i];
+    if (!it) return;
+    if (it.action === 'copy') {
+      navigator.clipboard?.writeText('hello@aykizintelligence.com').then(() => toast('email copied'));
+      closePalette();
+      return;
+    }
+    closePalette();
+    if (it.href.startsWith('#')) {
+      const target = document.querySelector(it.href);
+      if (target) { history.pushState(null, '', it.href); lenis ? lenis.scrollTo(target, { duration: 1.3 }) : target.scrollIntoView(); }
+    } else if (it.ext) {
+      window.open(it.href, '_blank', 'noopener');
+    } else {
+      window.location.href = it.href;
+    }
+  }
+
+  addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); open ? closePalette() : openPalette(); return; }
+    if (!open) {
+      if (e.key === '/' && !/^(input|textarea|select)$/i.test(document.activeElement?.tagName || '')) {
+        e.preventDefault(); openPalette();
+      }
+      return;
+    }
+    if (e.key === 'Escape') { e.preventDefault(); closePalette(); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); sel = (sel + 1) % shown.length; render(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); sel = (sel - 1 + shown.length) % shown.length; render(); }
+    else if (e.key === 'Enter') { e.preventDefault(); activate(sel); }
+    else if (e.key === 'Tab') { e.preventDefault(); input.focus(); }
+  });
+  input.addEventListener('input', () => { sel = 0; render(); });
+  list.addEventListener('pointermove', (e) => {
+    const li = e.target.closest('.pl-item');
+    if (li && +li.dataset.i !== sel) { sel = +li.dataset.i; render(); }
+  });
+  list.addEventListener('click', (e) => {
+    const li = e.target.closest('.pl-item');
+    if (li) activate(+li.dataset.i);
+  });
+  root.querySelector('.palette-backdrop').addEventListener('click', closePalette);
+  askBtn?.addEventListener('click', () => (open ? closePalette() : openPalette()));
+
+  let toastEl = null, toastTimer = null;
+  function toast(msg) {
+    if (!toastEl) { toastEl = document.createElement('div'); toastEl.className = 'toast'; document.body.appendChild(toastEl); }
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 1800);
+  }
+})();
+
+/* ───────────────────────── WebGL stardust ───────────────────────── */
+let renderer, scene, camera, points, uniforms, material, composer;
+const webgl = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch { return false; } })();
 const lowPower = window.matchMedia('(hover: none), (pointer: coarse)').matches
-  || (navigator.deviceMemory && navigator.deviceMemory <= 4);
+  || navigator.hardwareConcurrency <= 4;
 const COUNT = lowPower ? 24000 : 48000;
 const canvas = document.getElementById('scene');
-let renderer, composer, scene, camera, points, material, uniforms;
-let webgl = true;
 
-try {
+if (webgl) {
   renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: 'high-performance' });
   renderer.setClearColor(new THREE.Color('#02030A'), 1);
-} catch (e) { webgl = false; }
+}
 
 const cStarA = new THREE.Color('#F2F6FF'); // moonlight white
 const cStarB = new THREE.Color('#A9BDD8'); // cool silver
 const cTeal = new THREE.Color('#6BC5BD');  // aurora accent
 
 const snoise = `
-vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x,289.0);}
+vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
+vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}
+vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}
 vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}
 float snoise(vec3 v){
   const vec2 C=vec2(1.0/6.0,1.0/3.0); const vec4 D=vec4(0.0,0.5,1.0,2.0);
   vec3 i=floor(v+dot(v,C.yyy)); vec3 x0=v-i+dot(i,C.xxx);
   vec3 g=step(x0.yzx,x0.xyz); vec3 l=1.0-g; vec3 i1=min(g.xyz,l.zxy); vec3 i2=max(g.xyz,l.zxy);
-  vec3 x1=x0-i1+1.0*C.xxx; vec3 x2=x0-i2+2.0*C.xxx; vec3 x3=x0-1.0+3.0*C.xxx;
-  i=mod(i,289.0);
+  vec3 x1=x0-i1+C.xxx; vec3 x2=x0-i2+C.yyy; vec3 x3=x0-D.yyy;
+  i=mod289(i);
   vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));
-  float n_=1.0/7.0; vec3 ns=n_*D.wyz-D.xzx;
+  float n_=0.142857142857; vec3 ns=n_*D.wyz-D.xzx;
   vec4 j=p-49.0*floor(p*ns.z*ns.z);
   vec4 x_=floor(j*ns.z); vec4 y_=floor(j-7.0*x_);
-  vec4 x=x_*ns.x+ns.yyyy; vec4 y=y_*ns.x+ns.yyyy; vec4 h=1.0-abs(x)-abs(y);
+  vec4 x=x_*ns.x+ns.yyyy; vec4 y=y_*ns.x+ns.yyyy;
+  vec4 h=1.0-abs(x)-abs(y);
   vec4 b0=vec4(x.xy,y.xy); vec4 b1=vec4(x.zw,y.zw);
-  vec4 s0=floor(b0)*2.0+1.0; vec4 s1=floor(b1)*2.0+1.0; vec4 sh=-step(h,vec4(0.0));
+  vec4 s0=floor(b0)*2.0+1.0; vec4 s1=floor(b1)*2.0+1.0;
+  vec4 sh=-step(h,vec4(0.0));
   vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy; vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
   vec3 p0=vec3(a0.xy,h.x); vec3 p1=vec3(a0.zw,h.y); vec3 p2=vec3(a1.xy,h.z); vec3 p3=vec3(a1.zw,h.w);
   vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));
@@ -102,18 +347,13 @@ float snoise(vec3 v){
   vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0); m=m*m;
   return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
 }
-vec3 snoiseVec3(vec3 x){
-  return vec3(snoise(x),snoise(vec3(x.y-19.1,x.z+33.4,x.x+47.2)),snoise(vec3(x.z+74.2,x.x-124.5,x.y+99.4)));
-}
 vec3 curlNoise(vec3 p){
   const float e=0.1; vec3 dx=vec3(e,0.,0.),dy=vec3(0.,e,0.),dz=vec3(0.,0.,e);
-  vec3 px0=snoiseVec3(p-dx),px1=snoiseVec3(p+dx);
-  vec3 py0=snoiseVec3(p-dy),py1=snoiseVec3(p+dy);
-  vec3 pz0=snoiseVec3(p-dz),pz1=snoiseVec3(p+dz);
-  float x=py1.z-py0.z-pz1.y+pz0.y;
-  float y=pz1.x-pz0.x-px1.z+px0.z;
-  float z=px1.y-px0.y-py1.x+py0.x;
-  return normalize(vec3(x,y,z)*(1.0/(2.0*e)));
+  float x0=snoise(p-dx),x1=snoise(p+dx);
+  float y0=snoise(p-dy),y1=snoise(p+dy);
+  float z0=snoise(p-dz),z1=snoise(p+dz);
+  float x=(y1-y0)-(z1-z0); float y=(z1-z0)-(x1-x0); float z=(x1-x0)-(y1-y0);
+  return normalize(vec3(x,y,z)/(2.0*e));
 }`;
 
 const vert = `
@@ -542,6 +782,7 @@ function revealHero() {
   tl.to('#heroEyebrow', { opacity: 0.85, y: 0, duration: 0.9 })
     .from('#hero h1', { opacity: 0, y: 40, duration: 1.1 }, '-=0.5')
     .from('#hero .lede', { opacity: 0, y: 24, duration: 0.9 }, '-=0.7')
+    .from('#hero .hero-hud', { opacity: 0, y: 16, duration: 0.8 }, '-=0.6')
     .from('.hero .scroll-cue', { opacity: 0, duration: 0.8 }, '-=0.4');
 }
 
@@ -557,12 +798,24 @@ function setupScrollReveals() {
       scrollTrigger: { trigger: el, start: 'top 85%' },
     });
   });
-  // work card glow follows cursor
-  document.querySelectorAll('.work-card').forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const r = card.getBoundingClientRect();
-      card.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
-      card.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`);
+
+  // the studio, counted: numerals settle into place as the ledger scrolls in
+  document.querySelectorAll('.stat-n[data-count]').forEach((el) => {
+    const end = +el.dataset.count;
+    const counter = { v: 0 };
+    gsap.to(counter, {
+      v: end, duration: 1.6, ease: 'power2.out',
+      scrollTrigger: { trigger: el.closest('.stats'), start: 'top 85%', once: true },
+      onUpdate: () => { el.textContent = Math.round(counter.v); },
+    });
+  });
+
+  // app-row nebula follows the cursor
+  document.querySelectorAll('.app-row').forEach((row) => {
+    row.addEventListener('mousemove', (e) => {
+      const r = row.getBoundingClientRect();
+      row.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
+      row.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`);
     });
   });
 }
