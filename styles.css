@@ -23,6 +23,23 @@
   font-style: normal;
   font-display: swap;
 }
+/* Geist, subset to the wordmark glyphs only. BRAND-GUIDELINES.md 4: the
+   logotype "Aykiz Intelligence" is set in Geist, 600 for the name and 500 for
+   the tracked "Intelligence". 7.8KB for both, the wordmark is the only user. */
+@font-face {
+  font-family: 'Geist Wordmark';
+  src: url('assets/fonts/Geist-SemiBold.wordmark.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Wordmark';
+  src: url('assets/fonts/Geist-Medium.wordmark.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   /* ground */
@@ -47,6 +64,7 @@
   --f-display: 'Aykiz', 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
   --f-body:    -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Helvetica Neue', Arial, sans-serif;
   --f-label:   'Aykiz', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --f-mark:    'Geist Wordmark', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -85,17 +103,34 @@ em { font-style: normal; color: var(--teal); }
 ::selection { background: var(--teal-deep); color: var(--moon); }
 :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 3px; }
 
-/* ───────── the sheet: one soft moon wash, painted in CSS, no canvas ───────── */
+/* ───────── the sky: live canvas, with a CSS moon wash sitting over it ─────────
+   #sky is the ground. The wash on body::before keeps the teal bloom that the
+   dust alone does not give, and it fades out below the hero so the reading
+   sections stay quiet. */
+#sky {
+  position: fixed;
+  inset: 0;
+  /* canvas is a replaced element: inset alone will not stretch it, it would
+     sit at its intrinsic 300x150. The explicit size is what makes it fill. */
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
+  pointer-events: none;
+  background: var(--space);
+}
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(60vw 46vw at 68% -6%, rgba(107, 197, 189, 0.10), transparent 70%),
-    radial-gradient(52vw 40vw at 12% 4%, rgba(160, 186, 226, 0.07), transparent 68%);
+    radial-gradient(58vw 44vw at 68% -8%, rgba(107, 197, 189, 0.12), transparent 70%),
+    radial-gradient(50vw 38vw at 10% 2%, rgba(160, 186, 226, 0.08), transparent 68%);
 }
+/* the sections read over the sky, so they carry their own ground below the hero */
+.band, footer { background: var(--space); }
 
 .skip {
   position: fixed; top: 14px; left: 14px; z-index: 200;
@@ -123,7 +158,7 @@ body::before {
   padding: clamp(76px, 11vw, 168px) 0;
   border-top: 1px solid var(--line-soft);
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 .band > .wrap {
   display: grid;
@@ -171,16 +206,39 @@ body::before {
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   border-bottom: 1px solid var(--line-soft);
 }
-.brandmark { display: flex; align-items: baseline; gap: 9px; }
+.brandmark {
+  display: flex; align-items: baseline;
+  gap: calc(var(--bm-cap) * 0.62);
+  --bm-cap: 15px;                       /* cap height of the wordmark */
+}
+/* BRAND-GUIDELINES.md 4, horizontal lockup: mark height = cap height x 1.6,
+   baseline aligned. The path is the one from marks/aykiz-alif.svg, scaled,
+   never redrawn. The viewBox is cropped to the ink (9.6 x 69.8), which is the
+   ~1:7 height-to-width the guidelines call for, so the mark's foot is the
+   element's bottom edge and lands on the wordmark baseline on its own. */
+.bm-mark {
+  flex: none;
+  height: calc(var(--bm-cap) * 1.6);
+  width: auto;
+  aspect-ratio: 9.6 / 69.8;
+  display: block;
+  overflow: visible;
+}
+.bm-mark .stem { fill: #F6F2EB; }       /* cream on ink */
+.bm-mark .dot { fill: var(--teal); }    /* teal is the spark */
 .bm-word {
-  font-family: var(--f-display); font-weight: 500;
-  font-size: 21px; letter-spacing: 0.01em; color: var(--moon);
+  font-family: var(--f-mark); font-weight: 600;
+  font-size: var(--bm-cap); line-height: 1;
+  letter-spacing: -0.005em; color: var(--moon);
 }
 .bm-sub {
-  font-family: var(--f-label); font-weight: 500;
-  font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase;
+  font-family: var(--f-mark); font-weight: 500;
+  font-size: calc(var(--bm-cap) * 0.62); line-height: 1;
+  letter-spacing: 0.24em; text-transform: uppercase;
   color: var(--moon-faint);
 }
+.footer-id .brandmark { --bm-cap: 19px; }
+.palette-brand { font-family: var(--f-mark); font-weight: 600; }
 .links { display: flex; align-items: center; gap: clamp(14px, 2vw, 30px); }
 .links > a {
   font-family: var(--f-label); font-weight: 500;
@@ -220,7 +278,7 @@ body::before {
 /* ───────── hero: the specimen ───────── */
 .hero {
   padding: clamp(54px, 9vh, 108px) 0 clamp(48px, 7vw, 84px);
-  position: relative; z-index: 1;
+  position: relative; z-index: 2;
 }
 .hero-eyebrow {
   font-family: var(--f-label); font-weight: 500;
@@ -473,7 +531,7 @@ kbd {
 footer {
   border-top: 1px solid var(--line);
   padding: clamp(56px, 7vw, 92px) 0 40px;
-  position: relative; z-index: 1;
+  position: relative; z-index: 2;
 }
 .footer-grid {
   display: grid;
@@ -603,5 +661,5 @@ footer {
 @media print {
   * { animation: none !important; opacity: 1 !important; }
   body { background: #fff; color: #000; }
-  body::before, .nav, .palette, .skip { display: none !important; }
+  body::before, #sky, .nav, .palette, .skip { display: none !important; }
 }
