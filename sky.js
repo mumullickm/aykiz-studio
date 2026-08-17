@@ -27,6 +27,7 @@
 
   const ARRIVE = 1.9;             // seconds for the field to stream in
   const HOLE_R = 152;             // black-hole radius in CSS px
+  const FADE_FLOOR = 0.3;         // how much light is left at the foot of the page
 
   let W = 0, H = 0, DPR = 1;
   let pts = [];
@@ -34,9 +35,19 @@
   let holeR = 0;
   let elapsed = 0;
   let raf = 0, running = false, last = 0;
+  let fade = 1;                    // page-depth light level, 1 at the top
+
+  /* The sky covers the whole document, not just the hero, and thins as the page
+     goes down so the long reading sections stay calm. The canvas is fixed, so
+     the level comes from scroll progress rather than from any grain's position. */
+  function readDepth() {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const prog = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
+    fade = 1 - (1 - FADE_FLOOR) * prog;
+  }
 
   const rnd = (a, b) => a + Math.random() * (b - a);
-  const sky = (window.__sky = { grains: 0, arrive: 0, hole: 0, seam: 0 });
+  const sky = (window.__sky = { grains: 0, arrive: 0, hole: 0, seam: 0, fade: 1, p0: null });
 
   /* The band behind the hero Alif. Read from the element itself rather than
      duplicated as numbers here, so the dust and the stroke cannot drift apart.
@@ -101,8 +112,6 @@
         tw: rnd(0, Math.PI * 2),
         tws: rnd(0.4, 1.5),
         c: tone > 0.955 ? TEAL : (tone > 0.62 ? WARM : COLD),
-        dx: rnd(-0.55, 0.55),
-        dy: rnd(-0.4, 0.4),
         // seam grains arrive first, so the haze is lit before the pen moves
         lag: inSeam ? rnd(0, 0.2) : rnd(0.15, 0.6),
         seam: inSeam
@@ -137,9 +146,8 @@
       let tx = fromX + (homeX - fromX) * arrive;
       let ty = fromY + (homeY - fromY) * arrive;
 
-      // never static once home
-      tx += Math.sin(t * 0.00007 + p.tw) * 26 * arrive * p.dx;
-      ty += Math.cos(t * 0.00006 + p.tw) * 20 * arrive * p.dy;
+      // No orbiting drift. A star holds its place; only its light changes and
+      // only the pointer moves it. Any standing oscillation reads as wobble.
 
       p.vx += (tx - p.x) * 0.18;
       p.vy += (ty - p.y) * 0.18;
@@ -161,7 +169,7 @@
       p.x += p.vx; p.y += p.vy;
 
       p.tw += dt * p.tws;
-      let alpha = p.a * (0.74 + 0.26 * Math.sin(p.tw));
+      let alpha = p.a * (0.8 + 0.2 * Math.sin(p.tw)) * fade;
       if (p.seam) alpha *= 1.25;
 
       // anything still inside the hole fades toward nothing at the centre
@@ -193,6 +201,9 @@
 
     sky.arrive = Math.min(1, elapsed / (ARRIVE + 0.55));
     sky.hole = Math.round(holeR);
+    sky.fade = +fade.toFixed(3);
+    // one tracked grain, so "does it hold still" is a measurement not an opinion
+    if (pts.length) sky.p0 = { x: +pts[0].x.toFixed(2), y: +pts[0].y.toFixed(2) };
     raf = requestAnimationFrame(frame);
   }
 
@@ -235,10 +246,7 @@
     addEventListener('pointerleave', () => { mx = my = -9999; });
   }
 
-  const hero = document.getElementById('hero');
-  if (hero && 'IntersectionObserver' in window) {
-    new IntersectionObserver((es) => (es[0].isIntersecting ? start() : stop()),
-      { rootMargin: '10% 0px' }).observe(hero);
-  }
+  readDepth();
+  addEventListener('scroll', readDepth, { passive: true });
   addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
 })();
