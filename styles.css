@@ -134,7 +134,7 @@ body::before {
    thin scrim instead: enough to hold body-copy contrast, sheer enough that the
    field still reads through. The dust thins toward the footer in sky.js. */
 .band, footer {
-  background: color-mix(in srgb, var(--space) 74%, transparent);
+  background: color-mix(in srgb, var(--space) 58%, transparent);
 }
 
 .skip {
@@ -518,7 +518,7 @@ body::before {
   border: 1px solid var(--line-soft);
 }
 .principle {
-  background: color-mix(in srgb, var(--space-2) 76%, transparent);
+  background: color-mix(in srgb, var(--space-2) 62%, transparent);
   padding: clamp(24px, 2.8vw, 40px);
 }
 @media (max-width: 700px) { .principles { grid-template-columns: 1fr; } }

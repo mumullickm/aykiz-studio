@@ -27,7 +27,7 @@
 
   const ARRIVE = 1.9;             // seconds for the field to stream in
   const HOLE_R = 152;             // black-hole radius in CSS px
-  const FADE_FLOOR = 0.3;         // how much light is left at the foot of the page
+  const FADE_FLOOR = 0.58;        // how much light is left at the foot of the page
 
   let W = 0, H = 0, DPR = 1;
   let pts = [];
