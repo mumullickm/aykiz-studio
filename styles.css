@@ -319,6 +319,63 @@ body::before {
 .moon-disc .lit { fill: var(--moon); }
 .moon-disc .rim { fill: none; stroke: var(--moon-faint); stroke-width: 1; }
 
+/* ───────── the hero Alif: the mark condenses out of the dust ─────────
+   The stroke is penned top to bottom (a clip wipe), then the teal tittle
+   lands, which is the order a scribe actually makes an alif. It stays vector
+   throughout, so the entasis, the taper and the angled pen-lift shear survive.
+   sky.js reads this element's box and homes a share of the dust into a band
+   behind it, so the seam of grains is already glowing where the stroke lands. */
+.hero .wrap { position: relative; }
+.hero-alif {
+  position: absolute;
+  right: 4%;
+  top: 50%;
+  transform: translateY(-50%);
+  height: clamp(210px, 46vh, 460px);
+  width: auto;
+  aspect-ratio: 9.6 / 72;
+  z-index: -1;                    /* behind the headline, over the sky */
+  pointer-events: none;
+  overflow: visible;
+}
+.hero-alif .ha-stem {
+  fill: #F6F2EB;
+  /* the pen stroke, wiped on from the top */
+  clip-path: inset(0 0 100% 0);
+  animation: pen 1.15s cubic-bezier(0.33, 0.86, 0.24, 1) 1.35s forwards;
+}
+.hero-alif .ha-dot {
+  fill: var(--teal);
+  opacity: 0;
+  transform-origin: 49.7px 14.5px;
+  animation: tittle .5s var(--ease) 2.45s forwards;
+}
+@keyframes pen {
+  from { clip-path: inset(0 0 100% 0); }
+  to   { clip-path: inset(0 0 0% 0); }
+}
+@keyframes tittle {
+  0%   { opacity: 0; transform: scale(0.2); }
+  60%  { opacity: 1; transform: scale(1.18); }
+  100% { opacity: 1; transform: scale(1); }
+}
+/* On narrow screens the headline owns the full width, so the mark stops being
+   a background object and becomes the first thing in flow instead: small,
+   above the eyebrow, where the pen wipe still reads and nothing is covered. */
+@media (max-width: 900px) {
+  .hero-alif {
+    position: static;
+    transform: none;
+    height: clamp(74px, 13vw, 104px);
+    margin: 0 0 clamp(20px, 4vw, 30px) 2px;
+    z-index: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-alif .ha-stem { clip-path: none; animation: none; }
+  .hero-alif .ha-dot { opacity: 1; animation: none; }
+}
+
 /* ───────── manifesto ───────── */
 .manifesto p + p { margin-top: 22px; }
 .manifesto .lead + p { margin-top: 30px; }
