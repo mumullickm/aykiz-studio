@@ -47,30 +47,8 @@
   }
 
   const rnd = (a, b) => a + Math.random() * (b - a);
-  const sky = (window.__sky = { grains: 0, arrive: 0, hole: 0, seam: 0, fade: 1, p0: null });
+  const sky = (window.__sky = { grains: 0, arrive: 0, hole: 0, fade: 1, p0: null });
 
-  /* The band behind the hero Alif. Read from the element itself rather than
-     duplicated as numbers here, so the dust and the stroke cannot drift apart.
-     A share of the grains home into this band, which puts a glowing seam
-     exactly where the pen stroke wipes on. */
-  const SEAM_SHARE = 0.26;
-  let seam = null;
-  function measureSeam() {
-    const el = document.querySelector('.hero-alif');
-    if (!el) { seam = null; return; }
-    const r = el.getBoundingClientRect();
-    if (!r.width || !r.height) { seam = null; return; }
-    seam = {
-      cx: (r.left + r.width / 2) / W,
-      top: r.top / H,
-      bot: r.bottom / H,
-      // wider than the stroke so it reads as a haze it emerges from
-      halfW: Math.max(r.width * 3.2, 46) / W
-    };
-  }
-
-  // a rough normal, so the band is dense at the stroke and thins outward
-  const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
 
   function size() {
     DPR = Math.min(devicePixelRatio || 1, 2);
@@ -89,20 +67,12 @@
     const density = small ? 520 : 420;
     const n = Math.round(Math.min(small ? 900 : 3400, Math.max(small ? 520 : 1100, (W * H) / density)));
     pts = new Array(n);
-    let seamed = 0;
     for (let i = 0; i < n; i++) {
       const tone = Math.random();
-      const inSeam = seam && Math.random() < SEAM_SHARE;
-      if (inSeam) seamed++;
-      const fx = inSeam
-        ? seam.cx + gauss() * seam.halfW
-        : rnd(-0.06, 1.06);
-      const fy = inSeam
-        ? rnd(seam.top - 0.03, seam.bot + 0.03)
-        : rnd(-0.06, 1.06);
       pts[i] = {
         // home in the field, in normalised space so a resize stays cheap
-        fx, fy,
+        fx: rnd(-0.06, 1.06),
+        fy: rnd(-0.06, 1.06),
         // where it streams in from, off the edges
         sx: rnd(-0.5, 1.5),
         sy: rnd(-0.5, 1.5),
@@ -112,13 +82,10 @@
         tw: rnd(0, Math.PI * 2),
         tws: rnd(0.4, 1.5),
         c: tone > 0.955 ? TEAL : (tone > 0.62 ? WARM : COLD),
-        // seam grains arrive first, so the haze is lit before the pen moves
-        lag: inSeam ? rnd(0, 0.2) : rnd(0.15, 0.6),
-        seam: inSeam
+        lag: rnd(0, 0.55)           // staggers arrival so it is not one wall
       };
     }
     sky.grains = n;
-    sky.seam = seamed;
   }
 
   function frame(t) {
@@ -169,8 +136,8 @@
       p.x += p.vx; p.y += p.vy;
 
       p.tw += dt * p.tws;
-      let alpha = p.a * (0.8 + 0.2 * Math.sin(p.tw)) * fade;
-      if (p.seam) alpha *= 1.25;
+      const alpha0 = p.a * (0.8 + 0.2 * Math.sin(p.tw)) * fade;
+      let alpha = alpha0;
 
       // anything still inside the hole fades toward nothing at the centre
       if (holeR > 1) {
@@ -225,7 +192,6 @@
   function stop() { running = false; cancelAnimationFrame(raf); }
 
   size();
-  measureSeam();
   build();
   for (const p of pts) { p.x = p.sx * W; p.y = p.sy * H; }
   if (reduce) drawStatic(); else start();
@@ -234,7 +200,7 @@
   addEventListener('resize', () => {
     clearTimeout(rt);
     rt = setTimeout(() => {
-      size(); measureSeam(); build();
+      size(); build();
       for (const p of pts) { p.x = p.fx * W; p.y = p.fy * H; }
       elapsed = ARRIVE + 1;             // a resize lands in the settled field
       if (reduce) drawStatic();
