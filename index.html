@@ -35,11 +35,8 @@
 <meta name="twitter:image" content="https://aykizintelligence.com/assets/og-card.png" />
 <meta name="twitter:site" content="@aykizintel" />
 
-<link rel="preload" href="assets/mark-white.png" as="image" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+<link rel="preload" href="assets/fonts/Aykiz-Light.subset.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="assets/fonts/Aykiz-Medium.subset.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="styles.css" />
 <link rel="canonical" href="https://aykizintelligence.com/" />
 <script type="application/ld+json">
@@ -245,240 +242,232 @@
 
 <a class="skip" href="#work">Skip to the apps</a>
 
-<!-- deep space -->
-<div class="starfield"></div>
-<div class="moonglow"></div>
-
-<!-- Loader: the live stardust gathers into the mark as this fills -->
-<div id="loader">
-  <div class="loader-foot">
-    <div class="loader-bar"><span id="loaderFill"></span></div>
-    <div class="loader-pct"><span id="loaderPct">0</span> · gathering light</div>
-  </div>
-</div>
-
-<!-- Black-hole cursor -->
-<div class="cursor-ring"></div>
-
-<!-- WebGL stardust scene -->
-<canvas id="scene"></canvas>
-
 <header class="nav">
-  <a href="#top" class="brandmark" data-cursor>
+  <a href="#top" class="brandmark">
     <span class="bm-word">aykız</span>
     <span class="bm-sub">Intelligence</span>
   </a>
   <nav class="links" aria-label="Primary">
-    <a href="#work" data-cursor>Apps</a>
-    <a href="/work/" data-cursor>Work</a>
-    <a href="#approach" data-cursor>Approach</a>
-    <a href="/founder/" data-cursor>Founder</a>
-    <a href="#contact" data-cursor>Contact</a>
-    <button class="nav-ask" id="askBtn" type="button" data-cursor aria-haspopup="dialog" aria-controls="palette">
+    <a href="#work">Apps</a>
+    <a href="/work/">Work</a>
+    <a href="#approach">Approach</a>
+    <a href="/founder/">Founder</a>
+    <a href="#contact">Contact</a>
+    <button class="nav-ask" id="askBtn" type="button" aria-haspopup="dialog" aria-controls="palette">
       <span class="ask-word">ask</span>
     </button>
-    <a href="/cadence/" class="nav-cta" data-cursor><span class="dot"></span>Cadence</a>
+    <a href="/cadence/" class="nav-cta"><span class="dot"></span>Cadence</a>
   </nav>
 </header>
 
-<main class="content" id="top">
+<main id="top">
 
-  <!-- HERO -->
+  <!-- HERO: the specimen -->
   <section class="hero" id="hero">
-    <div class="eyebrow" id="heroEyebrow">Aykiz · moon girl · MMXXVI</div>
-    <h1 class="reveal">Quiet software,<br><em>made with care.</em></h1>
-    <p class="lede reveal">A studio of one, making small apps that do one thing well. Free, offline, no clutter. Each one answers when you ask and stays out of the way when you don't.</p>
-    <div class="hero-hud reveal" aria-hidden="true">
-      <svg id="moonDisc" class="hud-moon" viewBox="0 0 24 24" width="20" height="20"></svg>
-      <span class="hud-label" id="moonLabel">reading the sky</span>
-      <span class="hud-sep"></span>
-      <span class="hud-label" id="dhakaClock">Dhaka --:--</span>
+    <div class="wrap">
+      <div class="hero-eyebrow">Aykiz · moon girl · MMXXVI</div>
+      <h1>Quiet software,<em>made with care.</em></h1>
+      <p class="hero-lede">A studio of one, making small apps that do one thing well. Free, offline, no clutter. Each one answers when you ask and stays out of the way when you don't.</p>
+      <div class="instrument">
+        <span class="cell">
+          <svg class="moon-disc" id="moonDisc" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"></svg>
+          <span id="moonLabel">reading the sky</span>
+        </span>
+        <span class="cell" id="dhakaClock">Dhaka --:--</span>
+        <span class="cell">Six apps live</span>
+        <span class="cell">One person</span>
+      </div>
     </div>
   </section>
 
   <!-- MANIFESTO -->
-  <section class="manifesto" id="about">
+  <section class="band" id="about">
     <div class="wrap">
-      <div class="eyebrow-row reveal"><span class="num">01</span><span class="label">The idea</span><span class="rule"></span></div>
-      <p class="reveal">
-        I'm building a <em>small</em> assistant. <span class="mut">Not a platform, not a suite.</span> A quiet tool that answers when you ask, and stays out of the way when you don't.
-      </p>
-      <p class="sig reveal">
-        Aykiz means moon girl. A small word, almost a whisper. The studio sounds the same way: short sentences, soft verbs, no superlatives. It's named after my daughter, and I mean it that way: warm where it can be, exact where it must be.
-      </p>
-      <p class="sig reveal" style="margin-top: 18px;">One person. Flutter. Offline, free, built in Dhaka.</p>
+      <div class="mark"><span class="n">01</span>The idea</div>
+      <div class="manifesto body-max">
+        <p class="lead">A quiet tool that answers when you ask, and stays out of the way when you don't.</p>
+        <p class="dim">I'm building a small assistant. <span class="mute">Not a platform, not a suite.</span></p>
+        <p class="mute">Aykiz means moon girl. A small word, almost a whisper. The studio sounds the same way: short sentences, soft verbs, no superlatives. It's named after my daughter, and I mean it that way: warm where it can be, exact where it must be.</p>
+        <p class="mute">One person. Flutter. Offline, free, built in Dhaka.</p>
+      </div>
     </div>
   </section>
 
   <!-- WORK -->
-  <section id="work">
+  <section class="band" id="work">
     <div class="wrap">
-      <div class="eyebrow-row reveal"><span class="num">02</span><span class="label">Selected work</span><span class="rule"></span></div>
-      <div class="work-head reveal">
-        <h2>Six small<br>things, made with care.</h2>
-        <p>Each runs offline and stays out of your way. Open one and see.</p>
+      <div class="mark"><span class="n">02</span>Selected work</div>
+      <div>
+        <div class="work-head">
+          <h2>Six small things,<br>made with care.</h2>
+          <p>Each runs offline and stays out of your way. Open one and see.</p>
+        </div>
+
+        <div class="apps">
+
+          <a class="app-row" href="https://wasilah.site" target="_blank" rel="noopener" style="--glow:#2F8C84;">
+            <span class="ar-idx">001</span>
+            <img class="ar-icon" src="assets/apps/wasilah.png" alt="" width="56" height="56" loading="lazy" />
+            <div class="ar-main">
+              <h3 class="ar-name">Wasilah</h3>
+              <p class="ar-desc">A complete prayer companion: times, qibla, Quran, hadith, and Deen Intelligence for answered questions with references. Sadaqah jāriyah, never monetised.</p>
+            </div>
+            <div class="ar-side">
+              <span class="ar-badge">Live · iOS &amp; Android</span>
+              <span class="ar-tags">Prayer · Offline · Free</span>
+            </div>
+            <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
+          </a>
+
+          <a class="app-row" href="/drafy/" style="--glow:#C98B2D;">
+            <span class="ar-idx">002</span>
+            <img class="ar-icon" src="assets/apps/drafy.png" alt="" width="56" height="56" loading="lazy" />
+            <div class="ar-main">
+              <h3 class="ar-name">Drafy</h3>
+              <p class="ar-desc">A QR generator that asks for nothing. Eight types, logos, no paywall, no tracking. The free spoiler.</p>
+            </div>
+            <div class="ar-side">
+              <span class="ar-badge">Live · iOS &amp; Web</span>
+              <span class="ar-tags">Utility · Free</span>
+            </div>
+            <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
+          </a>
+
+          <a class="app-row" href="/crisp/" style="--glow:#3B6EA5;">
+            <span class="ar-idx">003</span>
+            <img class="ar-icon" src="assets/apps/crisp.png" alt="" width="56" height="56" loading="lazy" />
+            <div class="ar-main">
+              <h3 class="ar-name">Crisp</h3>
+              <p class="ar-desc">Turn photos into a clean PDF, free, on your device. No account, no upload, no watermark. The scanner app is on the way.</p>
+            </div>
+            <div class="ar-side">
+              <span class="ar-badge">Live · Web</span>
+              <span class="ar-tags">PDF · Private</span>
+            </div>
+            <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
+          </a>
+
+          <a class="app-row" href="/misbah/" style="--glow:#C9A24B;">
+            <span class="ar-idx">004</span>
+            <img class="ar-icon" src="assets/apps/misbah.png" alt="" width="56" height="56" loading="lazy" />
+            <div class="ar-main">
+              <h3 class="ar-name">Misbah</h3>
+              <p class="ar-desc">Light in the dark. A one-touch game where oil is sight. Small, calm, hand-made.</p>
+            </div>
+            <div class="ar-side">
+              <span class="ar-badge">Live · iOS &amp; Android</span>
+              <span class="ar-tags">Game · Calm</span>
+            </div>
+            <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
+          </a>
+
+          <a class="app-row" href="/hirra/" style="--glow:#2C4A52;">
+            <span class="ar-idx">005</span>
+            <img class="ar-icon" src="assets/apps/hirra.png" alt="" width="56" height="56" loading="lazy" />
+            <div class="ar-main">
+              <h3 class="ar-name">Hirra</h3>
+              <p class="ar-desc">A private health record for your cat that notices weight and thirst drift before you can. The care core is free; Plus adds AI vet triage.</p>
+            </div>
+            <div class="ar-side">
+              <span class="ar-badge">Live · iOS</span>
+              <span class="ar-tags">Cat health · Gulf</span>
+            </div>
+            <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
+          </a>
+
+          <a class="app-row" href="/verbatim/" style="--glow:#7C8DB5;">
+            <span class="ar-idx">006</span>
+            <img class="ar-icon" src="assets/apps/verbatim.png" alt="" width="56" height="56" loading="lazy" />
+            <div class="ar-main">
+              <h3 class="ar-name">Verbatim</h3>
+              <p class="ar-desc">Private transcription in your browser. Whisper runs on your device; audio never leaves it. No account, no upload, free.</p>
+            </div>
+            <div class="ar-side">
+              <span class="ar-badge">Live · Web</span>
+              <span class="ar-tags">Transcription · Private</span>
+            </div>
+            <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
+          </a>
+
+        </div>
+
+        <a class="work-more" href="/work/">Everything the studio ships
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+
+        <dl class="stats">
+          <div class="stat"><dt class="stat-l">apps shipped</dt><dd class="stat-n">6</dd></div>
+          <div class="stat"><dt class="stat-l">person, start to ship</dt><dd class="stat-n">1</dd></div>
+          <div class="stat"><dt class="stat-l">ads, ever</dt><dd class="stat-n">0</dd></div>
+          <div class="stat"><dt class="stat-l">works offline</dt><dd class="stat-n">∞</dd></div>
+        </dl>
       </div>
-
-      <div class="apps reveal">
-
-        <a class="app-row" data-cursor href="https://wasilah.site" target="_blank" rel="noopener" style="--glow:#2F8C84;">
-          <span class="ar-idx">001</span>
-          <img class="ar-icon" src="assets/apps/wasilah.png" alt="" width="88" height="88" loading="lazy" />
-          <div class="ar-main">
-            <h3 class="ar-name">Wasilah</h3>
-            <p class="ar-desc">A complete prayer companion: times, qibla, Quran, hadith, and Deen Intelligence for answered questions with references. Sadaqah jāriyah, never monetised.</p>
-          </div>
-          <div class="ar-side">
-            <span class="ar-badge">Live · iOS &amp; Android</span>
-            <span class="ar-tags">Prayer · Offline · Free</span>
-          </div>
-          <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
-        </a>
-
-        <a class="app-row" data-cursor href="/drafy/" style="--glow:#C98B2D;">
-          <span class="ar-idx">002</span>
-          <img class="ar-icon" src="assets/apps/drafy.png" alt="" width="88" height="88" loading="lazy" />
-          <div class="ar-main">
-            <h3 class="ar-name">Drafy</h3>
-            <p class="ar-desc">A QR generator that asks for nothing. Eight types, logos, no paywall, no tracking. The free spoiler.</p>
-          </div>
-          <div class="ar-side">
-            <span class="ar-badge">Live · iOS &amp; Web</span>
-            <span class="ar-tags">Utility · Free</span>
-          </div>
-          <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
-        </a>
-
-        <a class="app-row" data-cursor href="/crisp/" style="--glow:#3B6EA5;">
-          <span class="ar-idx">003</span>
-          <img class="ar-icon" src="assets/apps/crisp.png" alt="" width="88" height="88" loading="lazy" />
-          <div class="ar-main">
-            <h3 class="ar-name">Crisp</h3>
-            <p class="ar-desc">Turn photos into a clean PDF, free, on your device. No account, no upload, no watermark. The scanner app is on the way.</p>
-          </div>
-          <div class="ar-side">
-            <span class="ar-badge">Live · Web</span>
-            <span class="ar-tags">PDF · Private</span>
-          </div>
-          <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
-        </a>
-
-        <a class="app-row" data-cursor href="/misbah/" style="--glow:#C9A24B;">
-          <span class="ar-idx">004</span>
-          <img class="ar-icon" src="assets/apps/misbah.png" alt="" width="88" height="88" loading="lazy" />
-          <div class="ar-main">
-            <h3 class="ar-name">Misbah</h3>
-            <p class="ar-desc">Light in the dark. A one-touch game where oil is sight. Small, calm, hand-made.</p>
-          </div>
-          <div class="ar-side">
-            <span class="ar-badge">Live · iOS &amp; Android</span>
-            <span class="ar-tags">Game · Calm</span>
-          </div>
-          <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
-        </a>
-
-        <a class="app-row" data-cursor href="/hirra/" style="--glow:#2C4A52;">
-          <span class="ar-idx">005</span>
-          <img class="ar-icon" src="/hirra/assets/icon-1024.png" alt="" width="88" height="88" loading="lazy" />
-          <div class="ar-main">
-            <h3 class="ar-name">Hirra</h3>
-            <p class="ar-desc">A private health record for your cat that notices weight and thirst drift before you can. The care core is free; Plus adds AI vet triage.</p>
-          </div>
-          <div class="ar-side">
-            <span class="ar-badge">Live · iOS</span>
-            <span class="ar-tags">Cat health · Gulf</span>
-          </div>
-          <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
-        </a>
-
-        <a class="app-row" data-cursor href="/verbatim/" style="--glow:#7C8DB5;">
-          <span class="ar-idx">006</span>
-          <img class="ar-icon" src="/verbatim/icon-512.png" alt="" width="88" height="88" loading="lazy" />
-          <div class="ar-main">
-            <h3 class="ar-name">Verbatim</h3>
-            <p class="ar-desc">Private transcription in your browser. Whisper runs on your device; audio never leaves it. No account, no upload, free.</p>
-          </div>
-          <div class="ar-side">
-            <span class="ar-badge">Live · Web</span>
-            <span class="ar-tags">Transcription · Private</span>
-          </div>
-          <svg class="ar-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
-        </a>
-
-      </div>
-
-      <a class="work-more reveal" data-cursor href="/work/">Everything the studio ships
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-
-      <dl class="stats reveal">
-        <div class="stat"><dt class="stat-l">apps shipped</dt><dd class="stat-n" data-count="6">6</dd></div>
-        <div class="stat"><dt class="stat-l">person, start to ship</dt><dd class="stat-n" data-count="1">1</dd></div>
-        <div class="stat"><dt class="stat-l">ads, ever</dt><dd class="stat-n">0</dd></div>
-        <div class="stat"><dt class="stat-l">works offline</dt><dd class="stat-n">∞</dd></div>
-      </dl>
     </div>
   </section>
 
   <!-- APPROACH -->
-  <section id="approach">
+  <section class="band" id="approach">
     <div class="wrap">
-      <div class="eyebrow-row reveal"><span class="num">03</span><span class="label">How I work</span><span class="rule"></span></div>
+      <div class="mark"><span class="n">03</span>How I work</div>
+      <div>
+        <div class="work-head">
+          <h2>How the studio<br>actually works.</h2>
+          <p>This is the part that matters. The apps change. The way I make them doesn't. I work alone, ship free, and keep the surface small on purpose.</p>
+        </div>
 
-      <div class="work-head reveal">
-        <h2>How the studio<br>actually works.</h2>
-        <p>This is the part that matters. The apps change. The way I make them doesn't. I work alone, ship free, and keep the surface small on purpose.</p>
+        <div class="principles">
+          <div class="principle">
+            <span class="pn">A</span>
+            <h4>Offline first</h4>
+            <p>The phone is the computer. Things should work on a train, in a tunnel, on a dead signal. The network is a bonus, never a requirement. If an app stops working when the bars drop, it was never really yours.</p>
+          </div>
+          <div class="principle">
+            <span class="pn">B</span>
+            <h4>One button</h4>
+            <p>If a feature needs a settings page to explain it, it's the wrong feature. I start with the one thing the app is for, make that good, and stop. Most of the work is deciding what to leave out.</p>
+          </div>
+          <div class="principle">
+            <span class="pn">C</span>
+            <h4>Quiet by default</h4>
+            <p>No badges begging for taps, no streaks, no dark patterns. No ads, no tracking, nothing sold on the side. It answers when you ask, and stays quiet the rest of the time. Your attention is not the product.</p>
+          </div>
+          <div class="principle">
+            <span class="pn">D</span>
+            <h4>Finished, then free</h4>
+            <p>I'd rather ship one small thing that's done than five that are almost. When it's done it goes out free, with no paywall waiting later. A few of these are sadaqah, given for their own sake.</p>
+          </div>
+        </div>
+
+        <div class="process">
+          <div class="process-h">How a project goes</div>
+          <ol class="steps">
+            <li><span class="step-n">01</span><div><strong>One reason.</strong> It starts with a single thing a person needs and can't get without paying or being tracked. If I can't say it in a sentence, I don't start.</div></li>
+            <li><span class="step-n">02</span><div><strong>Smallest honest version.</strong> I build the one screen that does the job, on a real phone, offline, before anything else gets added.</div></li>
+            <li><span class="step-n">03</span><div><strong>Use it daily.</strong> I live with it for a while. The parts that annoy me get cut. The parts I reach for get quieter and faster.</div></li>
+            <li><span class="step-n">04</span><div><strong>Ship, then tend.</strong> It goes out free. After that it's care, not features: fix what breaks, leave the rest alone.</div></li>
+          </ol>
+        </div>
+
+        <p class="why">
+          I build this way because I have a daughter, and most of what I make is named after her. I wouldn't hand her an app that nags, leaks, or hides a feature behind a price. So I don't ship one.
+        </p>
       </div>
-
-      <div class="principles-grid reveal">
-        <div class="principle">
-          <span class="pn">A</span>
-          <h4>Offline first</h4>
-          <p>The phone is the computer. Things should work on a train, in a tunnel, on a dead signal. The network is a bonus, never a requirement. If an app stops working when the bars drop, it was never really yours.</p>
-        </div>
-        <div class="principle">
-          <span class="pn">B</span>
-          <h4>One button</h4>
-          <p>If a feature needs a settings page to explain it, it's the wrong feature. I start with the one thing the app is for, make that good, and stop. Most of the work is deciding what to leave out.</p>
-        </div>
-        <div class="principle">
-          <span class="pn">C</span>
-          <h4>Quiet by default</h4>
-          <p>No badges begging for taps, no streaks, no dark patterns. No ads, no tracking, nothing sold on the side. It answers when you ask, and stays quiet the rest of the time. Your attention is not the product.</p>
-        </div>
-        <div class="principle">
-          <span class="pn">D</span>
-          <h4>Finished, then free</h4>
-          <p>I'd rather ship one small thing that's done than five that are almost. When it's done it goes out free, with no paywall waiting later. A few of these are sadaqah, given for their own sake.</p>
-        </div>
-      </div>
-
-      <div class="process reveal">
-        <div class="process-head"><span class="pn">·</span><h4>How a project goes</h4></div>
-        <ol class="steps">
-          <li><span class="step-n">01</span><div><strong>One reason.</strong> It starts with a single thing a person needs and can't get without paying or being tracked. If I can't say it in a sentence, I don't start.</div></li>
-          <li><span class="step-n">02</span><div><strong>Smallest honest version.</strong> I build the one screen that does the job, on a real phone, offline, before anything else gets added.</div></li>
-          <li><span class="step-n">03</span><div><strong>Use it daily.</strong> I live with it for a while. The parts that annoy me get cut. The parts I reach for get quieter and faster.</div></li>
-          <li><span class="step-n">04</span><div><strong>Ship, then tend.</strong> It goes out free. After that it's care, not features: fix what breaks, leave the rest alone.</div></li>
-        </ol>
-      </div>
-
-      <p class="approach-why reveal">
-        I build this way because I have a daughter, and most of what I make is named after her. I wouldn't hand her an app that nags, leaks, or hides a feature behind a price. So I don't ship one. Small, offline, quiet, free. That's the whole studio.
-      </p>
     </div>
   </section>
 
   <!-- CLOSER -->
-  <section class="closer" id="contact">
+  <section class="band closer" id="contact">
     <div class="wrap">
-      <h2 class="reveal">Start with one.<br><em>Most are free.</em></h2>
-      <p class="lede reveal" style="margin: 24px auto 0;">Six small apps, mostly free and offline. Open the one that fits, and see if it stays out of your way.</p>
-      <a class="btn" data-cursor href="#work">See the apps
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
-      </a>
-      <p class="closer-contact reveal">Questions, or just want to say hello? <a href="mailto:hello@aykizintelligence.com">hello@aykizintelligence.com</a></p>
-      <p class="closer-kbd reveal">Or press <kbd>/</kbd> anywhere. Quiet software answers when you ask.</p>
+      <div class="mark"><span class="n">04</span>Start</div>
+      <div>
+        <h2>Start with one.<br><em>Most are free.</em></h2>
+        <p class="dim body-max" style="margin-top: 20px;">Six small apps, mostly free and offline. Open the one that fits, and see if it stays out of your way.</p>
+        <a class="btn" href="#work">See the apps
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 17 17 7M17 7H8M17 7v9"/></svg>
+        </a>
+        <p class="closer-contact">Questions, or just want to say hello? <a href="mailto:hello@aykizintelligence.com">hello@aykizintelligence.com</a></p>
+        <p class="closer-kbd">Or press <kbd>/</kbd> anywhere. Quiet software answers when you ask.</p>
+      </div>
     </div>
   </section>
 
@@ -486,14 +475,14 @@
     <div class="wrap">
       <div class="footer-grid">
         <div class="footer-id">
-          <a class="brandmark" href="#top" data-cursor>
+          <a class="brandmark" href="#top">
             <span class="bm-word">aykız</span>
             <span class="bm-sub">Intelligence</span>
           </a>
           <p class="footer-tag">A small studio for quiet software.</p>
-          <div class="footer-hud" aria-hidden="true">
-            <svg id="moonDiscFoot" class="hud-moon" viewBox="0 0 24 24" width="16" height="16"></svg>
-            <span class="hud-label" id="moonLabelFoot"></span>
+          <div class="footer-hud">
+            <svg class="moon-disc" id="moonDiscFoot" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"></svg>
+            <span id="moonLabelFoot"></span>
           </div>
         </div>
         <div class="footer-cols">
@@ -514,7 +503,7 @@
           </div>
           <div class="footer-col footer-colophon">
             <span class="footer-h">Colophon</span>
-            <p>The sky is rendered live; the moon above is tonight's, computed for Dhaka. The studio also draws its own typeface, <a href="https://github.com/mumullickm/aykiz-font" target="_blank" rel="noopener">Aykiz</a>.</p>
+            <p>Set in <a href="https://github.com/mumullickm/aykiz-font" target="_blank" rel="noopener">Aykiz</a>, the typeface the studio draws itself. The moon above is tonight's, computed for Dhaka. The design loads nothing from anyone else's server: no web font service, no animation library, 29KB of type.</p>
             <a href="mailto:hello@aykizintelligence.com">hello@aykizintelligence.com</a>
             <span class="footer-fine">Aykiz Intelligence · Dhaka · MMXXVI</span>
           </div>
@@ -539,18 +528,8 @@
   </div>
 </div>
 
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-  }
-}
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" integrity="sha384-li4UtcFCH6QeUqR4JyV58/VgTprMuz9aauj+oWtew7V4Y7ZVjnvz5px9Y3UCG0Ea" crossorigin="anonymous"></script>
-<script type="module" src="main.js"></script><!-- Cloudflare Web Analytics -->
+<script src="main.js" defer></script>
+<!-- Cloudflare Web Analytics -->
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "eebf402d4b0a4b1b8dcf055e594604f4"}'></script>
 <!-- End Cloudflare Web Analytics -->
 </body>
