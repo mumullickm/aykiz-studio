@@ -60,6 +60,7 @@
 
     drawMoon(document.getElementById('moonDisc'), p);
     drawMoon(document.getElementById('moonDiscFoot'), p);
+    drawMoon(document.getElementById('moonDiscWhy'), p);
 
     const l1 = document.getElementById('moonLabel');
     const l2 = document.getElementById('moonLabelFoot');
@@ -183,7 +184,25 @@
     });
   }
 
+  /* ───────── the ground under the nav ─────────
+     The nav is fixed and the paper scrolls beneath it. When the paper is under
+     the bar the nav takes ink; on the night it takes moonlight. One class. */
+  const nav = document.getElementById('nav');
+  const paper = document.getElementById('paper');
+  let groundTick = 0;
+  function ground() {
+    groundTick = 0;
+    if (!nav || !paper) return;
+    const probe = nav.offsetHeight * 0.55;
+    const r = paper.getBoundingClientRect();
+    nav.classList.toggle('on-paper', r.top <= probe && r.bottom > probe);
+  }
+  function onScroll() { if (!groundTick) groundTick = requestAnimationFrame(ground); }
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+
   /* ───────── go ───────── */
+  ground();
   paintSky();
   tick();
   setInterval(tick, 20000);
