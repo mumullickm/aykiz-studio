@@ -4,23 +4,27 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>aylight - A Quiet Web Browser for Mac, Windows and Linux</title>
-  <meta name="description" content="aylight is a small, quiet web browser by Aykiz Intelligence. Tabs, your sign-ins, nothing else in the way. Free for Mac, Windows and Linux." />
+  <meta name="description" content="aylight is a small, quiet web browser by Aykiz Intelligence. Glass chrome, a tab sidebar, bookmarks, and sign-ins that stay signed in. Free for Mac, Windows and Linux." />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://aykizintelligence.com/aylight/" />
-  <link rel="icon" href="/favicon.ico" />
-  <meta name="theme-color" content="#04060D" />
+  <link rel="icon" href="assets/icon.png" />
+  <meta name="theme-color" content="#0f1316" />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Aykiz Intelligence" />
   <meta property="og:title" content="aylight - A Quiet Web Browser" />
-  <meta property="og:description" content="Tabs, your sign-ins, nothing else in the way. Free for Mac, Windows and Linux." />
+  <meta property="og:description" content="Glass chrome, a tab sidebar, bookmarks, and sign-ins that stay signed in. Free for Mac, Windows and Linux." />
   <meta property="og:url" content="https://aykizintelligence.com/aylight/" />
   <meta property="og:image" content="https://aykizintelligence.com/aylight/assets/aylight.jpg" />
   <meta property="og:image:width" content="1600" />
   <meta property="og:image:height" content="1022" />
-  <meta property="og:image:alt" content="aylight browser window showing three tabs" />
+  <meta property="og:image:alt" content="aylight browser window with a glass sidebar of tabs and bookmarks" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@aykizintel" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;600;700&family=Figtree:wght@400;500&display=swap" rel="stylesheet" />
 
   <script type="application/ld+json">
   {
@@ -33,10 +37,11 @@
         "url": "https://aykizintelligence.com/aylight/",
         "applicationCategory": "BrowserApplication",
         "operatingSystem": "macOS, Windows, Linux",
-        "softwareVersion": "0.2.2",
+        "softwareVersion": "0.3.0",
         "downloadUrl": "https://github.com/mumullickm/aylight/releases/latest",
+        "image": "https://aykizintelligence.com/aylight/assets/icon.png",
         "screenshot": "https://aykizintelligence.com/aylight/assets/aylight.jpg",
-        "description": "A small, quiet web browser. Tabs, an address bar that remembers where you have been, and sign-ins that stay signed in.",
+        "description": "A small, quiet web browser. Glass chrome, a tab sidebar, bookmarks, an address bar that remembers where you have been, and sign-ins that stay signed in.",
         "isAccessibleForFree": true,
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
         "publisher": { "@id": "https://aykizintelligence.com/#organization" },
@@ -54,99 +59,140 @@
   </script>
 
   <style>
-    @font-face { font-family: 'Aykiz'; src: url('/assets/fonts/Aykiz-Light.subset.woff2') format('woff2'); font-weight: 300; font-display: swap; }
-    @font-face { font-family: 'Aykiz'; src: url('/assets/fonts/Aykiz-Medium.subset.woff2') format('woff2'); font-weight: 500; font-display: swap; }
     :root {
-      --space: #04060D; --space-2: #070A14; --space-3: #0B0F1A;
-      --moon: #EEF2FA; --moon-soft: #B9C2D2; --moon-mute: #7C8598; --moon-faint: #4E5666;
-      --teal: #6BC5BD;
-      --line: rgba(238,242,250,.10); --line-strong: rgba(238,242,250,.26);
-      --f-display: 'Aykiz', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      --f-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --bg: #0f1316;
+      --ink: #e9ecf1; --ink-2: rgba(233,236,241,.64); --ink-3: rgba(233,236,241,.42);
+      --glass: rgba(255,255,255,.06); --glass-2: rgba(255,255,255,.1); --edge: rgba(255,255,255,.13);
+      --green: #2fbf71; --gold: #e0a93a;
+      --f-brand: 'Red Hat Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --f-body: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --blur: blur(28px) saturate(170%);
     }
     * { box-sizing: border-box; margin: 0; }
-    html { background: var(--space); color: var(--moon); }
-    body { font: 16px/1.6 var(--f-body); -webkit-font-smoothing: antialiased; }
+    html { background: var(--bg); color: var(--ink); scroll-behavior: smooth; }
+    body { font: 16px/1.6 var(--f-body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     a { color: inherit; }
-    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .wrap { position: relative; max-width: 1120px; margin: 0 auto; padding: 0 24px; }
 
-    header { display: flex; align-items: center; justify-content: space-between; padding: 28px 0; }
+    .sky { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .sky i { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .55; will-change: transform; }
+    .sky .a { width: 720px; height: 720px; left: -200px; top: -240px; background: #10452f; animation: drift-a 26s ease-in-out infinite alternate; }
+    .sky .b { width: 640px; height: 640px; right: -220px; top: 120px; background: #15244a; animation: drift-b 32s ease-in-out infinite alternate; }
+    .sky .c { width: 520px; height: 520px; left: 30%; bottom: -260px; background: #1b5a44; animation: drift-c 38s ease-in-out infinite alternate; }
+    .sky .g { position: absolute; inset: 0; background: radial-gradient(1200px 600px at 50% -10%, rgba(255,255,255,.05), transparent 60%); }
+    @keyframes drift-a { to { transform: translate(140px, 90px) scale(1.12); } }
+    @keyframes drift-b { to { transform: translate(-120px, 160px) scale(.92); } }
+    @keyframes drift-c { to { transform: translate(-160px, -80px) scale(1.08); } }
+
+    .glass { background: var(--glass); -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+      border: 1px solid var(--edge); border-radius: 20px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 1px 2px rgba(0,0,0,.25), 0 24px 60px -30px rgba(0,0,0,.6); }
+
+    header { position: sticky; top: 14px; z-index: 5; margin-top: 14px; display: flex; align-items: center; justify-content: space-between;
+      height: 56px; padding: 0 10px 0 18px; border-radius: 16px; }
     .wm { text-decoration: none; display: flex; align-items: baseline; gap: 10px; }
-    .wm b { font: 300 21px/1 var(--f-display); letter-spacing: .01em; }
-    .wm span { font: 500 10px/1 var(--f-display); letter-spacing: .26em; color: var(--moon-mute); }
-    header nav a { font: 500 11px/1 var(--f-display); letter-spacing: .2em; text-transform: uppercase; color: var(--moon-soft); text-decoration: none; }
-    header nav a:hover { color: var(--moon); }
+    .wm b { font: 500 19px/1 var(--f-brand); letter-spacing: -.01em; }
+    .wm span { font: 600 10px/1 var(--f-brand); letter-spacing: .24em; color: var(--ink-3); }
+    header nav { display: flex; gap: 4px; }
+    header nav a { display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border-radius: 10px; text-decoration: none;
+      font: 600 13px/1 var(--f-brand); color: var(--ink-2); transition: background .15s, color .15s; }
+    header nav a:hover { background: var(--glass-2); color: var(--ink); }
 
-    .hero { padding: 72px 0 48px; max-width: 760px; }
-    .ey { font: 500 11px/1 var(--f-display); letter-spacing: .26em; text-transform: uppercase; color: var(--moon-mute); margin-bottom: 28px; }
-    h1 { font: 300 clamp(44px, 7vw, 88px)/1.02 var(--f-display); letter-spacing: -.02em; }
-    h1 em { font-style: normal; color: var(--teal); }
-    .lede { margin-top: 28px; font-size: 18px; color: var(--moon-soft); max-width: 560px; }
-
-    .get { margin-top: 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
-    .primary { display: inline-flex; align-items: center; gap: 12px; padding: 15px 26px; border-radius: 999px;
-      background: var(--moon); color: var(--space); text-decoration: none; font: 500 13px/1 var(--f-display); letter-spacing: .14em; text-transform: uppercase; }
-    .primary:hover { background: #fff; }
+    .hero { padding: 84px 0 40px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; }
+    .ey { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px 7px 8px; border-radius: 999px;
+      font: 600 12px/1 var(--f-brand); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+    .ey img { width: 22px; height: 22px; border-radius: 6px; }
+    h1 { margin-top: 24px; font: 700 clamp(44px, 7vw, 86px)/1.02 var(--f-brand); letter-spacing: -.03em; max-width: 820px; }
+    h1 em { font-style: normal; color: var(--green); }
+    .lede { margin-top: 26px; font-size: 18px; color: var(--ink-2); max-width: 580px; }
+    .get { margin-top: 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
+    .primary { display: inline-flex; align-items: center; gap: 12px; padding: 16px 26px; border-radius: 999px; text-decoration: none;
+      background: var(--ink); color: var(--bg); font: 700 14px/1 var(--f-brand); letter-spacing: .01em;
+      box-shadow: 0 10px 30px -12px rgba(255,255,255,.35); transition: transform .2s, box-shadow .2s; }
+    .primary:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -14px rgba(255,255,255,.45); }
     .primary svg { width: 16px; height: 16px; }
-    .meta { font-size: 13px; color: var(--moon-mute); }
+    .meta { font-size: 14px; color: var(--ink-3); }
 
-    figure.shot { margin: 40px 0 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--line);
-      box-shadow: 0 40px 120px -40px rgba(107,197,189,.18); }
-    figure.shot img { display: block; width: 100%; height: auto; }
+    figure.shot { margin: 0; padding: 10px; border-radius: 22px; }
+    figure.shot img { display: block; width: 100%; height: auto; border-radius: 14px; }
 
-    section.band { display: grid; grid-template-columns: 120px 1fr; gap: 24px; padding: 72px 0; border-top: 1px solid var(--line); }
-    .num { font: 500 11px/1.6 var(--f-display); letter-spacing: .2em; color: var(--moon-faint); }
-    h2 { font: 300 clamp(28px, 4vw, 40px)/1.15 var(--f-display); letter-spacing: -.01em; margin-bottom: 28px; }
+    .rise { opacity: 0; transform: translateY(18px); animation: rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
+    .d1 { animation-delay: .05s } .d2 { animation-delay: .15s } .d3 { animation-delay: .25s } .d4 { animation-delay: .35s } .d5 { animation-delay: .5s }
+    @keyframes rise { to { opacity: 1; transform: none; } }
 
-    .files { display: grid; gap: 0; border-top: 1px solid var(--line); }
-    .file { display: grid; grid-template-columns: 140px 1fr auto; gap: 16px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--line); text-decoration: none; }
-    .file .os { font: 500 12px/1 var(--f-display); letter-spacing: .16em; text-transform: uppercase; }
-    .file .what { color: var(--moon-soft); font-size: 15px; }
-    .file .dl { font: 500 11px/1 var(--f-display); letter-spacing: .18em; text-transform: uppercase; color: var(--moon-mute); }
-    .file:hover .dl { color: var(--teal); }
-    .file.mine .os::after { content: ' · yours'; color: var(--teal); }
+    section.band { display: grid; grid-template-columns: 120px 1fr; gap: 24px; padding: 72px 0; }
+    .num { font: 600 11px/1.6 var(--f-brand); letter-spacing: .2em; color: var(--ink-3); }
+    h2 { font: 700 clamp(28px, 4vw, 40px)/1.12 var(--f-brand); letter-spacing: -.02em; margin-bottom: 28px; }
 
-    .list { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px 40px; }
-    .list h3 { font: 500 14px/1.4 var(--f-display); letter-spacing: .02em; margin-bottom: 6px; }
-    .list p { color: var(--moon-soft); font-size: 15px; }
+    .files { display: grid; gap: 8px; }
+    .file { display: grid; grid-template-columns: 130px 1fr auto; gap: 16px; align-items: center; padding: 16px 18px; border-radius: 14px;
+      text-decoration: none; transition: background .15s, transform .2s; }
+    .file:hover { background: var(--glass-2); transform: translateX(4px); }
+    .file .os { font: 700 13px/1 var(--f-brand); letter-spacing: .02em; }
+    .file .what { color: var(--ink-2); font-size: 15px; }
+    .file .dl { font: 600 12px/1 var(--f-brand); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+    .file:hover .dl { color: var(--green); }
+    .file.mine .os::after { content: ' · yours'; color: var(--green); }
 
+    .list { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+    .list > div { padding: 22px; border-radius: 16px; transition: transform .2s; }
+    .list > div:hover { transform: translateY(-3px); }
+    .list h3 { font: 600 15px/1.4 var(--f-brand); margin-bottom: 6px; }
+    .list p { color: var(--ink-2); font-size: 15px; }
+
+    .note > div { padding: 28px; }
     .note p + p { margin-top: 14px; }
-    .note p { color: var(--moon-soft); max-width: 680px; }
-    .note b { color: var(--moon); font-weight: 500; }
-    code { font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--space-3); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; color: var(--moon); }
+    .note p { color: var(--ink-2); max-width: 680px; }
+    .note b { color: var(--ink); font-weight: 600; }
+    code { font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; background: rgba(0,0,0,.3); border: 1px solid var(--edge); border-radius: 6px; padding: 2px 6px; color: var(--ink); }
 
-    footer { display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; padding: 40px 0 56px; border-top: 1px solid var(--line); color: var(--moon-mute); font-size: 13px; }
+    @supports (animation-timeline: view()) {
+      .reveal { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+    }
+
+    footer { display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; margin: 24px 0 32px; padding: 22px 24px;
+      color: var(--ink-3); font-size: 13px; }
     footer a { text-decoration: none; }
-    footer a:hover { color: var(--moon); }
+    footer a:hover { color: var(--ink); }
 
+    @media (prefers-reduced-motion: reduce) {
+      .sky i { animation: none; }
+      .rise, .reveal { animation: none; opacity: 1; transform: none; }
+      .primary, .file, .list > div { transition: none; }
+    }
     @media (max-width: 720px) {
       section.band { grid-template-columns: 1fr; gap: 8px; padding: 56px 0; }
       .file { grid-template-columns: 1fr auto; }
       .file .what { grid-column: 1 / -1; grid-row: 2; font-size: 14px; }
-      .hero { padding-top: 40px; }
+      .hero { padding-top: 56px; }
+      header nav a { padding: 0 10px; }
     }
   </style>
 </head>
 <body>
+  <div class="sky" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i><span class="g"></span></div>
+
   <div class="wrap">
-    <header>
+    <header class="glass">
       <a class="wm" href="/"><b>aykız</b><span>INTELLIGENCE</span></a>
-      <nav><a href="https://github.com/mumullickm/aylight">Source</a></nav>
+      <nav><a href="#download">Download</a><a href="https://github.com/mumullickm/aylight">Source</a></nav>
     </header>
 
     <section class="hero">
-      <p class="ey">aylight · version 0.2.2</p>
-      <h1>A browser that <em>stays out of the way.</em></h1>
-      <p class="lede">aylight is the browser I built for my own days. Tabs, an address bar that remembers where you have been, and sign-ins that stay signed in. Nothing else on the screen.</p>
-      <div class="get">
-        <a class="primary" id="primary" href="https://github.com/mumullickm/aylight/releases/latest">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v9M4 7.5 8 11.5l4-4M3 14h10"/></svg>
-          <span id="primary-label">Download aylight</span>
-        </a>
-        <span class="meta" id="primary-meta">Free. Mac, Windows and Linux.</span>
+      <div>
+        <p class="ey glass rise d1"><img src="assets/icon.png" alt="" width="22" height="22" /> aylight · version 0.3.0</p>
+        <h1 class="rise d2">A browser made of <em>glass.</em></h1>
+        <p class="lede rise d3">aylight is the browser I built for my own days. Tabs in a sidebar, bookmarks a keystroke away, and chrome that lets your desktop show through. Nothing else on the screen.</p>
+        <div class="get rise d4">
+          <a class="primary" id="primary" href="https://github.com/mumullickm/aylight/releases/latest">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v9M4 7.5 8 11.5l4-4M3 14h10"/></svg>
+            <span id="primary-label">Download aylight</span>
+          </a>
+          <span class="meta" id="primary-meta">Free. Mac, Windows and Linux.</span>
+        </div>
       </div>
-      <figure class="shot">
-        <img src="assets/aylight.jpg" width="1600" height="1022" alt="aylight on a Mac with three tabs open: Aykiz Intelligence, Wasilah and Drafy" />
+      <figure class="shot glass rise d5">
+        <img src="assets/aylight.jpg" width="1600" height="1022" alt="aylight on a Mac: a glass sidebar with two tabs and two bookmarks beside a rounded page" />
       </figure>
     </section>
 
@@ -155,19 +201,19 @@
       <div>
         <h2>Every build, one click each.</h2>
         <div class="files">
-          <a class="file" data-os="mac-arm" href="https://github.com/mumullickm/aylight/releases/latest/download/aylight-mac-arm64.dmg">
+          <a class="file glass reveal" data-os="mac-arm" href="https://github.com/mumullickm/aylight/releases/latest/download/aylight-mac-arm64.dmg">
             <span class="os">Mac</span><span class="what">Apple silicon (M1 and later) · .dmg</span><span class="dl">Download</span>
           </a>
-          <a class="file" data-os="mac-intel" href="https://github.com/mumullickm/aylight/releases/latest/download/aylight-mac-x64.dmg">
+          <a class="file glass reveal" data-os="mac-intel" href="https://github.com/mumullickm/aylight/releases/latest/download/aylight-mac-x64.dmg">
             <span class="os">Mac</span><span class="what">Intel · .dmg</span><span class="dl">Download</span>
           </a>
-          <a class="file" data-os="win" href="https://github.com/mumullickm/aylight/releases/latest/download/aylight-win-x64.exe">
+          <a class="file glass reveal" data-os="win" href="https://github.com/mumullickm/aylight/releases/latest/download/aylight-win-x64.exe">
             <span class="os">Windows</span><span class="what">Windows 10 and 11 · installer .exe</span><span class="dl">Download</span>
           </a>
-          <a class="file" data-os="linux" href="https://github.com/mumullickm/aylight/releases/latest/download/aylight-linux-x86_64.AppImage">
+          <a class="file glass reveal" data-os="linux" href="https://github.com/mumullickm/aylight/releases/latest/download/aylight-linux-x86_64.AppImage">
             <span class="os">Linux</span><span class="what">AppImage, runs on most distributions</span><span class="dl">Download</span>
           </a>
-          <a class="file" data-os="linux-deb" href="https://github.com/mumullickm/aylight/releases/latest/download/aylight-linux-amd64.deb">
+          <a class="file glass reveal" data-os="linux-deb" href="https://github.com/mumullickm/aylight/releases/latest/download/aylight-linux-amd64.deb">
             <span class="os">Linux</span><span class="what">Debian and Ubuntu · .deb</span><span class="dl">Download</span>
           </a>
         </div>
@@ -179,29 +225,31 @@
       <div>
         <h2>The parts you use every day. Nothing more.</h2>
         <div class="list">
-          <div><h3>Tabs that come back</h3><p>Quit and reopen, your tabs are where you left them. Closed one by mistake? ⌘⇧T brings it back.</p></div>
-          <div><h3>An address bar that remembers</h3><p>Start typing and it finishes the site you meant from your own history. Anything else goes to Google.</p></div>
-          <div><h3>Stay signed in</h3><p>Your logins live in one private profile on your computer and survive every restart.</p></div>
-          <div><h3>Light and dark</h3><p>Follows your system setting. No theme menu to dig through.</p></div>
-          <div><h3>Downloads go to Downloads</h3><p>No save dialog every time. The file lands in your Downloads folder and aylight shows it to you.</p></div>
-          <div><h3>Built on Chromium</h3><p>Sites work the way they do in Chrome, because the engine underneath is the same.</p></div>
+          <div class="glass reveal"><h3>Tabs in a sidebar</h3><p>Every tab has room for its name. Hide the sidebar with ⌘⇧S when you want the page alone.</p></div>
+          <div class="glass reveal"><h3>Bookmarks, one key</h3><p>⌘D keeps the page you are on. It lives under your tabs, a click away.</p></div>
+          <div class="glass reveal"><h3>Glass that shows your desktop</h3><p>On Mac and Windows the chrome is real system glass, so your wallpaper comes through.</p></div>
+          <div class="glass reveal"><h3>Tabs that come back</h3><p>Quit and reopen, your tabs are where you left them. Closed one by mistake? ⌘⇧T brings it back.</p></div>
+          <div class="glass reveal"><h3>An address bar that remembers</h3><p>Start typing and it finishes the site you meant from your own history. Anything else goes to Google.</p></div>
+          <div class="glass reveal"><h3>Stay signed in</h3><p>Your logins live in one private profile on your computer and survive every restart.</p></div>
+          <div class="glass reveal"><h3>Find in page</h3><p>⌘F, then ⌘G to step through matches. Esc puts it away.</p></div>
+          <div class="glass reveal"><h3>Built on Chromium</h3><p>Sites work the way they do in Chrome, because the engine underneath is the same.</p></div>
         </div>
       </div>
     </section>
 
     <section class="band note">
       <span class="num">03 · FIRST OPEN</span>
-      <div>
+      <div class="glass reveal">
         <h2>One honest note before you install.</h2>
         <p>aylight is new and not yet signed with an Apple or Microsoft certificate, so your computer will ask before it opens it the first time. That is expected.</p>
         <p><b>Mac:</b> drag aylight to Applications, open it once, then go to System Settings, Privacy &amp; Security, and click <b>Open Anyway</b>. If macOS says the app is damaged, run <code>xattr -cr /Applications/aylight.app</code> in Terminal and open it again.</p>
         <p><b>Windows:</b> if SmartScreen appears, click <b>More info</b>, then <b>Run anyway</b>.</p>
-        <p><b>Linux:</b> make the AppImage executable with <code>chmod +x aylight-*.AppImage</code>, then run it.</p>
+        <p><b>Linux:</b> make the AppImage executable with <code>chmod +x aylight-*.AppImage</code>, then run it. Linux has no system glass, so aylight paints its own.</p>
         <p>The full source is on <a href="https://github.com/mumullickm/aylight">GitHub</a>, so you can read every line before you trust it.</p>
       </div>
     </section>
 
-    <footer>
+    <footer class="glass">
       <span>aylight by <a href="/">Aykiz Intelligence</a>. Built by <a href="/founder/">Miraz Mullick</a> in Dhaka.</span>
       <span><a href="https://github.com/mumullickm/aylight/releases">All releases</a> · <a href="mailto:hello@aykizintelligence.com">hello@aykizintelligence.com</a></span>
     </footer>
