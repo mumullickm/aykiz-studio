@@ -291,7 +291,7 @@
       <div class="glass reveal">
         <h2>One honest note before you install.</h2>
         <p>aylight is free and I have not paid Apple or Microsoft for a signing certificate, so your computer will ask before it opens it the first time. That is expected, and it happens once.</p>
-        <p><b>Mac:</b> drag aylight to Applications and open it once. macOS says it could not verify the app, that is the unsigned notice. Go to System Settings, Privacy &amp; Security, click <b>Open Anyway</b>, and it opens from then on. If you downloaded 0.7.0 and saw &ldquo;damaged&rdquo;, bin that copy and download again: 0.7.1 fixed it.</p>
+        <p><b>Mac:</b> drag aylight to Applications and open it once. macOS says it could not verify the app, that is the unsigned notice. Click <b>Done</b>, not Move to Bin. Then open System Settings, Privacy &amp; Security, scroll to Security, and click <b>Open Anyway</b> next to aylight. One more Open, and it opens normally from then on. Terminal route, same result: <code>xattr -d com.apple.quarantine /Applications/aylight.app</code>. If you downloaded 0.7.0 and saw &ldquo;damaged&rdquo;, bin that copy and download again: 0.7.1 fixed it.</p>
         <p><b>Windows:</b> if SmartScreen appears, click <b>More info</b>, then <b>Run anyway</b>.</p>
         <p><b>Linux:</b> make the AppImage executable with <code>chmod +x aylight-*.AppImage</code>, then run it. Linux has no system glass, so aylight paints its own.</p>
       </div>
