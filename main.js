@@ -89,6 +89,7 @@
     { name: 'Misbah',  kind: 'app',  href: '/misbah/' },
     { name: 'Hirra',   kind: 'app',  href: '/hirra/' },
     { name: 'Verbatim', kind: 'app', href: '/verbatim/' },
+    { name: 'aylight', kind: 'app', href: '/aylight/' },
     { name: 'Cadence', kind: 'page', href: '/cadence/' },
     { name: 'All work', kind: 'page', href: '/work/' },
     { name: 'Founder', kind: 'page', href: '/founder/' },
