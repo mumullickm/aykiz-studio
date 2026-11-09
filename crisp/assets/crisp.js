@@ -32,7 +32,7 @@
         if (isPdf) {
           const bytes = new Uint8Array(await f.arrayBuffer());
           const id = 's' + (++sid);
-          const doc = await pdfjsLib.getDocument({ data: bytes.slice() }).promise;
+          const doc = await pdfjsLib.getDocument({ data: bytes.slice(), isEvalSupported: false }).promise;
           srcs[id] = { bytes, doc, name: f.name };
           for (let i = 0; i < doc.numPages; i++) pages.push({ id: ++uid, source: 'pdf', srcId: id, pageIndex: i, rot: 0, sel: false });
         } else if (isImg) {
