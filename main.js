@@ -83,6 +83,8 @@
 
   /* ───────── command palette ───────── */
   const ITEMS = [
+    { name: 'ayroam', kind: 'app', href: 'https://ayroam.com' },
+    { name: 'sndbox', kind: 'app', href: 'https://sndbox.dev' },
     { name: 'Wasilah', kind: 'app',  href: 'https://wasilah.site' },
     { name: 'Drafy',   kind: 'app',  href: '/drafy/' },
     { name: 'Crisp',   kind: 'app',  href: '/crisp/' },
