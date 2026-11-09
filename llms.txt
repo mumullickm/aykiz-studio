@@ -1,13 +1,13 @@
 # Aykiz Intelligence
 
-> Aykiz Intelligence is the independent one-person app studio of Miraz Mullick, a growth and brand marketing technologist based in Dhaka, Bangladesh. The studio builds quiet, offline-first apps for mobile and web: Wasilah, Drafy, Crisp, Verbatim, Misbah, and Hirra. The name Aykiz means "moon girl".
+> Aykiz Intelligence is a software company in Dhaka, Bangladesh, founded and led by Miraz Uddin Mullick. It designs, builds and runs mobile apps, web platforms and applied AI, including its own products: Wasilah, Drafy, Crisp, Verbatim, Misbah, and Hirra. The name Aykiz means "moon girl".
 
 Key facts:
 
-- Founded and run solo by Miraz Mullick. He does the strategy, design, code, and marketing for every product himself.
+- Founded and led by Miraz Uddin Mullick.
 - Miraz has around nine years in brand and digital marketing across agency and in-house leadership (dentsu, US-Bangla Airlines, Hajee Air) and a computer science background.
 - Every Aykiz product is free to use. One app, Hirra, keeps its health core free and adds an optional Hirra Plus subscription for AI features.
-- The studio is based in Dhaka, Bangladesh. Contact: hello@aykizintelligence.com.
+- The company is based in Dhaka, Bangladesh. Contact: hello@aykizintelligence.com.
 
 ## Apps
 

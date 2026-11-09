@@ -90,14 +90,17 @@
     { name: 'Hirra',   kind: 'app',  href: '/hirra/' },
     { name: 'Verbatim', kind: 'app', href: '/verbatim/' },
     { name: 'aylight', kind: 'app', href: '/aylight/' },
-    { name: 'Cadence', kind: 'page', href: '/cadence/' },
-    { name: 'All work', kind: 'page', href: '/work/' },
+    { name: 'Services', kind: 'section', href: '/#services' },
+    { name: 'Products', kind: 'section', href: '/#work' },
+    { name: 'Approach', kind: 'section', href: '/#approach' },
+    { name: 'Company', kind: 'section', href: '/#about' },
+    { name: 'Contact', kind: 'section', href: '/#contact' },
+    { name: 'Work', kind: 'page', href: '/work/' },
     { name: 'Founder', kind: 'page', href: '/founder/' },
+    { name: 'Cadence', kind: 'page', href: '/cadence/' },
     { name: 'Cat care guide', kind: 'page', href: '/hirra/guide/' },
-    { name: 'The idea', kind: 'section', href: '#about' },
-    { name: 'Selected work', kind: 'section', href: '#work' },
-    { name: 'How I work', kind: 'section', href: '#approach' },
-    { name: 'Contact', kind: 'section', href: '#contact' },
+    { name: 'Privacy', kind: 'page', href: '/privacy/' },
+    { name: 'Terms', kind: 'page', href: '/terms/' },
     { name: 'Aykiz, the typeface', kind: 'link', href: 'https://github.com/mumullickm/aykiz-font' },
     { name: 'hello@aykizintelligence.com', kind: 'email', href: 'mailto:hello@aykizintelligence.com' }
   ];
@@ -137,7 +140,7 @@
     palette.hidden = false;
     input.value = '';
     render('');
-    input.focus();
+    if (matchMedia('(pointer: fine)').matches) input.focus();
   }
 
   function close() {
