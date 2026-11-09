@@ -93,7 +93,7 @@
     { name: 'Verbatim', kind: 'app', href: '/verbatim/' },
     { name: 'aylight', kind: 'app', href: '/aylight/' },
     { name: 'Services', kind: 'section', href: '/#services' },
-    { name: 'Products', kind: 'section', href: '/#work' },
+    { name: 'Products', kind: 'page', href: '/products/' },
     { name: 'Approach', kind: 'section', href: '/#approach' },
     { name: 'Company', kind: 'section', href: '/#about' },
     { name: 'Contact', kind: 'section', href: '/#contact' },
