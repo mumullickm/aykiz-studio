@@ -207,20 +207,32 @@
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', onScroll);
 
-  /* ───────── the product index: a name, then its line ───────── */
-  document.querySelectorAll('.px-index').forEach((list) => {
-    const cap = list.nextElementSibling;
-    if (!cap || !cap.classList.contains('px-caption')) return;
-    const rest = cap.textContent;
-    const show = (a) => { cap.textContent = a.dataset.line; };
-    const reset = () => { cap.textContent = rest; };
-    list.querySelectorAll('a[data-line]').forEach((a) => {
-      a.addEventListener('mouseenter', () => show(a));
-      a.addEventListener('focus', () => show(a));
-      a.addEventListener('mouseleave', reset);
-      a.addEventListener('blur', reset);
-    });
-  });
+  /* ───────── the product lineup: swipe, scroll or step ───────── */
+  const rail = document.getElementById('luRail');
+  const arrows = document.querySelector('.lu-arrows');
+  if (rail && arrows) {
+    const [prev, nextBtn] = arrows.querySelectorAll('.lu-arrow');
+    const sync = () => {
+      const max = rail.scrollWidth - rail.clientWidth - 2;
+      prev.disabled = rail.scrollLeft <= 2;
+      nextBtn.disabled = rail.scrollLeft >= max;
+      rail.classList.toggle('at-end', rail.scrollLeft >= max);
+    };
+    const step = (dir) => {
+      const cards = [...rail.querySelectorAll('.lu-card')];
+      const by = cards[0].offsetWidth + 16;
+      const per = Math.max(1, Math.floor(rail.clientWidth / by));
+      const at = Math.round(rail.scrollLeft / by);
+      const to = Math.min(cards.length - 1, Math.max(0, at + dir * per));
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      rail.scrollTo({ left: cards[to].offsetLeft - cards[0].offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
+    };
+    arrows.querySelectorAll('.lu-arrow').forEach((b) => b.addEventListener('click', () => step(Number(b.dataset.dir))));
+    rail.addEventListener('scroll', sync, { passive: true });
+    addEventListener('resize', sync);
+    arrows.hidden = false;
+    sync();
+  }
 
   /* ───────── go ───────── */
   ground();
