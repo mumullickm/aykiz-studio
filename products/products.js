@@ -10,6 +10,7 @@
   if (!panels.length || panels.length !== tabs.length) return;
 
   const NS = 'http://www.w3.org/2000/svg';
+  const useHash = list.dataset.hash !== 'off';
   let current = -1;
 
   const next = document.createElement('button');
@@ -37,7 +38,7 @@
       behavior: opts.instant ? 'auto' : 'smooth'
     });
     if (opts.focus) tabs[i].focus({ preventScroll: true });
-    if (opts.hash !== false) history.replaceState(null, '', `#${panel.id}`);
+    if (useHash && opts.hash !== false) history.replaceState(null, '', `#${panel.id}`);
   }
 
   function indexFromHash() {
@@ -73,7 +74,7 @@
     next.addEventListener('click', () => setActive((current + 1) % tabs.length));
     list.prepend(nav);
     list.append(next);
-    addEventListener('hashchange', () => {
+    if (useHash) addEventListener('hashchange', () => {
       const i = indexFromHash();
       if (i >= 0) setActive(i, { hash: false });
     });
@@ -93,20 +94,32 @@
       return button;
     });
     const order = [...buttons.keys()];
+    const dots = document.createElement('div');
+    dots.className = 'pp-dots';
+    const dotButtons = images.map((img) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'pp-dot';
+      dot.setAttribute('aria-label', `Show ${img.alt}`);
+      dots.append(dot);
+      return dot;
+    });
     const paint = () => {
       order.forEach((b, slot) => {
         buttons[b].dataset.slot = String(slot);
         buttons[b].setAttribute('aria-pressed', String(slot === 1));
       });
+      dotButtons.forEach((dot, b) => dot.setAttribute('aria-current', String(order[1] === b)));
     };
-    buttons.forEach((button, b) => {
-      button.addEventListener('click', () => {
-        const slot = order.indexOf(b);
-        if (slot === 1) return;
-        [order[1], order[slot]] = [order[slot], order[1]];
-        paint();
-      });
-    });
+    const bringFront = (b) => {
+      const slot = order.indexOf(b);
+      if (slot === 1) return;
+      [order[1], order[slot]] = [order[slot], order[1]];
+      paint();
+    };
+    buttons.forEach((button, b) => button.addEventListener('click', () => bringFront(b)));
+    dotButtons.forEach((dot, b) => dot.addEventListener('click', () => bringFront(b)));
+    group.after(dots);
     paint();
     group.classList.add('pp-fan');
   }
@@ -186,5 +199,5 @@
 
   list.classList.add('pp-live');
   const start = indexFromHash();
-  setActive(start >= 0 ? start : 0, { instant: true, hash: false });
+  setActive(useHash && start >= 0 ? start : 0, { instant: true, hash: false });
 })();

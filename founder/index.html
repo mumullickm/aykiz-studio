@@ -38,6 +38,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@600;700&display=swap" />
+<link rel="preload" href="/assets/fonts/Aykiz-Light.subset.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/styles.css" />
 <link rel="canonical" href="https://aykizintelligence.com/founder/" />
 
 <script type="application/ld+json">
@@ -90,92 +92,92 @@
 
 <style>
   :root{
-    --bg:#02030A; --panel:#0a0d1a; --ink:#EAEFFB; --dim:#8FA0C0;
-    --line:rgba(234,239,251,.12); --moon:#C9D6F0; --gold:#C9A24B;
+    --fp-bg:#02030A; --fp-panel:#0a0d1a; --fp-ink:#EAEFFB; --fp-dim:#8FA0C0;
+    --fp-line:rgba(234,239,251,.12); --fp-moon:#C9D6F0; --fp-gold:#C9A24B;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
   body{
     background:radial-gradient(120% 90% at 50% -10%,#0a1024 0%,#04060f 45%,#02030A 100%);
-    background-attachment:fixed; color:var(--ink);
+    background-color:#02030A; background-attachment:fixed; color:var(--fp-ink);
     font-family:"Geist",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
     line-height:1.7; -webkit-font-smoothing:antialiased; letter-spacing:.1px;
   }
-  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+  .fp{max-width:760px;margin:0 auto;padding:0 24px}
   a{color:inherit}
-  .nav{display:flex;justify-content:space-between;align-items:center;padding:26px 0;font-family:"Space Grotesk",sans-serif}
-  .brandmark{display:inline-flex;flex-direction:column;align-items:flex-end;line-height:1;text-decoration:none}
-  .brandmark .bm-word{font-family:'Geist',sans-serif;font-weight:600;letter-spacing:-.03em;color:var(--ink);font-size:20px}
-  .brandmark .bm-sub{font-family:'Geist',sans-serif;font-weight:500;text-transform:uppercase;color:var(--dim);letter-spacing:.14em;padding-left:.14em;font-size:7.5px;margin-top:4px}
-  .nav .back{color:var(--dim);text-decoration:none;font-size:13px;letter-spacing:.04em}
-  .nav .back:hover{color:var(--ink)}
 
-  header.hero{padding:56px 0 40px;border-bottom:1px solid var(--line)}
-  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);opacity:.9}
-  h1{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(34px,7vw,52px);line-height:1.05;margin:18px 0 6px;letter-spacing:-.5px}
-  .role{font-family:"Space Grotesk",sans-serif;font-size:clamp(17px,3.4vw,21px);color:var(--moon);font-weight:500}
-  .lede{margin-top:22px;font-size:17px;color:var(--ink)}
-  .lede .mut{color:var(--dim)}
+  .fp-hero{padding:calc(var(--nav-h) + 56px) 0 40px;border-bottom:1px solid var(--fp-line)}
+  .fp .eyebrow{font-family:var(--f-label);font-weight:500;font-size:15px;letter-spacing:0;color:var(--fp-dim)}
+  .fp h1{font-family:var(--f-display);font-weight:300;font-size:clamp(36px,7vw,60px);line-height:1.04;margin:16px 0 12px;letter-spacing:-.03em}
+  .role{font-family:"Space Grotesk",sans-serif;font-size:clamp(17px,3.4vw,21px);color:var(--fp-moon);font-weight:500}
+  .lede{margin-top:22px;font-size:17px;color:var(--fp-ink)}
+  .lede .mut{color:var(--fp-dim)}
 
-  section{padding:46px 0;border-bottom:1px solid var(--line)}
-  h2{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:24px}
-  h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:18px;margin-bottom:4px}
+  .fp section{padding:46px 0;border-bottom:1px solid var(--fp-line)}
+  .fp h2{font-family:var(--f-label);font-weight:500;font-size:15px;letter-spacing:0;color:var(--fp-dim);margin-bottom:24px}
+  .fp h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:18px;margin-bottom:4px}
 
   .cap{margin-bottom:26px}
-  .cap p{color:var(--dim);font-size:15.5px}
+  .cap p{color:var(--fp-dim);font-size:15.5px}
   .cap:last-child{margin-bottom:0}
 
-  .role-item{display:grid;grid-template-columns:1fr auto;gap:6px 18px;padding:18px 0;border-top:1px solid var(--line)}
+  .role-item{display:grid;grid-template-columns:1fr auto;gap:6px 18px;padding:18px 0;border-top:1px solid var(--fp-line)}
   .role-item:first-of-type{border-top:0}
-  .role-item .org{color:var(--moon);font-size:14.5px}
-  .role-item .when{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--dim);white-space:nowrap;text-align:right}
-  .role-item .note{grid-column:1 / -1;color:var(--dim);font-size:14.5px;margin-top:2px}
+  .role-item .org{color:var(--fp-moon);font-size:14.5px}
+  .role-item .when{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--fp-dim);white-space:nowrap;text-align:right}
+  .role-item .note{grid-column:1 / -1;color:var(--fp-dim);font-size:14.5px;margin-top:2px}
 
   .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-  .work{display:block;padding:18px;border:1px solid var(--line);border-radius:14px;text-decoration:none;background:rgba(255,255,255,.015);transition:border-color .2s,transform .2s}
+  .work{display:block;padding:18px;border:1px solid var(--fp-line);border-radius:14px;text-decoration:none;background:rgba(255,255,255,.015);transition:border-color .2s,transform .2s}
   .work:hover{border-color:rgba(201,214,240,.35);transform:translateY(-2px)}
   .work .t{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:16px}
-  .work .s{color:var(--dim);font-size:13.5px;margin-top:4px}
-  .work .badge{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.06em;color:var(--gold);margin-top:10px}
+  .work .s{color:var(--fp-dim);font-size:13.5px;margin-top:4px}
+  .work .badge{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.06em;color:var(--fp-gold);margin-top:10px}
 
-  .edu p{color:var(--dim);font-size:15px;margin-bottom:10px}
-  .edu strong{color:var(--ink);font-weight:600}
-  .certs{font-size:14.5px;color:var(--dim);margin-top:8px}
-  .certs b{color:var(--moon);font-weight:500}
+  .edu p{color:var(--fp-dim);font-size:15px;margin-bottom:10px}
+  .edu strong{color:var(--fp-ink);font-weight:600}
+  .certs{font-size:14.5px;color:var(--fp-dim);margin-top:8px}
+  .certs b{color:var(--fp-moon);font-weight:500}
 
-  .contact a{color:var(--moon);text-decoration:none;border-bottom:1px solid rgba(201,214,240,.3)}
-  .contact a:hover{border-color:var(--moon)}
-  footer{padding:34px 0 60px;color:var(--dim);font-size:13px;font-family:"JetBrains Mono",monospace}
+  .contact a{color:var(--fp-moon);text-decoration:none;border-bottom:1px solid rgba(201,214,240,.3)}
+  .contact a:hover{border-color:var(--fp-moon)}
+  .fp-foot{padding:34px 0 60px;color:var(--fp-dim);font-size:13px;font-family:"JetBrains Mono",monospace}
   /* brands marquee */
-  .brands-sub{color:var(--dim);font-size:14px;margin:-12px 0 28px}
-  .b-marquee{display:flex;flex-direction:column;gap:18px;overflow:hidden;
-    -webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);
+  .brands-sub{color:var(--fp-dim);font-size:14px;margin:-12px 0 28px}
+  .b-marquee{display:flex;flex-direction:column;gap:18px;overflow:hidden}
+  .b-marquee.is-moving{-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);
             mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
-  .b-row{display:flex;gap:clamp(22px,3.2vw,40px);width:max-content;animation:bscroll 45s linear infinite;will-change:transform}
-  .b-row.rev{animation-direction:reverse}
+  .b-row{display:flex;flex-wrap:wrap;justify-content:center;gap:18px clamp(22px,3.2vw,40px)}
+  .b-marquee.is-moving .b-row{flex-wrap:nowrap;justify-content:flex-start;width:max-content;animation:bscroll 45s linear infinite;will-change:transform}
+  .b-marquee.is-moving .b-row.rev{animation-direction:reverse}
   @keyframes bscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   .b-logo{flex:0 0 auto;width:clamp(76px,16vw,110px);height:clamp(32px,7vw,44px);background-color:#C9D6F0;opacity:.85;
     -webkit-mask-position:center;mask-position:center;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
-  @media (prefers-reduced-motion:reduce){.b-row{animation:none}}
   @media (max-width:560px){.work-grid{grid-template-columns:1fr}}
   .profiles{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
-  .profiles a{display:inline-flex;width:20px;height:20px;color:var(--dim);transition:color .15s ease,transform .15s ease}
-  .profiles a:hover{color:var(--gold);transform:translateY(-2px)}
+  .profiles a{display:inline-flex;width:20px;height:20px;color:var(--fp-dim);transition:color .15s ease,transform .15s ease}
+  .profiles a:hover{color:var(--fp-gold);transform:translateY(-2px)}
   .profiles svg{width:100%;height:100%;display:block}
+  .profiles a.wide{width:60px;height:12px;align-self:center}
 </style>
 </head>
 <body>
-<div class="wrap">
-
-  <nav class="nav">
-    <a class="brandmark" href="/">
-      <span class="bm-word">aykız</span>
-      <span class="bm-sub">Intelligence</span>
-    </a>
-    <a class="back" href="/">← back to the studio</a>
+<a class="skip" href="#content">Skip to content</a>
+<header class="nav" id="nav">
+  <a href="/" class="brandmark" aria-label="Aykiz Intelligence home">
+    <span class="bm-word">aykız</span>
+    <span class="bm-sub">Intelligence</span>
+  </a>
+  <nav class="links" aria-label="Primary">
+    <a href="/#services">Services</a>
+    <a href="/products/">Products</a>
+    <a href="/#approach">Approach</a>
+    <a href="/#about">Company</a>
+    <a href="/#contact" class="nav-cta">Start a project</a>
+    <button class="nav-ask" id="askBtn" type="button" aria-haspopup="dialog" aria-controls="palette">Menu</button>
   </nav>
+</header>
+<main class="fp" id="content">
 
-  <header class="hero">
+  <header class="fp-hero">
     <div class="eyebrow">Miraz Mullick · Dhaka</div>
     <h1>A brand leader who<br>ships the product too.</h1>
     <div class="role">Brand &amp; Growth Marketing Lead</div>
@@ -185,7 +187,7 @@
       <a href="https://x.com/aykizintel" rel="me noopener" target="_blank" aria-label="X (formerly Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
       <a href="https://github.com/mumullickm" rel="me noopener" target="_blank" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
       <a href="https://www.behance.net/mumullickm" rel="me noopener" target="_blank" aria-label="Behance"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.969 16.927a2.561 2.561 0 0 0 1.901.677 2.501 2.501 0 0 0 1.531-.475c.362-.235.636-.584.779-.99h2.585a5.091 5.091 0 0 1-1.9 2.896 5.292 5.292 0 0 1-3.091.88 5.839 5.839 0 0 1-2.284-.433 4.871 4.871 0 0 1-1.723-1.211 5.657 5.657 0 0 1-1.08-1.874 7.057 7.057 0 0 1-.383-2.393c-.005-.8.129-1.595.396-2.349a5.313 5.313 0 0 1 5.088-3.604 4.87 4.87 0 0 1 2.376.563c.661.362 1.231.87 1.668 1.485a6.2 6.2 0 0 1 .943 2.133c.194.821.263 1.666.205 2.508h-7.699c-.063.79.184 1.574.688 2.187ZM6.947 4.084a8.065 8.065 0 0 1 1.928.198 4.29 4.29 0 0 1 1.49.638c.418.303.748.711.958 1.182.241.579.357 1.203.341 1.83a3.506 3.506 0 0 1-.506 1.961 3.726 3.726 0 0 1-1.503 1.287 3.588 3.588 0 0 1 2.027 1.437c.464.747.697 1.615.67 2.494a4.593 4.593 0 0 1-.423 2.032 3.945 3.945 0 0 1-1.163 1.413 5.114 5.114 0 0 1-1.683.807 7.135 7.135 0 0 1-1.928.259H0V4.084h6.947Zm-.235 12.9c.308.004.616-.029.916-.099a2.18 2.18 0 0 0 .766-.332c.228-.158.411-.371.534-.619.142-.317.208-.663.191-1.009a2.08 2.08 0 0 0-.642-1.715 2.618 2.618 0 0 0-1.696-.505h-3.54v4.279h3.471Zm13.635-5.967a2.13 2.13 0 0 0-1.654-.619 2.336 2.336 0 0 0-1.163.259 2.474 2.474 0 0 0-.738.62 2.359 2.359 0 0 0-.396.792c-.074.239-.12.485-.137.734h4.769a3.239 3.239 0 0 0-.679-1.785l-.002-.001Zm-13.813-.648a2.254 2.254 0 0 0 1.423-.433c.399-.355.607-.88.56-1.413a1.916 1.916 0 0 0-.178-.891 1.298 1.298 0 0 0-.495-.533 1.851 1.851 0 0 0-.711-.274 3.966 3.966 0 0 0-.835-.073H3.241v3.631h3.293v-.014ZM21.62 5.122h-5.976v1.527h5.976V5.122Z"/></svg></a>
-      <a href="https://about.me/mumullickm" rel="me noopener" target="_blank" aria-label="about.me"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.158 9.897v4.131h.65v-.408c.23.297.577.483.961.483.768 0 1.332-.582 1.332-1.573 0-.967-.558-1.568-1.332-1.568-.372 0-.719.168-.96.49V9.897Zm10.285.322v.818h-.495v.563h.495v1.729c0 .501.26.774.769.774.297 0 .49-.087.607-.192l-.155-.496a.4.4 0 0 1-.285.112c-.186 0-.285-.155-.285-.36V11.6h.607v-.563h-.607v-.818zm-5.488.743c-.954 0-1.536.706-1.536 1.567 0 .855.582 1.574 1.536 1.574s1.537-.719 1.537-1.574c0-.86-.583-1.567-1.537-1.567m14.577 0c-.886 0-1.518.7-1.518 1.567 0 .948.663 1.574 1.567 1.574.47 0 .91-.155 1.214-.44l-.297-.427c-.217.216-.557.334-.855.334-.564 0-.898-.378-.948-.824H24v-.16c0-.942-.57-1.624-1.468-1.624m-4.576 0c-.459 0-.849.298-.979.477v-.402h-.65v2.991h.65v-2.093c.137-.192.403-.397.694-.397.354 0 .49.217.49.54v1.95h.65v-2.093c.13-.199.403-.397.694-.397.353 0 .495.217.495.54v1.95h.65v-2.161c0-.607-.315-.905-.86-.905-.453 0-.85.28-1.016.545-.1-.322-.372-.545-.818-.545m-16.55 0c-.477 0-.91.15-1.257.484l.272.452a1.2 1.2 0 0 1 .886-.384c.41 0 .7.21.7.557v.446c-.223-.254-.563-.384-.972-.384-.49 0-1.035.285-1.035.979 0 .656.551.99 1.035.99.396 0 .75-.142.972-.402v.328h.65V12.04c0-.799-.582-1.078-1.25-1.078m8.449.075v2.118c0 .607.322.948.966.948.47 0 .842-.235 1.053-.471v.396h.65v-2.991h-.65v2.1a.99.99 0 0 1-.762.39c-.372 0-.607-.149-.607-.613v-1.877zm12.67.458c.589 0 .83.434.85.787H21.69c.025-.36.285-.787.837-.787m-17.942.043c.514 0 .843.415.843.992 0 .582-.329.997-.843.997a.98.98 0 0 1-.774-.397v-1.189a.98.98 0 0 1 .774-.403m3.372 0c.558 0 .861.465.861.991 0 .533-.303.998-.86.998-.552 0-.862-.465-.862-.997 0-.527.31-.992.861-.992m-6.66 1.041c.279 0 .557.105.712.31v.458c-.155.204-.433.31-.712.31-.366 0-.644-.21-.644-.539 0-.322.278-.539.644-.539m14.269.65a.44.44 0 0 0-.434.428c0 .235.198.44.434.44a.445.445 0 0 0 .434-.44.44.44 0 0 0-.434-.428"/></svg></a>
+      <a href="https://about.me/mumullickm" rel="me noopener" target="_blank" aria-label="about.me" class="wide"><svg viewBox="0 9.6 24 4.8" width="60" height="12" fill="currentColor" aria-hidden="true"><path d="M3.158 9.897v4.131h.65v-.408c.23.297.577.483.961.483.768 0 1.332-.582 1.332-1.573 0-.967-.558-1.568-1.332-1.568-.372 0-.719.168-.96.49V9.897Zm10.285.322v.818h-.495v.563h.495v1.729c0 .501.26.774.769.774.297 0 .49-.087.607-.192l-.155-.496a.4.4 0 0 1-.285.112c-.186 0-.285-.155-.285-.36V11.6h.607v-.563h-.607v-.818zm-5.488.743c-.954 0-1.536.706-1.536 1.567 0 .855.582 1.574 1.536 1.574s1.537-.719 1.537-1.574c0-.86-.583-1.567-1.537-1.567m14.577 0c-.886 0-1.518.7-1.518 1.567 0 .948.663 1.574 1.567 1.574.47 0 .91-.155 1.214-.44l-.297-.427c-.217.216-.557.334-.855.334-.564 0-.898-.378-.948-.824H24v-.16c0-.942-.57-1.624-1.468-1.624m-4.576 0c-.459 0-.849.298-.979.477v-.402h-.65v2.991h.65v-2.093c.137-.192.403-.397.694-.397.354 0 .49.217.49.54v1.95h.65v-2.093c.13-.199.403-.397.694-.397.353 0 .495.217.495.54v1.95h.65v-2.161c0-.607-.315-.905-.86-.905-.453 0-.85.28-1.016.545-.1-.322-.372-.545-.818-.545m-16.55 0c-.477 0-.91.15-1.257.484l.272.452a1.2 1.2 0 0 1 .886-.384c.41 0 .7.21.7.557v.446c-.223-.254-.563-.384-.972-.384-.49 0-1.035.285-1.035.979 0 .656.551.99 1.035.99.396 0 .75-.142.972-.402v.328h.65V12.04c0-.799-.582-1.078-1.25-1.078m8.449.075v2.118c0 .607.322.948.966.948.47 0 .842-.235 1.053-.471v.396h.65v-2.991h-.65v2.1a.99.99 0 0 1-.762.39c-.372 0-.607-.149-.607-.613v-1.877zm12.67.458c.589 0 .83.434.85.787H21.69c.025-.36.285-.787.837-.787m-17.942.043c.514 0 .843.415.843.992 0 .582-.329.997-.843.997a.98.98 0 0 1-.774-.397v-1.189a.98.98 0 0 1 .774-.403m3.372 0c.558 0 .861.465.861.991 0 .533-.303.998-.86.998-.552 0-.862-.465-.862-.997 0-.527.31-.992.861-.992m-6.66 1.041c.279 0 .557.105.712.31v.458c-.155.204-.433.31-.712.31-.366 0-.644-.21-.644-.539 0-.322.278-.539.644-.539m14.269.65a.44.44 0 0 0-.434.428c0 .235.198.44.434.44a.445.445 0 0 0 .434-.44.44.44 0 0 0-.434-.428"/></svg></a>
       <a href="https://dev.to/mumullickm" rel="me noopener" target="_blank" aria-label="dev.to"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.42 10.05c-.18-.16-.46-.23-.84-.23H6l.02 2.44.04 2.45.56-.02c.41 0 .63-.07.83-.26.24-.24.26-.36.26-2.2 0-1.91-.02-1.96-.29-2.18zM0 4.94v14.12h24V4.94H0zM8.56 15.3c-.44.58-1.06.77-2.53.77H4.71V8.53h1.4c1.67 0 2.16.18 2.6.9.27.43.29.6.32 2.57.05 2.23-.02 2.73-.47 3.3zm5.09-5.47h-2.47v1.77h1.52v1.28l-.72.04-.75.03v1.77l1.22.03 1.2.04v1.28h-1.6c-1.53 0-1.6-.01-1.87-.3l-.3-.28v-3.16c0-3.02.01-3.18.25-3.48.23-.31.25-.31 1.88-.31h1.64v1.3zm4.68 5.45c-.17.43-.64.79-1 .79-.18 0-.45-.15-.67-.39-.32-.32-.45-.63-.82-2.08l-.9-3.39-.45-1.67h.76c.4 0 .75.02.75.05 0 .06 1.16 4.54 1.26 4.83.04.15.32-.7.73-2.3l.66-2.52.74-.04c.4-.02.73 0 .73.04 0 .14-1.67 6.38-1.8 6.68z"/></svg></a>
       <a href="https://www.instagram.com/mumullickm" rel="me noopener" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg></a>
       <a href="https://www.threads.net/@mumullickm" rel="me noopener" target="_blank" aria-label="Threads"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32L7.734 7.847c.98-1.454 2.568-2.256 4.478-2.256h.044c3.194.02 5.097 1.975 5.287 5.388.108.046.216.094.321.142 1.49.7 2.58 1.761 3.154 3.07.797 1.82.871 4.79-1.548 7.158-1.85 1.81-4.094 2.628-7.277 2.65Zm1.003-11.69c-.242 0-.487.007-.739.021-1.836.103-2.98.946-2.916 2.143.067 1.256 1.452 1.839 2.784 1.767 1.224-.065 2.818-.543 3.086-3.71a10.5 10.5 0 0 0-2.215-.221z"/></svg></a>
@@ -219,12 +221,12 @@
     <h2>Experience</h2>
     <div class="role-item">
       <div><h3>Lead, Brand &amp; Digital Marketing</h3><div class="org">Flight 24</div></div>
-      <div class="when">2025 — now</div>
+      <div class="when">2025 to now</div>
       <div class="note">Leading the brand and digital marketing team for the Dhaka-based travel platform: campaigns, brand communication, paid and organic acquisition, and the analytics behind the calls.</div>
     </div>
     <div class="role-item">
       <div><h3>Founder</h3><div class="org">Aykiz Intelligence</div></div>
-      <div class="when">2025 — now</div>
+      <div class="when">2025 to now</div>
       <div class="note">A one-person studio building free, offline-first mobile apps. Brand, product, build, and launch, all solo.</div>
     </div>
     <div class="role-item">
@@ -234,17 +236,17 @@
     </div>
     <div class="role-item">
       <div><h3>Brand Manager</h3><div class="org">US-Bangla Group</div></div>
-      <div class="when">2021 — 2025</div>
+      <div class="when">2021 to 2025</div>
       <div class="note">Three plus years leading airline brand and digital marketing. Campaigns, brand visibility, Google Ads and Analytics, SEO, social, and award-winning work including a Triplover guest campaign with Emirates.</div>
     </div>
     <div class="role-item">
       <div><h3>Digital Marketing &amp; Brand Communication</h3><div class="org">Lifan Motors</div></div>
-      <div class="when">2019 — 2021</div>
+      <div class="when">2019 to 2021</div>
       <div class="note">Senior Executive then Assistant Manager. Brand strategy, digital presence, creative direction, and B2B communication for the automotive brand.</div>
     </div>
     <div class="role-item">
       <div><h3>Visualizer · Senior Visualizer</h3><div class="org">dentsu international</div></div>
-      <div class="when">2017 — 2019</div>
+      <div class="when">2017 to 2019</div>
       <div class="note">Agency craft: display advertising, creative content, and visual storytelling across digital campaigns.</div>
     </div>
   </section>
@@ -252,12 +254,11 @@
   <section class="brands">
     <h2>Brands I've worked with</h2>
     <p class="brands-sub">Across agency and in-house roles.</p>
-    <div class="b-marquee"><div class="b-row" id="bRow1"></div><div class="b-row rev" id="bRow2"></div></div>
+    <div class="b-marquee" id="bMarquee"><div class="b-row"><span class="b-logo" style="-webkit-mask-image:url(/assets/brands/01.svg);mask-image:url(/assets/brands/01.svg)"></span><span class="b-logo" style="-webkit-mask-image:url(/assets/brands/02.svg);mask-image:url(/assets/brands/02.svg)"></span><span class="b-logo" style="-webkit-mask-image:url(/assets/brands/03.svg);mask-image:url(/assets/brands/03.svg)"></span><span class="b-logo" style="-webkit-mask-image:url(/assets/brands/04.svg);mask-image:url(/assets/brands/04.svg)"></span><span class="b-logo" style="-webkit-mask-image:url(/assets/brands/05.svg);mask-image:url(/assets/brands/05.svg)"></span><span class="b-logo" style="-webkit-mask-image:url(/assets/brands/06.svg);mask-image:url(/assets/brands/06.svg)"></span><span class="b-logo" style="-webkit-mask-image:url(/assets/brands/07.svg);mask-image:url(/assets/brands/07.svg)"></span></div><div class="b-row rev"><span class="b-logo" style="-webkit-mask-image:url(/assets/brands/08.svg);mask-image:url(/assets/brands/08.svg)"></span><span class="b-logo" style="-webkit-mask-image:url(/assets/brands/09.svg);mask-image:url(/assets/brands/09.svg)"></span><span class="b-logo" style="-webkit-mask-image:url(/assets/brands/10.svg);mask-image:url(/assets/brands/10.svg)"></span><span class="b-logo" style="-webkit-mask-image:url(/assets/brands/11.svg);mask-image:url(/assets/brands/11.svg)"></span><span class="b-logo" style="-webkit-mask-image:url(/assets/brands/12.svg);mask-image:url(/assets/brands/12.svg)"></span><span class="b-logo" style="-webkit-mask-image:url(/assets/brands/13.svg);mask-image:url(/assets/brands/13.svg)"></span><span class="b-logo" style="-webkit-mask-image:url(/assets/brands/14.svg);mask-image:url(/assets/brands/14.svg)"></span></div></div>
     <script>
-    (function(){var a=['01','02','03','04','05','06','07'],b=['08','09','10','11','12','13','14'];
-    var L=function(n){return '<span class="b-logo" style="-webkit-mask-image:url(/assets/brands/'+n+'.svg);mask-image:url(/assets/brands/'+n+'.svg)"></span>';};
-    document.getElementById('bRow1').innerHTML=a.map(L).join('')+a.map(L).join('');
-    document.getElementById('bRow2').innerHTML=b.map(L).join('')+b.map(L).join('');})();
+    (function(){if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;var m=document.getElementById('bMarquee');
+    m.querySelectorAll('.b-row').forEach(function(r){[].slice.call(r.children).forEach(function(c){var k=c.cloneNode(true);k.setAttribute('aria-hidden','true');r.appendChild(k);});});
+    m.classList.add('is-moving');})();
     </script>
   </section>
 
@@ -302,11 +303,33 @@
   <section class="contact">
     <h2>Contact</h2>
     <p>For brand, growth, and marketing-technology work, or a conversation.</p>
-    <p style="margin-top:10px;color:var(--dim);font-size:14.5px;display:flex;align-items:center"><a href="mailto:hello@aykizintelligence.com">hello@aykizintelligence.com</a><span style="color:var(--line);margin:0 12px">|</span><a href="https://wa.me/8801637888666" target="_blank" rel="noopener" aria-label="WhatsApp" style="border-bottom:0;display:inline-flex;width:19px;height:19px;color:var(--moon)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a></p>
+    <p style="margin-top:10px;color:var(--fp-dim);font-size:14.5px;display:flex;align-items:center"><a href="mailto:hello@aykizintelligence.com">hello@aykizintelligence.com</a><span style="color:var(--fp-line);margin:0 12px">|</span><a href="https://wa.me/8801637888666" target="_blank" rel="noopener" aria-label="WhatsApp" style="border-bottom:0;display:inline-flex;width:19px;height:19px;color:var(--fp-moon)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a></p>
   </section>
 
-  <footer>Miraz Mullick · Aykiz Intelligence · MMXXVI · <a href="https://github.com/mumullickm/aykiz-font/releases/latest/download/aykiz-font.zip" style="color:inherit;border-bottom:1px solid rgba(201,214,240,.3);text-decoration:none" title="Aykiz, our free typeface (SIL OFL)">Aykiz font</a></footer>
+  <div class="fp-foot">Miraz Mullick · Aykiz Intelligence · MMXXVI · <a href="https://github.com/mumullickm/aykiz-font/releases/latest/download/aykiz-font.zip" style="color:inherit;border-bottom:1px solid rgba(201,214,240,.3);text-decoration:none" title="Aykiz, our free typeface (SIL OFL)">Aykiz font</a></div>
 
+</main>
+  <footer class="night">
+    <div class="wrap">
+      <div class="footer-base" style="margin-top:0;padding-top:0;border-top:0">
+        <span>© 2026 Aykiz Intelligence. Dhanmondi, Dhaka 1209, Bangladesh.</span>
+        <span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/.well-known/security.txt">Security</a> · <a href="mailto:hello@aykizintelligence.com">hello@aykizintelligence.com</a></span>
+      </div>
+    </div>
+  </footer>
+<!-- Command palette: the studio thesis as an interface -->
+<div class="palette" id="palette" hidden>
+  <div class="palette-backdrop" data-close></div>
+  <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Ask the studio">
+    <div class="palette-head">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="paletteInput" type="text" placeholder="Where to?" aria-label="Search pages and apps" autocomplete="off" autocapitalize="off" spellcheck="false" />
+      <kbd>esc</kbd>
+    </div>
+    <ul id="paletteList" role="listbox" aria-label="Results"></ul>
+    <div class="palette-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="palette-brand">aykız</span></div>
+  </div>
 </div>
+<script src="/main.js" defer></script>
 </body>
 </html>

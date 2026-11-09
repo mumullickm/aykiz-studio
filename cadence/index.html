@@ -25,6 +25,8 @@
   <meta name="twitter:image" content="https://aykizintelligence.com/cadence/assets/og.png" />
   <meta name="twitter:site" content="@aykizintel" />
 
+  <link rel="preload" href="/assets/fonts/Aykiz-Light.subset.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -60,78 +62,78 @@
 
   <style>
     :root{
-      --ink:#0B0712; --ink-2:#1A1322; --ink-soft:#3A3340; --ink-mute:#6B6573;
-      --cream:#F6F2EB; --cream-2:#EDE6DB; --teal:#6BC5BD; --teal-deep:#2F8C84;
-      --line:rgba(11,7,18,0.10); --line-strong:rgba(11,7,18,0.20);
-      --f:'Inter','system-ui',-apple-system,sans-serif;
-      --f-display:'Inter Tight','Inter',sans-serif;
-      --f-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
-      --wrap:820px; color-scheme:light;
+      --cd-ink:#0B0712; --cd-ink-2:#1A1322; --cd-ink-soft:#3A3340; --cd-ink-mute:#6B6573;
+      --cd-cream:#F6F2EB; --cd-cream-2:#EDE6DB; --cd-teal:#6BC5BD; --cd-teal-deep:#2F8C84;
+      --cd-line:rgba(11,7,18,0.10); --cd-line-strong:rgba(11,7,18,0.20);
+      --cd-f:'Inter','system-ui',-apple-system,sans-serif;
+      --cd-f-display:'Inter Tight','Inter',sans-serif;
+      --cd-f-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+      --cd-wrap:820px; color-scheme:light;
     }
     *,*::before,*::after{box-sizing:border-box}
     html,body{margin:0;padding:0}
-    body{background:var(--cream);color:var(--ink);font-family:var(--f);font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    body{background:var(--cd-cream);color:var(--cd-ink);font-family:var(--cd-f);font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
     a{color:inherit}
-    .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
-    main > section{padding:64px 0;border-top:1px solid var(--line)}
+    .wrap{max-width:var(--cd-wrap);margin:0 auto;padding:0 24px}
+    main > section{padding:64px 0;border-top:1px solid var(--cd-line)}
     main > section:first-of-type{border-top:0}
-    .eyebrow{font-weight:600;letter-spacing:0.28em;text-transform:uppercase;font-size:11px;color:var(--ink-mute);margin:0 0 20px}
-    header{padding:26px 0}
-    .bar{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:11px}
-    .brand svg{display:block;width:22px;height:22px}
-    .brand .name{font-weight:600;letter-spacing:-0.01em;font-size:15px}
-    .tag{font-family:var(--f-mono);font-size:11px;letter-spacing:0.06em;color:var(--ink-mute);text-transform:uppercase}
-    .hero{padding-top:40px}
-    .hero h1{font-family:var(--f-display);font-weight:600;letter-spacing:-0.02em;line-height:1.02;font-size:clamp(38px,7vw,62px);margin:0 0 22px;text-wrap:balance;max-width:14ch}
-    .hero p.lede{font-size:clamp(17px,2.3vw,21px);color:var(--ink-soft);max-width:46ch;margin:0 0 34px}
-    .cta{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--cream);font-weight:600;font-size:15px;padding:14px 22px;border-radius:999px;text-decoration:none;transition:transform .15s ease,background .15s ease}
-    .cta:hover{transform:translateY(-1px);background:var(--ink-2)}
-    .cta .dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}
-    .under{margin-top:18px;font-size:13px;color:var(--ink-mute)}
-    .under a{color:var(--ink-soft)}
-    .prose{font-size:clamp(16px,2vw,18px);color:var(--ink-soft);max-width:52ch}
-    .prose strong{color:var(--ink);font-weight:600}
+    .eyebrow,.proof-note,.founding .label{font-family:var(--f-label);font-weight:500;letter-spacing:0;text-transform:none;font-size:15px;color:var(--cd-ink-mute);margin:0 0 20px}
+    .cd-hero{padding-top:calc(var(--nav-h) + 48px)}
+    .cd-hero h1{font-family:var(--f-display);font-weight:300;letter-spacing:-0.03em;line-height:1.02;font-size:clamp(40px,7.4vw,68px);margin:0 0 22px;text-wrap:balance;max-width:14ch}
+    .cd-hero p.lede{font-size:clamp(17px,2.3vw,21px);color:var(--cd-ink-soft);max-width:46ch;margin:0 0 34px}
+    .cta{display:inline-flex;align-items:center;gap:10px;background:var(--cd-ink);color:var(--cd-cream);font-weight:600;font-size:15px;padding:14px 22px;border-radius:999px;text-decoration:none;transition:transform .15s ease,background .15s ease}
+    .cta:hover{transform:translateY(-1px);background:var(--cd-ink-2)}
+    .cta .dot{width:7px;height:7px;border-radius:50%;background:var(--cd-teal)}
+    .under{margin-top:18px;font-size:13px;color:var(--cd-ink-mute)}
+    .under a{color:var(--cd-ink-soft)}
+    .prose{font-size:clamp(16px,2vw,18px);color:var(--cd-ink-soft);max-width:52ch}
+    .prose strong{color:var(--cd-ink);font-weight:600}
     .pkg{list-style:none;margin:0;padding:0}
-    .pkg li{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:18px 0;border-top:1px solid var(--line);align-items:baseline}
+    .pkg li{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:18px 0;border-top:1px solid var(--cd-line);align-items:baseline}
     .pkg li:first-child{border-top:0}
-    .pkg .k{font-family:var(--f-mono);font-size:12px;color:var(--teal-deep);letter-spacing:0.04em;padding-top:2px;white-space:nowrap}
-    .pkg .v b{font-weight:600;color:var(--ink)}
-    .pkg .v span{display:block;color:var(--ink-mute);font-size:14px;margin-top:3px}
+    .pkg .k{font-family:var(--cd-f-mono);font-size:12px;color:var(--cd-teal-deep);letter-spacing:0.04em;padding-top:2px;white-space:nowrap}
+    .pkg .v b{font-weight:600;color:var(--cd-ink)}
+    .pkg .v span{display:block;color:var(--cd-ink-mute);font-size:14px;margin-top:3px}
     .proof-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
-    .hero .proof-links{margin-top:30px}
-    .proof-note{font-family:var(--f-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-mute);margin:0 0 -14px}
-    .chip{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line-strong);border-radius:999px;padding:10px 16px;text-decoration:none;font-size:15px;font-weight:500;transition:border-color .15s ease,background .15s ease}
-    .chip:hover{border-color:var(--teal-deep);background:var(--cream-2)}
-    .chip .mk{width:6px;height:6px;border-radius:50%;background:var(--teal)}
-    .price{font-size:clamp(40px,8vw,58px);font-weight:600;letter-spacing:-0.03em;font-family:var(--f-display)}
-    .price .per{font-size:18px;color:var(--ink-mute);font-weight:500;letter-spacing:0}
-    .founding{margin-top:26px;padding:22px 24px;background:var(--cream-2);border:1px solid var(--line);border-radius:14px;max-width:52ch}
-    .founding .label{font-family:var(--f-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal-deep);margin:0 0 8px}
-    .founding p{margin:0;font-size:16px;color:var(--ink-soft)}
+    .cd-hero .proof-links{margin-top:30px}
+    .cd-hero .proof-note{margin:0 0 -14px}
+    .chip{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--cd-line-strong);border-radius:999px;padding:10px 16px;text-decoration:none;font-size:15px;font-weight:500;transition:border-color .15s ease,background .15s ease}
+    .chip:hover{border-color:var(--cd-teal-deep);background:var(--cd-cream-2)}
+    .chip .mk{width:6px;height:6px;border-radius:50%;background:var(--cd-teal)}
+    .price{font-size:clamp(40px,8vw,58px);font-weight:600;letter-spacing:-0.03em;font-family:var(--cd-f-display)}
+    .price .per{font-size:18px;color:var(--cd-ink-mute);font-weight:500;letter-spacing:0}
+    .founding{margin-top:26px;padding:22px 24px;background:var(--cd-cream-2);border:1px solid var(--cd-line);border-radius:14px;max-width:52ch}
+    .founding .label{color:var(--cd-teal-deep);margin:0 0 8px}
+    .founding p{margin:0;font-size:16px;color:var(--cd-ink-soft)}
     .founding p + p{margin-top:10px}
-    .founding b{color:var(--ink);font-weight:600}
-    footer.titleblock{max-width:var(--wrap);margin:0 auto;padding:40px 24px 72px;display:flex;flex-wrap:wrap;gap:28px;border-top:1px solid var(--line)}
+    .founding b{color:var(--cd-ink);font-weight:600}
+    footer.titleblock{max-width:var(--cd-wrap);margin:0 auto;padding:40px 24px 72px;display:flex;flex-wrap:wrap;gap:28px;border-top:1px solid var(--cd-line)}
     footer .cell{display:flex;flex-direction:column;gap:4px}
-    footer .k{font-family:var(--f-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute)}
+    footer .k{font-family:var(--f-label);font-weight:500;font-size:13px;letter-spacing:0;color:var(--cd-ink-mute)}
     footer .v{font-size:14px;font-weight:500}
     @media (max-width:560px){main > section{padding:48px 0}.pkg li{grid-template-columns:1fr;gap:4px}.pkg .k{padding-top:0}}
     @media (prefers-reduced-motion:reduce){*{transition:none !important}}
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap bar">
-      <a class="brand" href="/" style="text-decoration:none">
-        <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M46.4,27 L53.6,24.5 C54.9,44 55.1,62 54.3,76 C54.25,78.5 54.5,80 54.8,80 L45.2,80 C45.5,80 45.75,78.5 45.7,76 L46.4,27 Z" fill="var(--ink)"/><circle cx="49.7" cy="14.5" r="4.3" fill="var(--teal)"/></svg>
-        <span class="name">Aykiz Intelligence</span>
-      </a>
-      <span class="tag">Cadence</span>
-    </div>
-  </header>
+<a class="skip" href="#content">Skip to content</a>
+<header class="nav on-paper" id="nav">
+  <a href="/" class="brandmark" aria-label="Aykiz Intelligence home">
+    <span class="bm-word">aykız</span>
+    <span class="bm-sub">Intelligence</span>
+  </a>
+  <nav class="links" aria-label="Primary">
+    <a href="/#services">Services</a>
+    <a href="/products/">Products</a>
+    <a href="/#approach">Approach</a>
+    <a href="/#about">Company</a>
+    <a href="/#contact" class="nav-cta">Start a project</a>
+    <button class="nav-ask" id="askBtn" type="button" aria-haspopup="dialog" aria-controls="palette">Menu</button>
+  </nav>
+</header>
 
-  <main>
-    <section class="hero">
+  <main id="content">
+    <section class="cd-hero">
       <div class="wrap">
         <p class="eyebrow">A content engine by Aykiz Intelligence</p>
         <h1>We keep your brand posting.</h1>
@@ -209,6 +211,20 @@
     <div class="cell"><span class="k">Contact</span><span class="v"><a href="mailto:hello@aykizintelligence.com">hello@aykizintelligence.com</a></span></div>
   </footer>
 
+  <!-- Command palette: the studio thesis as an interface -->
+<div class="palette" id="palette" hidden>
+  <div class="palette-backdrop" data-close></div>
+  <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Ask the studio">
+    <div class="palette-head">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="paletteInput" type="text" placeholder="Where to?" aria-label="Search pages and apps" autocomplete="off" autocapitalize="off" spellcheck="false" />
+      <kbd>esc</kbd>
+    </div>
+    <ul id="paletteList" role="listbox" aria-label="Results"></ul>
+    <div class="palette-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span class="palette-brand">aykız</span></div>
+  </div>
+</div>
+<script src="/main.js" defer></script>
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "eebf402d4b0a4b1b8dcf055e594604f4"}'></script>
 </body>
 </html>
